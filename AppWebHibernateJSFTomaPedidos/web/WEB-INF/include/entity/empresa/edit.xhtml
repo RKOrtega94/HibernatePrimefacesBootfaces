@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition>
+        <p:dialog id="EmpresaEditDialog"
+                  widgetVar="EmpresaEditDialog"
+                  modal="true"
+                  resizable="false"
+                  appendTo="@(body)"
+                  header="Editar empresa"
+                  closeOnEscape="true">
+            <h:form id="EmpresaEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2"
+                                 rendered="#{empresaController.selected != null}">
+                        <p:outputLabel for="empresaRazonSocial"
+                                       value="Razon social"/>
+                        <p:inputText id="empresaRazonSocial"
+                                     value="#{empresaController.selected.empresaRazonSocial}"/>
+
+                        <p:outputLabel for="empresaRuc"
+                                       value="Ruc"/>
+                        <p:inputText id="empresaRuc"
+                                     value="#{empresaController.selected.empresaRuc}"/>
+                        
+                        <p:outputLabel for="empresaEstado"
+                                       value="Estado"/>
+                        <p:selectOneMenu id="empresaEstado"
+                                         value="#{empresaController.selected.empresaEstado}"
+                                         style="width: 100%">
+                            <f:selectItem itemLabel="Activo"
+                                          itemValue="A"/>
+                            <f:selectItem itemLabel="Inactivo"
+                                          itemValue="I"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <b:commandButton id="btnSaveEdit"
+                                     value="Guardar"
+                                     look="success"
+                                     actionListener="#{empresaController.update()}">
+                        <p:confirm header="Confirmación"
+                                   message="Guardar los cambios?"
+                                   icon="ui-icon-alert"/>
+                    </b:commandButton>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+    </ui:composition>
+</html>
+

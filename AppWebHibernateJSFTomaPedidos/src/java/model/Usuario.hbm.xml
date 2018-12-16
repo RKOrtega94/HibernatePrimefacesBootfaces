@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 11-dic-2018 10:09:41 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.Usuario" table="usuario" schema="dbo" catalog="restoitsco" optimistic-lock="version">
+        <id name="usuarioId" type="int">
+            <column name="usuarioId" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="empleado" class="model.Empleado" fetch="select">
+            <column name="empleadoId" not-null="true" />
+        </many-to-one>
+        <many-to-one name="perfil" class="model.Perfil" fetch="select">
+            <column name="perfilId" not-null="true" />
+        </many-to-one>
+        <property name="usuarioNombre" type="string">
+            <column name="usuarioNombre" length="50" />
+        </property>
+        <property name="usuarioClave" type="string">
+            <column name="usuarioClave" length="50" />
+        </property>
+        <property name="usuarioFechaCreacion" type="timestamp">
+            <column name="usuarioFechaCreacion" length="23" />
+        </property>
+        <property name="usuarioFechaModificacion" type="timestamp">
+            <column name="usuarioFechaModificacion" length="23" />
+        </property>
+        <property name="usuarioEstado" type="java.lang.Character">
+            <column name="usuarioEstado" length="1" />
+        </property>
+        <set name="cabecerafacturas" table="cabecerafactura" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="usuarioId" not-null="true" />
+            </key>
+            <one-to-many class="model.Cabecerafactura" />
+        </set>
+    </class>
+</hibernate-mapping>

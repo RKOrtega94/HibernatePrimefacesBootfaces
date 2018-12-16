@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 11-dic-2018 10:09:41 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.Cargo" table="cargo" schema="dbo" catalog="restoitsco" optimistic-lock="version">
+        <id name="cargoId" type="int">
+            <column name="cargoId" />
+            <generator class="identity" />
+        </id>
+        <property name="cargoDescripcion" type="string">
+            <column name="cargoDescripcion" length="100" />
+        </property>
+        <property name="cargoFechaCreacion" type="timestamp">
+            <column name="cargoFechaCreacion" length="23" />
+        </property>
+        <property name="cargoFechaModificacion" type="timestamp">
+            <column name="cargoFechaModificacion" length="23" />
+        </property>
+        <property name="cargoEstado" type="java.lang.Character">
+            <column name="cargoEstado" length="1"/>
+        </property>
+        <set name="empleados" table="empleado" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="cargoId" not-null="true" />
+            </key>
+            <one-to-many class="model.Empleado" />
+        </set>
+    </class>
+</hibernate-mapping>

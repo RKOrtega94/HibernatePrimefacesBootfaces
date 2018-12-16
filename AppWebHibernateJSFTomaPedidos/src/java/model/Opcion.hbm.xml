@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 11-dic-2018 10:09:41 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.Opcion" table="opcion" schema="dbo" catalog="restoitsco" optimistic-lock="version">
+        <id name="opcionId" type="int">
+            <column name="opcionId" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="opcion" class="model.Opcion" fetch="select">
+            <column name="opcionOpcionId" />
+        </many-to-one>
+        <property name="opcionDescripcion" type="string">
+            <column name="opcionDescripcion" length="150" />
+        </property>
+        <property name="opcionLink" type="string">
+            <column name="opcionLink" length="150" />
+        </property>
+        <property name="opcionIcon" type="string">
+            <column name="opcionIcon" length="50" />
+        </property>
+        <property name="opcionFechaCreacion" type="timestamp">
+            <column name="opcionFechaCreacion" length="23" />
+        </property>
+        <property name="opcionFechaModificacion" type="timestamp">
+            <column name="opcionFechaModificacion" length="23" />
+        </property>
+        <property name="opcionEstado" type="java.lang.Character">
+            <column name="opcionEstado" length="1" />
+        </property>
+        <set name="opcions" table="opcion" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="opcionOpcionId" />
+            </key>
+            <one-to-many class="model.Opcion" />
+        </set>
+        <set name="opcionXperfils" table="opcionXPerfil" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="opcionId" not-null="true" />
+            </key>
+            <one-to-many class="model.OpcionXperfil" />
+        </set>
+    </class>
+</hibernate-mapping>

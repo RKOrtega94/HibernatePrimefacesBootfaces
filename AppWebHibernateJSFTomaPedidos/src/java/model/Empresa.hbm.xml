@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 11-dic-2018 10:09:41 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.Empresa" table="empresa" schema="dbo" catalog="restoitsco" optimistic-lock="version">
+        <id name="empresaId" type="int">
+            <column name="empresaId" />
+            <generator class="identity" />
+        </id>
+        <property name="empresaRazonSocial" type="string">
+            <column name="empresaRazonSocial" length="250" />
+        </property>
+        <property name="empresaRuc" type="string">
+            <column name="empresaRuc" length="15" />
+        </property>
+        <property name="empresaFechaCreacion" type="timestamp">
+            <column name="empresaFechaCreacion" length="23" />
+        </property>
+        <property name="empresaFechaModificacion" type="timestamp">
+            <column name="empresaFechaModificacion" length="23" />
+        </property>
+        <property name="empresaEstado" type="java.lang.Character">
+            <column name="empresaEstado" length="1" />
+        </property>
+        <set name="clientes" table="cliente" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="empresaId" not-null="true" />
+            </key>
+            <one-to-many class="model.Cliente" />
+        </set>
+        <set name="menus" table="menu" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="empresaId" not-null="true" />
+            </key>
+            <one-to-many class="model.Menu" />
+        </set>
+        <set name="locals" table="local" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="empresaId" not-null="true" />
+            </key>
+            <one-to-many class="model.Local" />
+        </set>
+    </class>
+</hibernate-mapping>

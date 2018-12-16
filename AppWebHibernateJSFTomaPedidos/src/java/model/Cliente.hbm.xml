@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 11-dic-2018 10:09:41 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.Cliente" table="cliente" schema="dbo" catalog="restoitsco" optimistic-lock="version">
+        <id name="clienteId" type="int">
+            <column name="clienteId" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="empresa" class="model.Empresa" fetch="select">
+            <column name="empresaId" not-null="true" />
+        </many-to-one>
+        <property name="clienteNombre" type="string">
+            <column name="clienteNombre" length="250" />
+        </property>
+        <property name="cienteDumeroDocumento" type="string">
+            <column name="cienteDumeroDocumento" length="50" />
+        </property>
+        <property name="clienteTelefono" type="string">
+            <column name="clienteTelefono" length="50" />
+        </property>
+        <property name="clienteCorreo" type="string">
+            <column name="clienteCorreo" length="150" />
+        </property>
+        <property name="clienteFechaCreacion" type="timestamp">
+            <column name="clienteFechaCreacion" length="23" />
+        </property>
+        <property name="clienteFechaModificacion" type="timestamp">
+            <column name="clienteFechaModificacion" length="23" />
+        </property>
+        <property name="clienteEstado" type="java.lang.Character">
+            <column name="clienteEstado" length="1" />
+        </property>
+        <set name="cabecerafacturas" table="cabecerafactura" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="clienteId" not-null="true" />
+            </key>
+            <one-to-many class="model.Cabecerafactura" />
+        </set>
+    </class>
+</hibernate-mapping>

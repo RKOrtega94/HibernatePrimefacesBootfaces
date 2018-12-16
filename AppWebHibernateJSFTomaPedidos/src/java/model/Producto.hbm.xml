@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 11-dic-2018 10:09:41 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.Producto" table="producto" schema="dbo" catalog="restoitsco" optimistic-lock="version">
+        <id name="productoId" type="int">
+            <column name="productoId" />
+            <generator class="assigned" />
+        </id>
+        <property name="productoNombre" type="string">
+            <column name="productoNombre" length="150" />
+        </property>
+        <property name="productoDetalle" type="string">
+            <column name="productoDetalle" length="200" />
+        </property>
+        <property name="productoFechaCreacion" type="timestamp">
+            <column name="productoFechaCreacion" length="23" />
+        </property>
+        <property name="productoFechaModificacion" type="timestamp">
+            <column name="productoFechaModificacion" length="23" />
+        </property>
+        <property name="productoEstado" type="java.lang.Character">
+            <column name="productoEstado" length="1" />
+        </property>
+        <set name="inventarios" table="inventario" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="productoId" not-null="true" />
+            </key>
+            <one-to-many class="model.Inventario" />
+        </set>
+    </class>
+</hibernate-mapping>

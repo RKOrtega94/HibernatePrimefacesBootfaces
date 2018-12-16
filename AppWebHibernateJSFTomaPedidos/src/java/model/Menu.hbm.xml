@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 11-dic-2018 10:09:41 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.Menu" table="menu" schema="dbo" catalog="restoitsco" optimistic-lock="version">
+        <id name="menuId" type="int">
+            <column name="menuId" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="empresa" class="model.Empresa" fetch="select">
+            <column name="empresaId" not-null="true" />
+        </many-to-one>
+        <property name="menuNombre" type="string">
+            <column name="menuNombre" length="50" />
+        </property>
+        <property name="menuDescriocion" type="string">
+            <column name="menuDescriocion" length="250" />
+        </property>
+        <property name="menuTipo" type="java.lang.Character">
+            <column name="menuTipo" length="1" />
+        </property>
+        <property name="menuValor" type="big_decimal">
+            <column name="menuValor" scale="4" />
+        </property>
+        <property name="menuFechaCreacion" type="timestamp">
+            <column name="menuFechaCreacion" length="23" />
+        </property>
+        <property name="menuFechaModificacion" type="timestamp">
+            <column name="menuFechaModificacion" length="23" />
+        </property>
+        <property name="menuEstado" type="java.lang.Character">
+            <column name="menuEstado" length="1" />
+        </property>
+        <property name="menuFoto" type="string">
+            <column name="menuFoto" length="500" />
+        </property>
+        <set name="detallefacturas" table="detallefactura" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="menuId" not-null="true" />
+            </key>
+            <one-to-many class="model.Detallefactura" />
+        </set>
+    </class>
+</hibernate-mapping>

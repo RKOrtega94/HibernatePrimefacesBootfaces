@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <ui:composition>
+        <p:dialog id="EmpresaViewDialog"
+                  widgetVar="empresaViewDialog"
+                  modal="true"
+                  resizable="false"
+                  appendTo="@(body)"
+                  header="Empresa"
+                  closeOnEscape="true">
+            <h:form id="EmpresaViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2"
+                                 rendered="#{empresaController.selected != null}">
+
+                        <h:outputText value="Razón social"/>
+                        <h:outputText value="#{empresaController.selected.empresaRazonSocial}"/>
+
+                        <h:outputText value="RUC"/>
+                        <h:outputText value="#{empresaController.selected.empresaRuc}"/>
+
+                        <h:outputText value="Fecha de registro"/>
+                        <h:outputText value="#{empresaController.selected.empresaFechaCreacion}"/>
+
+                        <h:outputText value="Última modificación"/>
+                        <h:outputText value="#{empresaController.selected.empresaFechaModificacion}"/>
+
+                        <h:outputText value="Estado"/>
+                        <h:outputText value="#{empresaController.selected.empresaEstado=='A'?'Activo':'Inactivo'}"/>
+                    </p:panelGrid>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+    </ui:composition>
+</html>
+

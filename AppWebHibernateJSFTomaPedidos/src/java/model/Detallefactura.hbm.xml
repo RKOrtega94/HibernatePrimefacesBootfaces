@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 11-dic-2018 10:09:41 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.Detallefactura" table="detallefactura" schema="dbo" catalog="restoitsco" optimistic-lock="version">
+        <id name="detallefacturaId" type="int">
+            <column name="detallefacturaId" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="cabecerafactura" class="model.Cabecerafactura" fetch="select">
+            <column name="cabecerafacturaId" not-null="true" />
+        </many-to-one>
+        <many-to-one name="menu" class="model.Menu" fetch="select">
+            <column name="menuId" not-null="true" />
+        </many-to-one>
+        <property name="detallefacturaCantidad" type="java.lang.Integer">
+            <column name="detallefacturaCantidad" />
+        </property>
+        <property name="detallefacturaFechaCreacion" type="timestamp">
+            <column name="detallefacturaFechaCreacion" length="23" />
+        </property>
+        <property name="detallefacturaFechaModificacion" type="timestamp">
+            <column name="detallefacturaFechaModificacion" length="23" />
+        </property>
+        <property name="detallefacturaEstado" type="java.lang.Character">
+            <column name="detallefacturaEstado" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

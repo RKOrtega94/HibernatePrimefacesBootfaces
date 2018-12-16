@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 11-dic-2018 10:09:41 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.Inventario" table="inventario" schema="dbo" catalog="restoitsco" optimistic-lock="version">
+        <id name="inventarioId" type="int">
+            <column name="inventarioId" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="local" class="model.Local" fetch="select">
+            <column name="localId" not-null="true" />
+        </many-to-one>
+        <many-to-one name="producto" class="model.Producto" fetch="select">
+            <column name="productoId" not-null="true" />
+        </many-to-one>
+        <property name="inventarioCantidad" type="java.lang.Double">
+            <column name="inventarioCantidad" precision="53" scale="0" />
+        </property>
+        <property name="inventarioFechaCracion" type="timestamp">
+            <column name="inventarioFechaCracion" length="23" />
+        </property>
+        <property name="inventarioFechaModificacion" type="timestamp">
+            <column name="inventarioFechaModificacion" length="23" />
+        </property>
+        <property name="inventarioEstado" type="java.lang.Character">
+            <column name="inventarioEstado" length="1" />
+        </property>
+    </class>
+</hibernate-mapping>

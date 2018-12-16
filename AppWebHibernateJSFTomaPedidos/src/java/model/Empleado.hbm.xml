@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 11-dic-2018 10:09:41 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.Empleado" table="empleado" schema="dbo" catalog="restoitsco" optimistic-lock="version">
+        <id name="empleadoId" type="int">
+            <column name="empleadoId" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="cargo" class="model.Cargo" fetch="select">
+            <column name="cargoId" not-null="true" />
+        </many-to-one>
+        <many-to-one name="local" class="model.Local" fetch="select">
+            <column name="localId" not-null="true" />
+        </many-to-one>
+        <property name="empleadoPromerApellido" type="string">
+            <column name="empleadoPromerApellido" length="150" />
+        </property>
+        <property name="empleadoSegundoApellido" type="string">
+            <column name="empleadoSegundoApellido" length="150" />
+        </property>
+        <property name="empleadoPrimernombre" type="string">
+            <column name="empleadoPrimernombre" length="150" />
+        </property>
+        <property name="empleadoSegundoNombre" type="string">
+            <column name="empleadoSegundoNombre" length="150" />
+        </property>
+        <property name="empleadoNumeroDocumento" type="string">
+            <column name="empleadoNumeroDocumento" length="50" />
+        </property>
+        <property name="empleadoFechaCreacion" type="timestamp">
+            <column name="empleadoFechaCreacion" length="23" />
+        </property>
+        <property name="empleadoFechaModificacion" type="timestamp">
+            <column name="empleadoFechaModificacion" length="23" />
+        </property>
+        <property name="emleadoFoto" type="string">
+            <column name="emleadoFoto" length="500" />
+        </property>
+        <property name="empleadoEstado" type="java.lang.Character">
+            <column name="empleadoEstado" length="1" />
+        </property>
+        <set name="usuarios" table="usuario" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="empleadoId" not-null="true" />
+            </key>
+            <one-to-many class="model.Usuario" />
+        </set>
+    </class>
+</hibernate-mapping>
