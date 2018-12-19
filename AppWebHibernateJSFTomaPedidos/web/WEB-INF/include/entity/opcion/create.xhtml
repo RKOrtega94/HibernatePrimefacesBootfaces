@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition>
+        <h:form id="OpcionCreateForm">
+            <p:dialog widgetVar="create"
+                      header="Registrar"
+                      showEffect="fade"
+                      hideEffect="fade"
+                      resizable="false">
+                <p:panelGrid id="EditPanel">
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="txtNivel"
+                                           value="Nivel"/>
+                        </p:column>
+                        <p:column>
+                            <p:selectOneMenu id="txtNivel"
+                                             value="#{opcionController.nivel}"
+                                             required="true"
+                                             requiredMessage="Campo obligatorio"
+                                             style="width: 100%">
+                                <p:ajax listener="#{opcionController.onChangeNivel()}"
+                                        update="EditPanel"/>
+                                <f:selectItem itemLabel="Menu"
+                                              itemValue="1"/>
+                                <f:selectItem itemLabel="Submenu"
+                                              itemValue="2"/>
+                            </p:selectOneMenu>
+                        </p:column>
+                    </p:row>
+                    <c:if test="#{opcionController.nivel==2}">
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel for="txtSubmenu"
+                                               value="Submenu"/>
+                            </p:column>
+                            <p:column>
+                                <p:selectOneMenu id="txtSubmenu"
+                                                 value="#{opcionController.opcion.opcion}"
+                                                 style="width: 100%">
+                                    <f:selectItems value="#{opcionController.opciones}"
+                                                   var="item"
+                                                   itemLabel="#{item.opcionDescripcion}"
+                                                   itemValue="#{item}"/>
+                                </p:selectOneMenu>
+                            </p:column>
+                        </p:row>
+                    </c:if>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="txtDescripcion"
+                                           value="Descripción"/>
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="txtDescripcion"
+                                         value="#{opcionController.opcion.opcionDescripcion}"
+                                         required="true"
+                                         requiredMessage="Descripción obligatoria"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="txtLink"
+                                           value="Link"/>
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="txtLink"
+                                         value="#{opcionController.opcion.opcionLink}"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="txtIcon"
+                                           value="Ícono"/>
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="txtIcon"
+                                         value="#{opcionController.opcion.opcionIcon}"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="2">
+                            <center>
+                                <b:commandButton id="btnSuccess"
+                                                 value="Guardar"
+                                                 actionListener="#{opcionController.save()}"
+                                                 look="success"
+                                                 update=":listForm:dataList, :growl"/>
+                            </center>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+            </p:dialog>
+        </h:form>
+    </ui:composition>
+</html>

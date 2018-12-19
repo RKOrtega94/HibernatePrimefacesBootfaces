@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition>
+        <p:dialog id="OpcionViewDialog"
+                  widgetVar="opcionViewDialog"
+                  modal="true"
+                  resizable="false"
+                  appendTo="@(body)"
+                  header="Opcion"
+                  closeOnEscape="true">
+            <h:form id="OpcionViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2"
+                                 rendered="#{opcionController.selected != null}">
+
+                        <h:outputText value="Descripción"/>
+                        <h:outputText value="#{opcionController.selected.opcionDescripcion}"/>
+
+                        <c:if test="#{opcionController.selected.opcionLink!=null}">
+                            <h:outputText value="Enlace"/>
+                            <h:outputText value="#{opcionController.selected.opcionLink}"/>
+                        </c:if>
+
+                        <c:if test="#{opcionController.selected.opcionIcon!=null}">
+                            <h:outputText value="Ícono"/>
+                            <h:outputText value="#{opcionController.selected.opcionIcon}"/>
+                        </c:if>
+
+                        <h:outputText value="Fecha de registro"/>
+                        <h:outputText value="#{opcionController.selected.opcionFechaCreacion}"/>
+
+                        <c:if test="#{opcionController.selected.opcionFechaModificacion!=null}">
+                            <h:outputText value="Última modificación"/>
+                            <h:outputText value="#{opcionController.selected.opcionFechaModificacion}"/>
+                        </c:if>
+
+                        <h:outputText value="Estado"/>
+                        <h:outputText value="#{opcionController.selected.opcionEstado=='A'?'Activo':'Inactivo'}"/>
+
+                    </p:panelGrid>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+    </ui:composition>
+</html>

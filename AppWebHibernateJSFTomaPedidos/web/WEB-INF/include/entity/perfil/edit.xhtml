@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition>
+        <p:dialog id="PerfilEditDialog"
+                  widgetVar="PerfilEditDialog"
+                  modal="true"
+                  resizable="false"
+                  appendTo="@(body)"
+                  header="Editar perfil"
+                  closeOnEscape="true">
+            <h:form id="PerfilEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2"
+                                 rendered="#{perfilController.selected != null}">
+                        <p:outputLabel for="perfilNombre"
+                                       value="Perfil"/>
+                        <p:inputText id="perfilNombre"
+                                     value="#{perfilController.selected.perfilDescripcion}"/>
+
+                        <p:outputLabel for="perfilEstado"
+                                       value="Estado"/>
+                        <p:selectOneMenu id="perfilEstado"
+                                         value="#{perfilController.selected.perfilEstado}"
+                                         style="width: 100%">
+                            <f:selectItem itemLabel="Activo"
+                                          itemValue="A"/>
+                            <f:selectItem itemLabel="Inactivo"
+                                          itemValue="I"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <b:commandButton id="btnSaveEdit"
+                                     value="Guardar"
+                                     look="success"
+                                     actionListener="#{perfilController.update()}">
+                        <p:confirm header="Confirmación"
+                                   message="Guardar los cambios?"
+                                   icon="ui-icon-alert"/>
+                    </b:commandButton>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+    </ui:composition>
+</html>

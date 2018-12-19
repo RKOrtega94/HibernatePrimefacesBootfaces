@@ -1,7 +1,7 @@
 package model;
 // Generated 11-dic-2018 10:09:37 by Hibernate Tools 4.3.1
 
-import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -116,6 +116,10 @@ public class Cargo implements java.io.Serializable {
     public void prePersist(){
         if(cargoEstado == null){
             cargoEstado = 'A';
+        }
+        if(cargoFechaCreacion == null){
+            Date date = new Date();
+            cargoFechaCreacion = (new Timestamp(date.getTime()));
         }
     }
 }
