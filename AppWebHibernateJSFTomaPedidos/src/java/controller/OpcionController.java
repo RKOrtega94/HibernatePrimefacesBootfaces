@@ -27,6 +27,7 @@ public class OpcionController implements Serializable {
     private Opcion selected;
     private List<Opcion> opciones;
     private int nivel = 1;
+    private int opcionId;
     private String visibility = "none";
 
     public Opcion getOpcion() {
@@ -68,9 +69,15 @@ public class OpcionController implements Serializable {
     public void setVisibility(String visibility) {
         this.visibility = visibility;
     }
-    
-    
-    
+
+    public int getOpcionId() {
+        return opcionId;
+    }
+
+    public void setOpcionId(int opcionId) {
+        this.opcionId = opcionId;
+    }
+
     @PostConstruct
     public void init() {
         opcion = new Opcion();
@@ -85,24 +92,32 @@ public class OpcionController implements Serializable {
         opciones = opcionDAO.findAll();
     }
 
-    public void onChangeNivel(){
-        if(nivel==1){
+    public void onChangeNivel() {
+        if (nivel == 1) {
             visibility = "none";
-        } else if (nivel == 2){
+        } else if (nivel == 2) {
             visibility = "compact";
         }
     }
-    
+
     public void save() {
         OpcionDAO opcionDAO = new OpcionDAO();
-        if (opcionDAO.save(opcion)) {
-            FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Dato registrado correctamente!");
-            FacesContext.getCurrentInstance().addMessage(null, massage);
-            opciones = opcionDAO.findAll();
+        selected = opcionDAO.findById(opcionId);
+        if (selected != null) {
+            opcion.setOpcion(selected);
+            if (opcionDAO.save(opcion)) {
+                FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Dato registrado correctamente!");
+                FacesContext.getCurrentInstance().addMessage(null, massage);
+                opciones = opcionDAO.findAll();
+            } else {
+                FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error!");
+                FacesContext.getCurrentInstance().addMessage(null, massage);
+            }
         } else {
             FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error!");
             FacesContext.getCurrentInstance().addMessage(null, massage);
         }
+        selected = null;
     }
 
     public void update() {
