@@ -18,6 +18,7 @@
             <h:form id="OpcionEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2"
+                                 styleClass="ui-noborder"
                                  rendered="#{opcionController.selected != null}">
                         <p:outputLabel for="opcionDescripcion"
                                        value="Descripción"/>
@@ -30,7 +31,7 @@
                             <p:inputText id="opcionLink"
                                          value="#{opcionController.selected.opcionLink}"/>
                         </c:if>
-                        
+
                         <p:outputLabel for="perfilEstado"
                                        value="Estado"/>
                         <p:selectOneMenu id="perfilEstado"
@@ -42,14 +43,16 @@
                                           itemValue="I"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <b:commandButton id="btnSaveEdit"
-                                     value="Guardar"
-                                     look="success"
-                                     actionListener="#{opcionController.update()}">
-                        <p:confirm header="Confirmación"
-                                   message="Guardar los cambios?"
-                                   icon="ui-icon-alert"/>
-                    </b:commandButton>
+                    <center>
+                        <b:commandButton id="btnSaveEdit"
+                                         value="Guardar"
+                                         look="success"
+                                         actionListener="#{opcionController.update()}">
+                            <p:confirm header="Confirmación"
+                                       message="Guardar los cambios?"
+                                       icon="ui-icon-alert"/>
+                        </b:commandButton>
+                    </center>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

@@ -17,6 +17,7 @@
             <h:form id="PerfilEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2"
+                                 styleClass="ui-noborder"
                                  rendered="#{perfilController.selected != null}">
                         <p:outputLabel for="perfilNombre"
                                        value="Perfil"/>
@@ -34,14 +35,16 @@
                                           itemValue="I"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <b:commandButton id="btnSaveEdit"
-                                     value="Guardar"
-                                     look="success"
-                                     actionListener="#{perfilController.update()}">
-                        <p:confirm header="Confirmación"
-                                   message="Guardar los cambios?"
-                                   icon="ui-icon-alert"/>
-                    </b:commandButton>
+                    <center>
+                        <b:commandButton id="btnSaveEdit"
+                                         value="Guardar"
+                                         look="success"
+                                         actionListener="#{perfilController.update()}">
+                            <p:confirm header="Confirmación"
+                                       message="Guardar los cambios?"
+                                       icon="ui-icon-alert"/>
+                        </b:commandButton>
+                    </center>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

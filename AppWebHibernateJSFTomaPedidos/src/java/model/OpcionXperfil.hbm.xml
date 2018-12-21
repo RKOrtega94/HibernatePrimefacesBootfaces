@@ -6,7 +6,7 @@
     <class name="model.OpcionXperfil" table="opcionXPerfil" schema="dbo" catalog="restoitsco" optimistic-lock="version">
         <id name="opcionPerfilId" type="int">
             <column name="opcionPerfilId" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <many-to-one name="opcion" class="model.Opcion" fetch="select">
             <column name="opcionId" not-null="true" />

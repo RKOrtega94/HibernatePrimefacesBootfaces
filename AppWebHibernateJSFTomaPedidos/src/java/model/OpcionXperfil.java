@@ -1,6 +1,7 @@
 package model;
 // Generated 11-dic-2018 10:09:37 by Hibernate Tools 4.3.1
 
+import java.sql.Timestamp;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -109,4 +111,14 @@ public class OpcionXperfil implements java.io.Serializable {
         this.opcionPerfilEstado = opcionPerfilEstado;
     }
 
+    @PrePersist
+    public void prepersist(){
+        if(opcionPerfilEstado == null){
+            opcionPerfilEstado = 'A';
+        }
+        if (opcionPerfilFechaCreacion == null){
+            Date date = new Date();
+            opcionPerfilFechaCreacion = (new Timestamp(date.getTime()));
+        }
+    }
 }

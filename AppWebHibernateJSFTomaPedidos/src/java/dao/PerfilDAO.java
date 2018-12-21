@@ -88,4 +88,23 @@ public class PerfilDAO {
         }
         return result;
     }
+    
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public Perfil findById(int id){
+        Perfil perfil = null;
+        Session session = sessionFactory.openSession();
+        try {
+            session.beginTransaction();
+            Query query = session.createQuery("select p from Perfil p where p.perfilId = :id");
+            query.setParameter("id", id);
+            perfil = (Perfil) query.uniqueResult();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            perfil = null;
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return perfil;
+    }
 }

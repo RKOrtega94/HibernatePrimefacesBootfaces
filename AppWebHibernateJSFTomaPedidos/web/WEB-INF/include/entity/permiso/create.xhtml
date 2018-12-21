@@ -8,81 +8,56 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition>
-        <h:form id="OpcionCreateForm">
+        <h:form id="PermisoCreateForm">
             <p:dialog widgetVar="create"
                       header="Registrar"
                       showEffect="fade"
                       hideEffect="fade"
                       resizable="false">
-                <p:panelGrid id="EditPanel">
+                <p:panelGrid id="EditPanel"
+                             styleClass="ui-noborder">
                     <p:row>
                         <p:column>
-                            <p:outputLabel for="txtNivel"
-                                           value="Nivel"/>
+                            <p:outputLabel for="txtPerfil"
+                                           value="Perfil"/>
                         </p:column>
                         <p:column>
-                            <p:selectOneMenu id="txtNivel"
-                                             value="#{opcionController.nivel}"
+                            <p:selectOneMenu id="txtPerfil"
+                                             value="#{permisosController.perfilId}"
                                              required="true"
                                              requiredMessage="Campo obligatorio"
+                                             effect="fade"
+                                             filter="true"
+                                             filterMatchMode="contains"
                                              style="width: 100%">
-                                <p:ajax listener="#{opcionController.onChangeNivel()}"
-                                        update="EditPanel"/>
-                                <f:selectItem itemLabel="Menu"
-                                              itemValue="1"/>
-                                <f:selectItem itemLabel="Submenu"
-                                              itemValue="2"/>
+                                <f:selectItem itemLabel="Seleccionar perfil"/>
+                                <f:selectItems value="#{perfilController.perfiles}"
+                                               var="item"
+                                               itemLabel="#{item.perfilDescripcion}"
+                                               itemValue="#{item.perfilId}"/>
                             </p:selectOneMenu>
                         </p:column>
                     </p:row>
-                    <c:if test="#{opcionController.nivel==2}">
-                        <p:row>
-                            <p:column>
-                                <p:outputLabel for="txtSubmenu"
-                                               value="Submenu"/>
-                            </p:column>
-                            <p:column>
-                                <p:selectOneMenu id="txtSubmenu"
-                                                 value="#{opcionController.opcionId}"
-                                                 style="width: 100%">
-                                    <f:selectItems value="#{opcionController.opciones}"
-                                                   var="item"
-                                                   itemLabel="#{item.opcionDescripcion}"
-                                                   itemValue="#{item.opcionId}"/>
-                                </p:selectOneMenu>
-                            </p:column>
-                        </p:row>
-                    </c:if>
                     <p:row>
                         <p:column>
-                            <p:outputLabel for="txtDescripcion"
-                                           value="Descripción"/>
+                            <p:outputLabel for="txtOpcion"
+                                           value="Opcion"/>
                         </p:column>
                         <p:column>
-                            <p:inputText id="txtDescripcion"
-                                         value="#{opcionController.opcion.opcionDescripcion}"
-                                         required="true"
-                                         requiredMessage="Descripción obligatoria"/>
-                        </p:column>
-                    </p:row>
-                    <p:row>
-                        <p:column>
-                            <p:outputLabel for="txtLink"
-                                           value="Link"/>
-                        </p:column>
-                        <p:column>
-                            <p:inputText id="txtLink"
-                                         value="#{opcionController.opcion.opcionLink}"/>
-                        </p:column>
-                    </p:row>
-                    <p:row>
-                        <p:column>
-                            <p:outputLabel for="txtIcon"
-                                           value="Ícono"/>
-                        </p:column>
-                        <p:column>
-                            <p:inputText id="txtIcon"
-                                         value="#{opcionController.opcion.opcionIcon}"/>
+                            <p:selectOneMenu id="txtOpcion"
+                                             value="#{permisosController.opcionId}"
+                                             required="true"
+                                             requiredMessage="Campo obligatorio"
+                                             effect="fade"
+                                             filter="true"
+                                             filterMatchMode="contains"
+                                             style="width: 100%">
+                                <f:selectItem itemLabel="Seleccionar opcion"/>
+                                <f:selectItems value="#{opcionController.opciones}"
+                                               var="item"
+                                               itemLabel="#{item.opcionDescripcion} #{item.opcionLink}"
+                                               itemValue="#{item.opcionId}"/>
+                            </p:selectOneMenu>
                         </p:column>
                     </p:row>
                     <p:row>
@@ -90,7 +65,7 @@
                             <center>
                                 <b:commandButton id="btnSuccess"
                                                  value="Guardar"
-                                                 actionListener="#{opcionController.save()}"
+                                                 actionListener="#{permisosController.save()}"
                                                  look="success"
                                                  update=":listForm:dataList, :growl"/>
                             </center>

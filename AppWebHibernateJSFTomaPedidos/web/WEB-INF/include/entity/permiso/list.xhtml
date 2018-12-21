@@ -24,17 +24,17 @@
                             icon="ui-icon-trash"/>
             </p:contextMenu>
             <p:dataTable id="dataList"
-                         value="#{opcionController.opciones}"
+                         value="#{permisosController.xperfiles}"
                          var="item"
                          lazy="false"
-                         rowKey="#{item.opcionId}"
+                         rowKey="#{item.opcionPerfilId}"
                          paginator="true"
                          rows="10"
                          rowsPerPageTemplate="10,20,30,40,50"
                          selectionMode="single"
-                         selection="#{opcionController.selected}">
+                         selection="#{permisosController.selected}">
                 <f:facet name="header">
-                    Opcion
+                    Permisos
                 </f:facet>
 
                 <p:ajax event="rowSelect"
@@ -44,22 +44,31 @@
                 <p:ajax event="contextMenu"
                         update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
                 <p:ajax event="rowDblselect"
-                        onsuccess="document.getElementById('opcionListForm:viewButton').click();"/>
+                        onsuccess="document.getElementById('ListForm:viewButton').click();"/>
 
-                <p:column sortBy="#{item.opcionDescripcion}"
-                          filterBy="#{item.opcionDescripcion}"
+                <p:column sortBy="#{item.perfil.perfilDescripcion}"
+                          filterBy="#{item.perfil.perfilDescripcion}"
                           filterMatchMode="contains">
                     <f:facet name="header">
-                        <h:outputText value="Descripción"/>
+                        <h:outputText value="Opcion"/>
                     </f:facet>
-                    <h:outputText value="#{item.opcionDescripcion} #{item.opcionLink}"/>
+                    <h:outputText value="#{item.perfil.perfilDescripcion}"/>
                 </p:column>
-                <p:column sortBy="#{item.opcionEstado}"
-                          filterBy="#{item.opcionEstado==('A')?'Activo':'Inactivo'}">
+
+                <p:column sortBy="#{item.opcion.opcionDescripcion}"
+                          filterBy="#{item.opcion.opcionDescripcion}"
+                          filterMatchMode="contains">
+                    <f:facet name="header">
+                        <h:outputText value="Opcion"/>
+                    </f:facet>
+                    <h:outputText value="#{item.opcion.opcionDescripcion} #{item.opcion.opcionLink}"/>
+                </p:column>
+                <p:column sortBy="#{item.opcionPerfilEstado}"
+                          filterBy="#{item.opcionPerfilEstado==('A')?'Activo':'Inactivo'}">
                     <f:facet name="header">
                         <h:outputText value="Estado"/>
                     </f:facet>
-                    <h:outputText value="#{item.opcionEstado==('A')?'Activo':'Inactivo'}"/>
+                    <h:outputText value="#{item.opcionPerfilEstado==('A')?'Activo':'Inactivo'}"/>
                 </p:column>
             </p:dataTable>
             <p:commandButton id="createButton"
@@ -71,20 +80,20 @@
                              icon="ui-icon-search"
                              style="visibility: hidden"
                              value="Ver"
-                             update=":OpcionViewForm"
-                             oncomplete="PF('opcionViewDialog').show()"/>
+                             update=":PermisoViewForm"
+                             oncomplete="PF('permisoViewDialog').show()"/>
             <p:commandButton id="editButton"
                              style="visibility: hidden;"
                              icon="ui-icon-pencil"
                              value="Editar"
-                             update="OpcionEditForm"
-                             oncomplete="PF('OpcionEditDialog').show()"/>
+                             update="PermisoEditForm"
+                             oncomplete="PF('PermisoEditDialog').show()"/>
             <p:commandButton id="deleteButton"
                              style="visibility: hidden"
                              icon="ui-icon-trash"
                              value="Eliminar"
                              update=":growl, dataList"
-                             actionListener="#{opcionController.delete()}">
+                             actionListener="#{permisosController.delete()}">
                 <p:confirm header="Confirmación"
                            message="Seguro quiere eliminar el registro?"
                            icon="ui-icon-alert"/>

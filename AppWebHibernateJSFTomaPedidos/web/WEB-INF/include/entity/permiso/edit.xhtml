@@ -8,33 +8,58 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:composition>
-        <p:dialog id="OpcionEditDialog"
-                  widgetVar="OpcionEditDialog"
+        <p:dialog id="PermisoEditDialog"
+                  widgetVar="PermisoEditDialog"
                   modal="true"
                   resizable="false"
                   appendTo="@(body)"
-                  header="Editar opcion"
+                  header="Editar permiso"
                   closeOnEscape="true">
-            <h:form id="OpcionEditForm">
+            <h:form id="PermisoEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2"
-                                 rendered="#{opcionController.selected != null}">
-                        <p:outputLabel for="opcionDescripcion"
-                                       value="Descripción"/>
-                        <p:inputText id="opcionDescripcion"
-                                     value="#{opcionController.selected.opcionDescripcion}"/>
+                                 styleClass="ui-noborder"
+                                 rendered="#{permisosController.selected != null}">
+                        <p:outputLabel for="permisoPerfil"
+                                       value="Perfil"/>
+                        <p:selectOneMenu id="permisoPerfil"
+                                         value="#{permisosController.perfilId}"
+                                         required="true"
+                                         requiredMessage="Campo obligatorio"
+                                         effect="fade"
+                                         filter="true"
+                                         filterMatchMode="contains"
+                                         style="width: 100%">
+                            <f:selectItem itemLabel="#{permisosController.selected.perfil.perfilDescripcion}"
+                                          itemValue="#{permisosController.selected.perfil.perfilId}"/>
+                            <f:selectItems value="#{perfilController.perfiles}"
+                                           var="item"
+                                           itemLabel="#{item.perfilDescripcion}"
+                                           itemValue="#{item.perfilId}"/>
+                        </p:selectOneMenu>
 
-                        <c:if test="#{opcionController.selected.opcionLink!=null}">
-                            <p:outputLabel for="opcionLink"
-                                           value="Enlace"/>
-                            <p:inputText id="opcionLink"
-                                         value="#{opcionController.selected.opcionLink}"/>
-                        </c:if>
-                        
+                        <p:outputLabel for="opcionPerfil"
+                                       value="Opción"/>
+                        <p:selectOneMenu id="opcionPerfil"
+                                         value="#{permisosController.opcionId}"
+                                         required="true"
+                                         requiredMessage="Campo obligatorio"
+                                         effect="fade"
+                                         filter="true"
+                                         filterMatchMode="contains"
+                                         style="width: 100%">
+                            <f:selectItem itemLabel="#{permisosController.selected.opcion.opcionDescripcion} #{permisosController.selected.opcion.opcionLink}"
+                                          itemValue="#{permisosController.selected.opcion.opcionId}"/>
+                            <f:selectItems value="#{opcionController.opciones}"
+                                           var="item"
+                                           itemLabel="#{item.opcionDescripcion} #{item.opcionLink}"
+                                           itemValue="#{item.opcionId}"/>
+                        </p:selectOneMenu>
+
                         <p:outputLabel for="perfilEstado"
                                        value="Estado"/>
                         <p:selectOneMenu id="perfilEstado"
-                                         value="#{opcionController.selected.opcionEstado}"
+                                         value="#{permisosController.selected.opcionPerfilEstado}"
                                          style="width: 100%">
                             <f:selectItem itemLabel="Activo"
                                           itemValue="A"/>
@@ -42,14 +67,16 @@
                                           itemValue="I"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <b:commandButton id="btnSaveEdit"
-                                     value="Guardar"
-                                     look="success"
-                                     actionListener="#{opcionController.update()}">
-                        <p:confirm header="Confirmación"
-                                   message="Guardar los cambios?"
-                                   icon="ui-icon-alert"/>
-                    </b:commandButton>
+                    <center>
+                        <b:commandButton id="btnSaveEdit"
+                                         value="Guardar"
+                                         look="success"
+                                         actionListener="#{permisosController.update()}">
+                            <p:confirm header="Confirmación"
+                                       message="Guardar los cambios?"
+                                       icon="ui-icon-alert"/>
+                        </b:commandButton>
+                    </center>
                 </h:panelGroup>
             </h:form>
         </p:dialog>

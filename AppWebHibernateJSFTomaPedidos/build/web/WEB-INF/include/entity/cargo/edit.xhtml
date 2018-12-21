@@ -17,6 +17,7 @@
             <h:form id="CargoEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2"
+                                 styleClass="ui-noborder"
                                  rendered="#{cargoController.selected != null}">
                         <p:outputLabel for="cargoDescripcion"
                                        value="Cargo"/>
@@ -34,14 +35,16 @@
                                           itemValue="I"/>
                         </p:selectOneMenu>
                     </p:panelGrid>
-                    <b:commandButton id="btnSaveEdit"
-                                     value="Guardar"
-                                     look="success"
-                                     actionListener="#{cargoController.update()}">
-                        <p:confirm header="Confirmación"
-                                   message="Guardar los cambios?"
-                                   icon="ui-icon-alert"/>
-                    </b:commandButton>
+                    <center>
+                        <b:commandButton id="btnSaveEdit"
+                                         value="Guardar"
+                                         look="success"
+                                         actionListener="#{cargoController.update()}">
+                            <p:confirm header="Confirmación"
+                                       message="Guardar los cambios?"
+                                       icon="ui-icon-alert"/>
+                        </b:commandButton>
+                    </center>
                 </h:panelGroup>
             </h:form>
         </p:dialog>
