@@ -6,7 +6,7 @@
     <class name="model.Producto" table="producto" schema="dbo" catalog="restoitsco" optimistic-lock="version">
         <id name="productoId" type="int">
             <column name="productoId" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <property name="productoNombre" type="string">
             <column name="productoNombre" length="150" />
