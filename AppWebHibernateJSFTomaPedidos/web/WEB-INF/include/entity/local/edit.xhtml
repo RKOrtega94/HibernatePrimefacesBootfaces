@@ -8,35 +8,53 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:composition>
-        <p:dialog id="ProductoEditDialog"
-                  widgetVar="ProductoEditDialog"
+        <p:dialog id="LocalEditDialog"
+                  widgetVar="LocalEditDialog"
                   modal="true"
                   resizable="false"
                   appendTo="@(body)"
-                  header="Editar producto"
+                  header="Editar local"
                   closeOnEscape="true">
-            <h:form id="ProductoEditForm">
+            <h:form id="LocalEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2"
                                  styleClass="ui-noborder"
-                                 rendered="#{productoController.selected != null}">
+                                 rendered="#{localController.selected != null}">
 
-                        <p:outputLabel for="productoNombre"
+                        <p:outputLabel for="localEmpresa"
                                        value="Nombre"/>
-                        <p:inputText id="productoNombre"
-                                     value="#{productoController.selected.productoNombre}"
+                        <p:selectOneMenu id="localEmpresa"
+                                         value="#{localController.empresaId}">
+                            <f:selectItem itemLabel="#{localController.selected.localNombre}"
+                                          itemValue="#{localController.selected.localId}"/>
+                            <f:selectItems value="#{empresaController.empresas}"
+                                           var="item"
+                                           itemLabel="#{item.empresaRazonSocial}"
+                                           itemValue="#{item.empresaId}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="localNombre"
+                                       value="Nombre"/>
+                        <p:inputText id="localNombre"
+                                     value="#{localController.selected.localNombre}"
                                      required="true"/>
 
-                        <p:outputLabel for="productoDetalle"
-                                       value="Detalle"/>
-                        <p:inputText id="productoDetalle"
-                                     value="#{productoController.selected.productoDetalle}"
+                        <p:outputLabel for="localDireccion"
+                                       value="Dirección"/>
+                        <p:inputText id="localDireccion"
+                                     value="#{localController.selected.localDireccion}"
                                      required="true"/>
-
-                        <p:outputLabel for="productoEstado"
+                        
+                        <p:outputLabel for="localTelefono"
+                                       value="Teléfono"/>
+                        <p:inputText id="localTelefono"
+                                     value="#{localController.selected.localTelefono}"
+                                     required="true"/>
+                        
+                        <p:outputLabel for="localEstado"
                                        value="Estado"/>
-                        <p:selectOneMenu id="productoEstado"
-                                         value="#{productoController.selected.productoEstado}"
+                        <p:selectOneMenu id="localEstado"
+                                         value="#{localController.selected.localEstado}"
                                          style="width: 100%">
                             <f:selectItem itemLabel="Activo"
                                           itemValue="A"/>

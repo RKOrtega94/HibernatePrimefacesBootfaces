@@ -88,4 +88,23 @@ public class EmpresaDAO {
         }
         return result;
     }
+    
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public Empresa findById(int id){
+        Empresa empresa = null;
+        Session session = sessionFactory.openSession();
+        try {
+            session.beginTransaction();
+            Query query = session.createQuery("select e from Empresa e where e.empresaId = :id");
+            query.setParameter("id", id);
+            empresa = (Empresa) query.uniqueResult();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            empresa = null;
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return empresa;
+    }
 }

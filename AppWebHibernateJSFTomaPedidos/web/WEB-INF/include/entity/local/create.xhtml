@@ -8,7 +8,7 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition>
-        <h:form id="ProductoCreateForm">
+        <h:form id="LocalCreateForm">
             <p:dialog widgetVar="create"
                       header="Registrar"
                       showEffect="fade"
@@ -16,28 +16,57 @@
                       resizable="false">
                 <p:panelGrid id="EditPanel"
                              styleClass="ui-noborder">
+                    
                     <p:row>
                         <p:column>
-                            <p:outputLabel for="txtProducto"
-                                           value="Producto"/>
+                            <p:outputLabel for="txtEmpresa"
+                                           value="Nombre"/>
                         </p:column>
                         <p:column>
-                            <p:inputText id="txtProducto"
-                                         value="#{productoController.producto.productoNombre}"
-                                         required="true"
-                                         requiredMessage="El nombre del producto es requerido"/>
+                            <p:selectOneMenu id="txtEmpresa"
+                                             value="#{localController.empresaId}">
+                                <f:selectItems value="#{empresaController.empresas}"
+                                               var="item"
+                                               itemLabel="#{item.empresaRazonSocial}"
+                                               itemValue="#{item.empresaId}"/>
+                            </p:selectOneMenu>
                         </p:column>
                     </p:row>
                     <p:row>
                         <p:column>
-                            <p:outputLabel for="txtDetalle"
-                                           value="Detalle"/>
+                            <p:outputLabel for="txtNombre"
+                                           value="Nombre"/>
                         </p:column>
                         <p:column>
-                            <p:inputText id="txtDetalle"
-                                         value="#{productoController.producto.productoDetalle}"
+                            <p:inputText id="txtNombre"
+                                         value="#{localController.local.localNombre}"
                                          required="true"
-                                         requiredMessage="El detalle del producto es requerido"/>
+                                         requiredMessage="El nombre del local es requerido"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="txtDireccion"
+                                           value="Dirección"/>
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="txtDireccion"
+                                         value="#{localController.local.localDireccion}"
+                                         required="true"
+                                         requiredMessage="La dirección del local es requerido"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="txtTelefono"
+                                           value="Teléfono"/>
+                        </p:column>
+                        <p:column>
+                            <p:inputMask id="txtTelefono"
+                                         mask="(09)999-9999"
+                                         value="#{localController.local.localTelefono}"
+                                         required="true"
+                                         requiredMessage="El teléfono del local es requerido"/>
                         </p:column>
                     </p:row>
                     <p:row>
@@ -45,7 +74,7 @@
                             <center>
                                 <b:commandButton id="btnSuccess"
                                                  value="Guardar"
-                                                 actionListener="#{productoController.sabe()}"
+                                                 actionListener="#{localController.save()}"
                                                  look="success"
                                                  update=":listForm:dataList, :growl"/>
                             </center>

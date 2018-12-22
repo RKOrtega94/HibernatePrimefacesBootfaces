@@ -24,17 +24,17 @@
                             icon="ui-icon-trash"/>
             </p:contextMenu>
             <p:dataTable id="dataList"
-                         value="#{productoController.productos}"
+                         value="#{localController.locales}"
                          var="item"
                          lazy="false"
-                         rowKey="#{item.productoId}"
+                         rowKey="#{item.localId}"
                          paginator="true"
                          rows="10"
                          rowsPerPageTemplate="10,20,30,40,50"
                          selectionMode="single"
-                         selection="#{productoController.selected}">
+                         selection="#{localController.selected}">
                 <f:facet name="header">
-                    Productos
+                    Locales
                 </f:facet>
 
                 <p:ajax event="rowSelect"
@@ -46,30 +46,39 @@
                 <p:ajax event="rowDblselect"
                         onsuccess="document.getElementById('ListForm:viewButton').click();"/>
 
-                <p:column sortBy="#{item.productoNombre}"
-                          filterBy="#{item.productoNombre}"
+                <p:column sortBy="#{item.localNombre}"
+                          filterBy="#{item.localNombre}"
                           filterMatchMode="contains">
                     <f:facet name="header">
-                        <h:outputText value="Producto"/>
+                        <h:outputText value="Local"/>
                     </f:facet>
-                    <h:outputText value="#{item.productoNombre}"/>
+                    <h:outputText value="#{item.localNombre}"/>
                 </p:column>
 
-                <p:column sortBy="#{item.productoDetalle}"
-                          filterBy="#{item.productoDetalle}"
+                <p:column sortBy="#{item.localDireccion}"
+                          filterBy="#{item.localDireccion}"
                           filterMatchMode="contains">
                     <f:facet name="header">
-                        <h:outputText value="Detalle"/>
+                        <h:outputText value="Dirección"/>
                     </f:facet>
-                    <h:outputText value="#{item.productoDetalle}"/>
+                    <h:outputText value="#{item.localDireccion}"/>
+                </p:column>
+                
+                <p:column sortBy="#{item.localTelefono}"
+                          filterBy="#{item.localTelefono}"
+                          filterMatchMode="contains">
+                    <f:facet name="header">
+                        <h:outputText value="Teléfono"/>
+                    </f:facet>
+                    <h:outputText value="#{item.localTelefono}"/>
                 </p:column>
 
-                <p:column sortBy="#{item.productoEstado}"
-                          filterBy="#{item.productoEstado==('A')?'Activo':'Inactivo'}">
+                <p:column sortBy="#{item.localEstado}"
+                          filterBy="#{item.localEstado==('A')?'Activo':'Inactivo'}">
                     <f:facet name="header">
                         <h:outputText value="Estado"/>
                     </f:facet>
-                    <h:outputText value="#{item.productoEstado==('A')?'Activo':'Inactivo'}"/>
+                    <h:outputText value="#{item.localEstado==('A')?'Activo':'Inactivo'}"/>
                 </p:column>
             </p:dataTable>
             <p:commandButton id="createButton"
@@ -81,20 +90,20 @@
                              icon="ui-icon-search"
                              style="visibility: hidden"
                              value="Ver"
-                             update=":ProductoViewForm"
-                             oncomplete="PF('productoViewDialog').show()"/>
+                             update=":LocalViewForm"
+                             oncomplete="PF('localViewDialog').show()"/>
             <p:commandButton id="editButton"
                              style="visibility: hidden;"
                              icon="ui-icon-pencil"
                              value="Editar"
-                             update="ProductoEditForm"
-                             oncomplete="PF('ProductoEditDialog').show()"/>
+                             update="LocalEditForm"
+                             oncomplete="PF('LocalEditDialog').show()"/>
             <p:commandButton id="deleteButton"
                              style="visibility: hidden"
                              icon="ui-icon-trash"
                              value="Eliminar"
                              update=":growl, dataList"
-                             actionListener="#{productoController.delete()}">
+                             actionListener="#{localController.delete()}">
                 <p:confirm header="Confirmación"
                            message="Seguro quiere eliminar el registro?"
                            icon="ui-icon-alert"/>

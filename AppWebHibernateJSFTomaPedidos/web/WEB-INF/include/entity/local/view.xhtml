@@ -6,33 +6,39 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:composition>
-        <p:dialog id="ProductoViewDialog"
-                  widgetVar="productoViewDialog"
+        <p:dialog id="LocalViewDialog"
+                  widgetVar="localViewDialog"
                   modal="true"
                   resizable="false"
                   appendTo="@(body)"
-                  header="Producto"
+                  header="Local"
                   closeOnEscape="true">
-            <h:form id="ProductoViewForm">
+            <h:form id="LocalViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2"
                                  styleClass="ui-noborder"
-                                 rendered="#{productoController.selected != null}">
+                                 rendered="#{localController.selected != null}">
 
-                        <h:outputText value="Nombre"/>
-                        <h:outputText value="#{productoController.selected.productoNombre}"/>
+                        <h:outputText value="Empresa"/>
+                        <h:outputText value="#{localController.selected.empresa.empresaRazonSocial}"/>
 
-                        <h:outputText value="Detalle"/>
-                        <h:outputText value="#{productoController.selected.productoDetalle}"/>
-
+                        <h:outputText value="Local"/>
+                        <h:outputText value="#{localController.selected.localNombre}"/>
+                        
+                        <h:outputText value="Dirección"/>
+                        <h:outputText value="#{localController.selected.localDireccion}"/>
+                        
+                        <h:outputText value="Teléfono"/>
+                        <h:outputText value="#{localController.selected.localTelefono}"/>
+                        
                         <h:outputText value="Fecha de registro"/>
-                        <h:outputText value="#{productoController.selected.productoFechaCreacion}"/>
-
-                        <h:outputText value="Fecha de registro"/>
-                        <h:outputText value="#{productoController.selected.productoFechaModificacion}"/>
+                        <h:outputText value="#{localController.selected.localFechaCreacion}"/>
+                        
+                        <h:outputText value="Última modificación"/>
+                        <h:outputText value="#{localController.selected.localFechaModificacion}"/>
 
                         <h:outputText value="Estado"/>
-                        <h:outputText value="#{permisosController.selected.opcionPerfilEstado=='A'?'Activo':'Inactivo'}"/>
+                        <h:outputText value="#{localController.selected.localEstado=='A'?'Activo':'Inactivo'}"/>
 
                     </p:panelGrid>
                 </h:panelGroup>
