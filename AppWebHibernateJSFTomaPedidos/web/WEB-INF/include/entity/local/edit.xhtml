@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition>
+        <p:dialog id="ProductoEditDialog"
+                  widgetVar="ProductoEditDialog"
+                  modal="true"
+                  resizable="false"
+                  appendTo="@(body)"
+                  header="Editar producto"
+                  closeOnEscape="true">
+            <h:form id="ProductoEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2"
+                                 styleClass="ui-noborder"
+                                 rendered="#{productoController.selected != null}">
+
+                        <p:outputLabel for="productoNombre"
+                                       value="Nombre"/>
+                        <p:inputText id="productoNombre"
+                                     value="#{productoController.selected.productoNombre}"
+                                     required="true"/>
+
+                        <p:outputLabel for="productoDetalle"
+                                       value="Detalle"/>
+                        <p:inputText id="productoDetalle"
+                                     value="#{productoController.selected.productoDetalle}"
+                                     required="true"/>
+
+                        <p:outputLabel for="productoEstado"
+                                       value="Estado"/>
+                        <p:selectOneMenu id="productoEstado"
+                                         value="#{productoController.selected.productoEstado}"
+                                         style="width: 100%">
+                            <f:selectItem itemLabel="Activo"
+                                          itemValue="A"/>
+                            <f:selectItem itemLabel="Inactivo"
+                                          itemValue="I"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <center>
+                        <b:commandButton id="btnSaveEdit"
+                                         value="Guardar"
+                                         look="success"
+                                         actionListener="#{productoController.update()}">
+                            <p:confirm header="Confirmación"
+                                       message="Guardar los cambios?"
+                                       icon="ui-icon-alert"/>
+                        </b:commandButton>
+                    </center>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+    </ui:composition>
+</html>

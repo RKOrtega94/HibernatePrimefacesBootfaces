@@ -6,7 +6,7 @@
     <class name="model.Local" table="local" schema="dbo" catalog="restoitsco" optimistic-lock="version">
         <id name="localId" type="int">
             <column name="localId" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <many-to-one name="empresa" class="model.Empresa" fetch="select">
             <column name="empresaId" not-null="true" />
