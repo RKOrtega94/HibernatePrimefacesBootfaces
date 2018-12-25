@@ -5,54 +5,54 @@
  */
 package controller;
 
+import dao.ClienteDAO;
 import dao.EmpresaDAO;
-import dao.LocalDAO;
-import javax.inject.Named;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.inject.Named;
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import model.Cliente;
 import model.Empresa;
-import model.Local;
 
 /**
  *
  * @author RKOrtega
  */
-@Named(value = "localController")
+@Named(value = "clienteController")
 @ApplicationScoped
-public class LocalController implements Serializable {
+public class ClienteController implements Serializable {
 
-    private Local local;
-    private Local selected;
-    private List<Local> locales;
+    private Cliente cliente;
+    private Cliente selected;
+    private List<Cliente> clientes;
     private Empresa empresa;
     private int empresaId;
 
-    public Local getLocal() {
-        return local;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setLocal(Local local) {
-        this.local = local;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
-    public Local getSelected() {
+    public Cliente getSelected() {
         return selected;
     }
 
-    public void setSelected(Local selected) {
+    public void setSelected(Cliente selected) {
         this.selected = selected;
     }
 
-    public List<Local> getLocales() {
-        return locales;
+    public List<Cliente> getClientes() {
+        return clientes;
     }
 
-    public void setLocales(List<Local> locales) {
-        this.locales = locales;
+    public void setClientes(List<Cliente> clientes) {
+        this.clientes = clientes;
     }
 
     public Empresa getEmpresa() {
@@ -73,67 +73,76 @@ public class LocalController implements Serializable {
 
     @PostConstruct
     public void init() {
-        local = new Local();
-        selected = new Local();
+        cliente = new Cliente();
+        selected = new Cliente();
+        empresa = new Empresa();
     }
 
     /**
-     * Creates a new instance of LocalController
+     * Creates a new instance of ClienteController
      */
-    public LocalController() {
-        LocalDAO localDAO = new LocalDAO();
-        locales = localDAO.findAll();
+    public ClienteController() {
+        ClienteDAO clienteDAO = new ClienteDAO();
+        clientes = clienteDAO.findAll();
     }
 
     public void save() {
-        LocalDAO localDAO = new LocalDAO();
+        ClienteDAO clienteDAO = new ClienteDAO();
         EmpresaDAO empresaDAO = new EmpresaDAO();
         empresa = empresaDAO.findById(empresaId);
         if (empresa != null) {
-            local.setEmpresa(empresa);
-            if (localDAO.save(local)) {
+            cliente.setEmpresa(empresa);
+            if (clienteDAO.save(cliente)) {
                 FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Dato registrado correctamente!");
                 FacesContext.getCurrentInstance().addMessage(null, massage);
-                locales = localDAO.findAll();
+                clientes = clienteDAO.findAll();
+                cliente = null;
             } else {
                 FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error!");
                 FacesContext.getCurrentInstance().addMessage(null, massage);
+                cliente = null;
             }
         } else {
             FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error!", "Ha ocurrido un error!");
             FacesContext.getCurrentInstance().addMessage(null, massage);
+            cliente = null;
         }
     }
 
     public void update() {
-        LocalDAO localDAO = new LocalDAO();
+        ClienteDAO clienteDAO = new ClienteDAO();
         EmpresaDAO empresaDAO = new EmpresaDAO();
         empresa = empresaDAO.findById(empresaId);
         if (empresa != null) {
             selected.setEmpresa(empresa);
-            if (localDAO.update(selected)) {
+            if (clienteDAO.update(selected)) {
                 FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Dato modificado correctamente!");
                 FacesContext.getCurrentInstance().addMessage(null, massage);
-                locales = localDAO.findAll();
+                clientes = clienteDAO.findAll();
+                selected = null;
             } else {
                 FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error!");
                 FacesContext.getCurrentInstance().addMessage(null, massage);
+                selected = null;
             }
         } else {
-            FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error!", "Ha ocurrido un error!");
+            FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error!");
             FacesContext.getCurrentInstance().addMessage(null, massage);
+            selected = null;
         }
     }
 
     public void delete() {
-        LocalDAO localDAO = new LocalDAO();
-        if (localDAO.delete(selected)) {
+        ClienteDAO clienteDAO = new ClienteDAO();
+        if (clienteDAO.delete(selected)) {
             FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Dato eliminado correctamente!");
             FacesContext.getCurrentInstance().addMessage(null, massage);
-            locales = localDAO.findAll();
+            clientes = clienteDAO.findAll();
+            selected = null;
         } else {
-            FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error!\nNo se puede eliminar");
+            FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error!");
             FacesContext.getCurrentInstance().addMessage(null, massage);
+            selected = null;
         }
     }
 }

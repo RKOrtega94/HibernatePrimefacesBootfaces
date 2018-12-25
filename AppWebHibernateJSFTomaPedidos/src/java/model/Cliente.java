@@ -1,6 +1,7 @@
 package model;
 // Generated 11-dic-2018 10:09:37 by Hibernate Tools 4.3.1
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,15 +24,15 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "cliente",
-         schema = "dbo",
-         catalog = "restoitsco"
+        schema = "dbo",
+        catalog = "restoitsco"
 )
 public class Cliente implements java.io.Serializable {
 
     private int clienteId;
     private Empresa empresa;
     private String clienteNombre;
-    private String cienteDumeroDocumento;
+    private String cienteNumeroDocumento;
     private String clienteTelefono;
     private String clienteCorreo;
     private Date clienteFechaCreacion;
@@ -46,11 +48,11 @@ public class Cliente implements java.io.Serializable {
         this.empresa = empresa;
     }
 
-    public Cliente(int clienteId, Empresa empresa, String clienteNombre, String cienteDumeroDocumento, String clienteTelefono, String clienteCorreo, Date clienteFechaCreacion, Date clienteFechaModificacion, Character clienteEstado, Set cabecerafacturas) {
+    public Cliente(int clienteId, Empresa empresa, String clienteNombre, String cienteNumeroDocumento, String clienteTelefono, String clienteCorreo, Date clienteFechaCreacion, Date clienteFechaModificacion, Character clienteEstado, Set cabecerafacturas) {
         this.clienteId = clienteId;
         this.empresa = empresa;
         this.clienteNombre = clienteNombre;
-        this.cienteDumeroDocumento = cienteDumeroDocumento;
+        this.cienteNumeroDocumento = cienteNumeroDocumento;
         this.clienteTelefono = clienteTelefono;
         this.clienteCorreo = clienteCorreo;
         this.clienteFechaCreacion = clienteFechaCreacion;
@@ -89,13 +91,13 @@ public class Cliente implements java.io.Serializable {
         this.clienteNombre = clienteNombre;
     }
 
-    @Column(name = "cienteDumeroDocumento", length = 50)
-    public String getCienteDumeroDocumento() {
-        return this.cienteDumeroDocumento;
+    @Column(name = "cienteNumeroDocumento", length = 50)
+    public String getCienteNumeroDocumento() {
+        return this.cienteNumeroDocumento;
     }
 
-    public void setCienteDumeroDocumento(String cienteDumeroDocumento) {
-        this.cienteDumeroDocumento = cienteDumeroDocumento;
+    public void setCienteNumeroDocumento(String cienteNumeroDocumento) {
+        this.cienteNumeroDocumento = cienteNumeroDocumento;
     }
 
     @Column(name = "clienteTelefono", length = 50)
@@ -154,4 +156,17 @@ public class Cliente implements java.io.Serializable {
         this.cabecerafacturas = cabecerafacturas;
     }
 
+    @PrePersist
+    public void prepersist() {
+        if (clienteEstado == null) {
+            clienteEstado = 'A';
+        }
+        if (clienteFechaCreacion == null) {
+            Date date = new Date();
+            clienteFechaCreacion = (new Timestamp(date.getTime()));
+        }
+        if (clienteCorreo == null) {
+            clienteCorreo = "no_info@correo.com";
+        }
+    }
 }

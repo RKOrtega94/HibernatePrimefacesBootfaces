@@ -6,7 +6,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:b="http://bootsfaces.net/ui">
     <ui:composition>
-        <h:form id="PerfilCreateForm">
+        <h:form id="perfilCreateForm">
             <p:dialog widgetVar="create"
                       header="Registrar"
                       showEffect="fade"
@@ -15,11 +15,11 @@
                 <p:panelGrid styleClass="ui-noborder">
                     <p:row>
                         <p:column>
-                            <p:outputLabel for="txtPerfil"
-                                           value="Perfil"/>
+                            <p:outputLabel for="txtperfil"
+                                           value="perfil"/>
                         </p:column>
                         <p:column>
-                            <p:inputText id="txtPerfil"
+                            <p:inputText id="txtperfil"
                                          value="#{perfilController.perfil.perfilDescripcion}"
                                          required="true"
                                          requiredMessage="El nombre es obligatorio"/>

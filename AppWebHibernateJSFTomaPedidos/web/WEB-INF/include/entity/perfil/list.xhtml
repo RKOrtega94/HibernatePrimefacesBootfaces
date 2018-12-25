@@ -34,19 +34,19 @@
                          selectionMode="single"
                          selection="#{perfilController.selected}">
                 <f:facet name="header">
-                    Perfil
+                    perfil
                 </f:facet>
 
                 <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:dataConextMenu"/>
                 <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:dataConextMenu"/>
                 <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
-                <p:ajax event="rowDblselect" onsuccess="document.getElementById('PerfilListForm:viewButton').click();"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('perfilListForm:viewButton').click();"/>
 
                 <p:column sortBy="#{item.perfilDescripcion}"
                           filterBy="#{item.perfilDescripcion}"
                           filterMatchMode="contains">
                     <f:facet name="header">
-                        <h:outputText value="Razón social"/>
+                        <h:outputText value="Perfil"/>
                     </f:facet>
                     <h:outputText value="#{item.perfilDescripcion}"/>
                 </p:column>
@@ -67,14 +67,14 @@
                              icon="ui-icon-search"
                              style="visibility: hidden"
                              value="Ver"
-                             update=":PerfilViewForm"
+                             update=":perfilViewForm"
                              oncomplete="PF('perfilViewDialog').show()"/>
             <p:commandButton id="editButton"
                              style="visibility: hidden;"
                              icon="ui-icon-pencil"
                              value="Editar"
-                             update="PerfilEditForm"
-                             oncomplete="PF('PerfilEditDialog').show()"/>
+                             update="perfilEditForm"
+                             oncomplete="PF('perfilEditDialog').show()"/>
             <p:commandButton id="deleteButton"
                              style="visibility: hidden"
                              icon="ui-icon-trash"

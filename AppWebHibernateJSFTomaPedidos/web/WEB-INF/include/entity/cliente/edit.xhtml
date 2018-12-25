@@ -8,53 +8,58 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:composition>
-        <p:dialog id="LocalEditDialog"
-                  widgetVar="LocalEditDialog"
+        <p:dialog id="ClienteEditDialog"
+                  widgetVar="ClienteEditDialog"
                   modal="true"
                   resizable="false"
                   appendTo="@(body)"
-                  header="Editar local"
+                  header="Editar cliente"
                   closeOnEscape="true">
-            <h:form id="LocalEditForm">
+            <h:form id="ClienteEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2"
                                  styleClass="ui-noborder"
-                                 rendered="#{localController.selected != null}">
+                                 rendered="#{clienteController.selected != null}">
 
-                        <p:outputLabel for="localEmpresa"
+                        <p:outputLabel for="clienteEmpresa"
                                        value="Empresa"/>
-                        <p:selectOneMenu id="localEmpresa"
-                                         value="#{localController.empresaId}">
-                            <f:selectItem itemLabel="#{localController.selected.empresa.empresaRazonSocial}"
-                                          itemValue="#{localController.selected.empresa.empresaId}"/>
+                        <p:selectOneMenu id="clienteEmpresa"
+                                         value="#{clienteController.empresaId}">
+                            <f:selectItem itemLabel="#{clienteController.selected.empresa.empresaRazonSocial}"
+                                          itemValue="#{clienteController.selected.empresa.empresaId}"/>
                             <f:selectItems value="#{empresaController.empresas}"
                                            var="item"
                                            itemLabel="#{item.empresaRazonSocial}"
                                            itemValue="#{item.empresaId}"/>
                         </p:selectOneMenu>
 
-                        <p:outputLabel for="localNombre"
+                        <p:outputLabel for="clienteNombre"
                                        value="Nombre"/>
-                        <p:inputText id="localNombre"
-                                     value="#{localController.selected.localNombre}"
+                        <p:inputText id="clienteNombre"
+                                     value="#{clienteController.selected.clienteNombre}"
                                      required="true"/>
 
-                        <p:outputLabel for="localDireccion"
-                                       value="Dirección"/>
-                        <p:inputText id="localDireccion"
-                                     value="#{localController.selected.localDireccion}"
+                        <p:outputLabel for="clienteDocumento"
+                                       value="Cédula / RUC"/>
+                        <p:inputText id="clienteDocumento"
+                                     value="#{clienteController.selected.cienteNumeroDocumento}"
                                      required="true"/>
-                        
-                        <p:outputLabel for="localTelefono"
+
+                        <p:outputLabel for="clienteTelefono"
                                        value="Teléfono"/>
-                        <p:inputText id="localTelefono"
-                                     value="#{localController.selected.localTelefono}"
+                        <p:inputText id="clienteTelefono"
+                                     value="#{clienteController.selected.clienteTelefono}"
                                      required="true"/>
-                        
-                        <p:outputLabel for="localEstado"
+
+                        <p:outputLabel for="clienteCorreo"
+                                       value="Correo"/>
+                        <p:inputText id="clienteCorreo"
+                                     value="#{clienteController.selected.clienteCorreo}"/>
+
+                        <p:outputLabel for="clienteEstado"
                                        value="Estado"/>
-                        <p:selectOneMenu id="localEstado"
-                                         value="#{localController.selected.localEstado}"
+                        <p:selectOneMenu id="clienteEstado"
+                                         value="#{clienteController.selected.clienteEstado}"
                                          style="width: 100%">
                             <f:selectItem itemLabel="Activo"
                                           itemValue="A"/>
@@ -66,7 +71,7 @@
                         <b:commandButton id="btnSaveEdit"
                                          value="Guardar"
                                          look="success"
-                                         actionListener="#{localController.update()}">
+                                         actionListener="#{clienteController.update()}">
                             <p:confirm header="Confirmación"
                                        message="Guardar los cambios?"
                                        icon="ui-icon-alert"/>

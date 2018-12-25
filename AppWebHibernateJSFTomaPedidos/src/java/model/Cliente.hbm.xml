@@ -6,7 +6,7 @@
     <class name="model.Cliente" table="cliente" schema="dbo" catalog="restoitsco" optimistic-lock="version">
         <id name="clienteId" type="int">
             <column name="clienteId" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <many-to-one name="empresa" class="model.Empresa" fetch="select">
             <column name="empresaId" not-null="true" />
@@ -14,8 +14,8 @@
         <property name="clienteNombre" type="string">
             <column name="clienteNombre" length="250" />
         </property>
-        <property name="cienteDumeroDocumento" type="string">
-            <column name="cienteDumeroDocumento" length="50" />
+        <property name="cienteNumeroDocumento" type="string">
+            <column name="cienteNumeroDocumento" length="50" />
         </property>
         <property name="clienteTelefono" type="string">
             <column name="clienteTelefono" length="50" />

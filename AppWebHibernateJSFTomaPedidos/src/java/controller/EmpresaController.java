@@ -7,10 +7,10 @@ package controller;
 
 import dao.EmpresaDAO;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import model.Empresa;
@@ -20,7 +20,7 @@ import model.Empresa;
  * @author RKOrtega
  */
 @Named(value = "empresaController")
-@SessionScoped
+@ApplicationScoped
 public class EmpresaController implements Serializable {
 
     private Empresa empresa;
@@ -71,6 +71,7 @@ public class EmpresaController implements Serializable {
             FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Dato registrado correctamente!");
             FacesContext.getCurrentInstance().addMessage(null, massage);
             empresas = empresaDAO.findAll();
+            empresa = null;
         } else {
             FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error!");
             FacesContext.getCurrentInstance().addMessage(null, massage);

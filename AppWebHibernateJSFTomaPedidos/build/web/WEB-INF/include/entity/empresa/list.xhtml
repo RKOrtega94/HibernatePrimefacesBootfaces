@@ -34,13 +34,13 @@
                          selectionMode="single"
                          selection="#{empresaController.selected}">
                 <f:facet name="header">
-                    Empresa
+                    empresa
                 </f:facet>
 
                 <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:dataConextMenu"/>
                 <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:dataConextMenu"/>
                 <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
-                <p:ajax event="rowDblselect" onsuccess="document.getElementById('EmpresaListForm:viewButton').click();"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('empresaListForm:viewButton').click();"/>
 
                 <p:column sortBy="#{item.empresaRazonSocial}"
                           filterBy="#{item.empresaRazonSocial}"
@@ -74,14 +74,14 @@
                              icon="ui-icon-search"
                              style="visibility: hidden"
                              value="Ver"
-                             update=":EmpresaViewForm"
+                             update=":empresaViewForm"
                              oncomplete="PF('empresaViewDialog').show()"/>
             <p:commandButton id="editButton"
                              style="visibility: hidden;"
                              icon="ui-icon-pencil"
                              value="Editar"
-                             update="EmpresaEditForm"
-                             oncomplete="PF('EmpresaEditDialog').show()"/>
+                             update="empresaEditForm"
+                             oncomplete="PF('empresaEditDialog').show()"/>
             <p:commandButton id="deleteButton"
                              style="visibility: hidden"
                              icon="ui-icon-trash"

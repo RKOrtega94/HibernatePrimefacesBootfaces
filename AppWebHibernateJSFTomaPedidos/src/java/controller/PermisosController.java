@@ -9,10 +9,10 @@ import dao.OpcionDAO;
 import dao.OpcionPerfilDAO;
 import dao.PerfilDAO;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import model.Opcion;
@@ -24,7 +24,7 @@ import model.Perfil;
  * @author RKOrtega
  */
 @Named(value = "permisosController")
-@SessionScoped
+@ApplicationScoped
 public class PermisosController implements Serializable {
 
     private OpcionXperfil xperfil;

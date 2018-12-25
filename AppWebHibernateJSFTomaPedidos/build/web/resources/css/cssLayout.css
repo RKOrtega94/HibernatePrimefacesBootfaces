@@ -1,6 +1,5 @@
 
 #top {
-    position: fixed;
     margin: 0px;
     width: 100%;
     z-index: 40;
@@ -30,7 +29,7 @@
 .center_content {
     position: relative;
     background: white;
-    padding-top: 5em;
+    padding-top: 2em;
     padding-bottom: 2em;
     z-index: 10;
 }

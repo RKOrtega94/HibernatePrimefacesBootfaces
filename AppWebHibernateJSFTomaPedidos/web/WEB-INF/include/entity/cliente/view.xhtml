@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition>
+        <p:dialog id="ClienteViewDialog"
+                  widgetVar="clienteViewDialog"
+                  modal="true"
+                  resizable="false"
+                  appendTo="@(body)"
+                  header="Cliente"
+                  closeOnEscape="true">
+            <h:form id="ClienteViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2"
+                                 styleClass="ui-noborder"
+                                 rendered="#{clienteController.selected != null}">
+
+                        <h:outputText value="Empresa"/>
+                        <h:outputText value="#{clienteController.selected.empresa.empresaRazonSocial}"/>
+
+                        <h:outputText value="Nombre"/>
+                        <h:outputText value="#{clienteController.selected.clienteNombre}"/>
+
+                        <h:outputText value="Cédula / RUC"/>
+                        <h:outputText value="#{clienteController.selected.cienteNumeroDocumento}"/>
+
+                        <h:outputText value="Teléfono"/>
+                        <h:outputText value="#{clienteController.selected.clienteTelefono}"/>
+
+                        <h:outputText value="Correo"/>
+                        <h:outputText value="#{clienteController.selected.clienteCorreo}"/>
+
+                        <h:outputText value="Fecha de registro"/>
+                        <h:outputText value="#{clienteController.selected.clienteFechaCreacion}"/>
+
+                        <c:if test="#{clienteController.selected.clienteFechaModificacion != null}">
+                            <h:outputText value="Última modificación"/>
+                            <h:outputText value="#{clienteController.selected.clienteFechaModificacion}"/>
+                        </c:if>
+
+                        <h:outputText value="Estado"/>
+                        <h:outputText value="#{clienteController.selected.clienteEstado=='A'?'Activo':'Inactivo'}"/>
+
+                    </p:panelGrid>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+    </ui:composition>
+</html>

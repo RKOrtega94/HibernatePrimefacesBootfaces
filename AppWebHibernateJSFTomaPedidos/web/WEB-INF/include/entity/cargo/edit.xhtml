@@ -7,20 +7,20 @@
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition>
-        <p:dialog id="CargoEditDialog"
-                  widgetVar="CargoEditDialog"
+        <p:dialog id="cargoEditDialog"
+                  widgetVar="cargoEditDialog"
                   modal="true"
                   resizable="false"
                   appendTo="@(body)"
                   header="Editar cargo"
                   closeOnEscape="true">
-            <h:form id="CargoEditForm">
+            <h:form id="cargoEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2"
                                  styleClass="ui-noborder"
                                  rendered="#{cargoController.selected != null}">
                         <p:outputLabel for="cargoDescripcion"
-                                       value="Cargo"/>
+                                       value="cargo"/>
                         <p:inputText id="cargoDescripcion"
                                      value="#{cargoController.selected.cargoDescripcion}"/>
 

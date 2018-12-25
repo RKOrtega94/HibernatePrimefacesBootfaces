@@ -7,10 +7,10 @@ package controller;
 
 import dao.PerfilDAO;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import model.Perfil;
@@ -20,7 +20,7 @@ import model.Perfil;
  * @author RKOrtega
  */
 @Named(value = "perfilController")
-@SessionScoped
+@ApplicationScoped
 public class PerfilController implements Serializable {
 
     private Perfil perfil;

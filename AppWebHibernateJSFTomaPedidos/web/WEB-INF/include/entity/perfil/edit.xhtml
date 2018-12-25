@@ -7,14 +7,14 @@
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition>
-        <p:dialog id="PerfilEditDialog"
-                  widgetVar="PerfilEditDialog"
+        <p:dialog id="perfilEditDialog"
+                  widgetVar="perfilEditDialog"
                   modal="true"
                   resizable="false"
                   appendTo="@(body)"
                   header="Editar perfil"
                   closeOnEscape="true">
-            <h:form id="PerfilEditForm">
+            <h:form id="perfilEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2"
                                  styleClass="ui-noborder"
@@ -22,7 +22,9 @@
                         <p:outputLabel for="perfilNombre"
                                        value="Perfil"/>
                         <p:inputText id="perfilNombre"
-                                     value="#{perfilController.selected.perfilDescripcion}"/>
+                                     value="#{perfilController.selected.perfilDescripcion}"
+                                     required="true"
+                                     requiredMessage="El perfil es obligatorio"/>
 
                         <p:outputLabel for="perfilEstado"
                                        value="Estado"/>

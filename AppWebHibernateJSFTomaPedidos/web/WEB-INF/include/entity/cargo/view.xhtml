@@ -5,19 +5,19 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
     <ui:composition>
-        <p:dialog id="CargoViewDialog"
+        <p:dialog id="cargoViewDialog"
                   widgetVar="cargoViewDialog"
                   modal="true"
                   resizable="false"
                   appendTo="@(body)"
-                  header="Cargo"
+                  header="cargo"
                   closeOnEscape="true">
-            <h:form id="CargoViewForm">
+            <h:form id="cargoViewForm">
                 <h:panelGroup>
                     <p:panelGrid columns="2"
                                  styleClass="ui-noborder"
                                  rendered="#{cargoController.selected != null}">
-                        <h:outputText value="Cargo"/>
+                        <h:outputText value="cargo"/>
                         <h:outputText value="#{cargoController.selected.cargoDescripcion}"/>
                         
                         <h:outputText value="Fecha de registro"/>

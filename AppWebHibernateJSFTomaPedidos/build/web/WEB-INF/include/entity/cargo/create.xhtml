@@ -6,21 +6,24 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:b="http://bootsfaces.net/ui">
     <ui:composition>
-        <h:form id="CargoCreateForm">
+        <h:form id="cargoCreateForm">
             <p:dialog widgetVar="create"
                       header="Registrar"
                       showEffect="fade"
                       hideEffect="fade"
                       resizable="false">
-                <p:panelGrid styleClass="ui-noborder">
+                <p:panelGrid id="createPanel"
+                             styleClass="ui-noborder">
                     <p:row>
                         <p:column>
-                            <p:outputLabel for="txtCargo"
-                                           value="Cargo"/>
+                            <p:outputLabel for="txtcargo"
+                                           value="cargo"/>
                         </p:column>
                         <p:column>
-                            <p:inputText id="txtCargo"
-                                         value="#{cargoController.cargo.cargoDescripcion}"/>
+                            <p:inputText id="txtcargo"
+                                         value="#{cargoController.cargo.cargoDescripcion}"
+                                         required="true"
+                                         requiredMessage="El nombre del cargo es obligatorio"/>
                         </p:column>
                     </p:row>
                     <p:row>
@@ -30,7 +33,7 @@
                                                  value="Guardar"
                                                  actionListener="#{cargoController.save()}"
                                                  look="success"
-                                                 update=":listForm:dataList, :growl"/>
+                                                 update=":listForm:dataList, :growl, createPanel"/>
                             </center>
                         </p:column>
                     </p:row>

@@ -7,10 +7,10 @@ package controller;
 
 import dao.ProductoDAO;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import model.Producto;
@@ -20,7 +20,7 @@ import model.Producto;
  * @author RKOrtega
  */
 @Named(value = "productoController")
-@SessionScoped
+@ApplicationScoped
 public class ProductoController implements Serializable {
 
     private Producto producto;

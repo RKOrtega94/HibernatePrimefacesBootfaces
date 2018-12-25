@@ -7,10 +7,10 @@ package controller;
 
 import dao.OpcionDAO;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import model.Opcion;
@@ -20,7 +20,7 @@ import model.Opcion;
  * @author RKOrtega
  */
 @Named(value = "opcionController")
-@SessionScoped
+@ApplicationScoped
 public class OpcionController implements Serializable {
 
     private Opcion opcion;

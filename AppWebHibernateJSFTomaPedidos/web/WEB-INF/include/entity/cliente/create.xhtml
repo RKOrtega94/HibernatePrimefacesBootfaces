@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition>
+        <h:form id="ClienteCreateForm">
+            <p:dialog widgetVar="create"
+                      header="Registrar"
+                      showEffect="fade"
+                      hideEffect="fade"
+                      resizable="false">
+                <p:panelGrid id="EditPanel"
+                             styleClass="ui-noborder">
+
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="txtEmpresa"
+                                           value="Nombre"/>
+                        </p:column>
+                        <p:column>
+                            <p:selectOneMenu id="txtEmpresa"
+                                             value="#{clienteController.empresaId}">
+                                <f:selectItems value="#{empresaController.empresas}"
+                                               var="item"
+                                               itemLabel="#{item.empresaRazonSocial}"
+                                               itemValue="#{item.empresaId}"/>
+                            </p:selectOneMenu>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="txtNombre"
+                                           value="Nombre"/>
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="txtNombre"
+                                         value="#{clienteController.cliente.clienteNombre}"
+                                         required="true"
+                                         requiredMessage="El nombre es obligatorio"/>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="txtDocumento"
+                                           value="Cédula / RUC"/>
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="txtDocumento"
+                                         value="#{clienteController.cliente.cienteNumeroDocumento}"
+                                         required="true"
+                                         requiredMessage="El número de documento es obligatorio"/>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="txtTelefono"
+                                           value="Teléfono"/>
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="txtTelefono"
+                                         value="#{clienteController.cliente.clienteTelefono}"
+                                         required="true"
+                                         requiredMessage="El número de teléfono es obligatorio"/>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="txtCorreo"
+                                           value="Correo"/>
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="txtCorreo"
+                                         value="#{clienteController.cliente.clienteCorreo}"/>
+                        </p:column>
+                    </p:row>
+
+                    <p:row>
+                        <p:column colspan="2">
+                            <center>
+                                <b:commandButton id="btnSuccess"
+                                                 value="Guardar"
+                                                 actionListener="#{clienteController.save()}"
+                                                 look="success"
+                                                 update=":listForm:dataList, :growl">
+                                    <p:confirm header="Confirmación"
+                                               message="Listo para guardar?"
+                                               icon="ui-icon-alert"/>
+                                </b:commandButton>
+                            </center>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+            </p:dialog>
+        </h:form>
+    </ui:composition>
+</html>

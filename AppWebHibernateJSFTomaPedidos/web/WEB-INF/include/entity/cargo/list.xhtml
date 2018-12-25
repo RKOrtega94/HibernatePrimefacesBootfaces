@@ -34,13 +34,13 @@
                          selectionMode="single"
                          selection="#{cargoController.selected}">
                 <f:facet name="header">
-                    Cargos
+                    cargos
                 </f:facet>
                 
                 <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:dataConextMenu"/>
                 <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:dataConextMenu"/>
                 <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
-                <p:ajax event="rowDblselect" onsuccess="document.getElementById('CargoListForm:viewButton').click();"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('cargoListForm:viewButton').click();"/>
                 
                 <p:column sortBy="#{item.cargoDescripcion}"
                           filterBy="#{item.cargoDescripcion}"
@@ -67,14 +67,14 @@
                              icon="ui-icon-search"
                              style="visibility: hidden"
                              value="Ver"
-                             update=":CargoViewForm"
+                             update=":cargoViewForm"
                              oncomplete="PF('cargoViewDialog').show()"/>
             <p:commandButton id="editButton"
                              style="visibility: hidden;"
                              icon="ui-icon-pencil"
                              value="Editar"
-                             update="CargoEditForm"
-                             oncomplete="PF('CargoEditDialog').show()"/>
+                             update="cargoEditForm"
+                             oncomplete="PF('cargoEditDialog').show()"/>
             <p:commandButton id="deleteButton"
                              style="visibility: hidden"
                              icon="ui-icon-trash"
