@@ -6,7 +6,7 @@
 package dao;
 
 import java.util.List;
-import model.Local;
+import model.Inventario;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -16,54 +16,35 @@ import util.HibernateUtil;
  *
  * @author RKOrtega
  */
-public class LocalDAO {
+public class InventarioDAO {
 
     private static final SessionFactory SESSION_FACTORY = HibernateUtil.getSessionFactory();
 
     @SuppressWarnings({"rawtypes", "unchecked"})
-    public List<Local> findAll() {
-        List<Local> locales = null;
+    public List<Inventario> findAll() {
+        List<Inventario> inventarios = null;
         Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
-            Query query = session.createQuery("select l from Local l");
-            locales = query.getResultList();
+            Query query = session.createQuery("select i from Inventario i");
+            inventarios = query.getResultList();
             session.getTransaction().commit();
         } catch (Exception e) {
-            locales = null;
+            inventarios = null;
             session.getTransaction().rollback();
         } finally {
             session.close();
         }
-        return locales;
+        return inventarios;
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
-    public Local findById(int id) {
-        Local local = null;
-        Session session = SESSION_FACTORY.openSession();
-        try {
-            session.beginTransaction();
-            Query query = session.createQuery("select l from Local l where l.localId = :id");
-            query.setParameter("id", id);
-            local = (Local) query.uniqueResult();
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            local = null;
-            session.getTransaction().rollback();
-        } finally {
-            session.close();
-        }
-        return local;
-    }
-
-    @SuppressWarnings({"rawtypes", "unchecked"})
-    public boolean save(Local local) {
+    public boolean save(Inventario inventario) {
         boolean result = true;
         Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
-            session.save(local);
+            session.save(inventario);
             session.getTransaction().commit();
         } catch (Exception e) {
             result = false;
@@ -75,12 +56,12 @@ public class LocalDAO {
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
-    public boolean update(Local local) {
+    public boolean update(Inventario inventario) {
         boolean result = true;
         Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
-            session.update(local);
+            session.update(inventario);
             session.getTransaction().commit();
         } catch (Exception e) {
             result = false;
@@ -92,12 +73,12 @@ public class LocalDAO {
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
-    public boolean delete(Local local) {
+    public boolean delete(Inventario inventario) {
         boolean result = true;
         Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
-            session.delete(local);
+            session.delete(inventario);
             session.getTransaction().commit();
         } catch (Exception e) {
             result = false;

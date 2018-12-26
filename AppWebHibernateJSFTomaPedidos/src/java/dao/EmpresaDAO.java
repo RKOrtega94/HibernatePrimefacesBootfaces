@@ -18,12 +18,12 @@ import util.HibernateUtil;
  */
 public class EmpresaDAO {
 
-    private static final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+    private static final SessionFactory SESSION_FACTORY = HibernateUtil.getSessionFactory();
 
     @SuppressWarnings({"rawtypes", "unchecked"})
     public List<Empresa> findAll() {
         List<Empresa> empresas = null;
-        Session session = sessionFactory.openSession();
+        Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
             Query query = session.createQuery("select e from Empresa e");
@@ -41,7 +41,7 @@ public class EmpresaDAO {
     @SuppressWarnings({"rawtypes", "unchecked"})
     public boolean save(Empresa empresa){
         boolean result = true;
-        Session session = sessionFactory.openSession();
+        Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
             session.save(empresa);
@@ -58,7 +58,7 @@ public class EmpresaDAO {
     @SuppressWarnings({"rawtypes", "unchecked"})
     public boolean update(Empresa empresa){
         boolean result = true;
-        Session session = sessionFactory.openSession();
+        Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
             session.update(empresa);
@@ -75,7 +75,7 @@ public class EmpresaDAO {
     @SuppressWarnings({"unchecked", "rawtypes"})
     public boolean delete(Empresa empresa){
         boolean result = true;
-        Session session = sessionFactory.openSession();
+        Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
             session.delete(empresa);
@@ -92,7 +92,7 @@ public class EmpresaDAO {
     @SuppressWarnings({"rawtypes", "unchecked"})
     public Empresa findById(int id){
         Empresa empresa = null;
-        Session session = sessionFactory.openSession();
+        Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
             Query query = session.createQuery("select e from Empresa e where e.empresaId = :id");

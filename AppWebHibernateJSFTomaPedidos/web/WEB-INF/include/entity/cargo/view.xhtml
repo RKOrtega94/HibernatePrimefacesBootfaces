@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:composition>
         <p:dialog id="cargoViewDialog"
                   widgetVar="cargoViewDialog"
@@ -17,15 +18,17 @@
                     <p:panelGrid columns="2"
                                  styleClass="ui-noborder"
                                  rendered="#{cargoController.selected != null}">
-                        <h:outputText value="cargo"/>
+                        <h:outputText value="Cargo"/>
                         <h:outputText value="#{cargoController.selected.cargoDescripcion}"/>
-                        
+
                         <h:outputText value="Fecha de registro"/>
                         <h:outputText value="#{cargoController.selected.cargoFechaCreacion}"/>
-                        
-                        <h:outputText value="Última modificación"/>
-                        <h:outputText value="#{cargoController.selected.cargoFechaModificacion}"/>
-                        
+
+                        <c:if test="#{cargoController.selected.cargoFechaModificacion!=null}">
+                            <h:outputText value="Última modificación"/>
+                            <h:outputText value="#{cargoController.selected.cargoFechaModificacion}"/>
+                        </c:if>
+
                         <h:outputText value="Estado"/>
                         <h:outputText value="#{cargoController.selected.cargoEstado=='A'?'Activo':'Inactivo'}"/>
                     </p:panelGrid>

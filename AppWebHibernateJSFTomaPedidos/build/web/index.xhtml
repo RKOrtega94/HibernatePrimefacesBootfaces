@@ -27,7 +27,7 @@
                           col-xs="10">
                     <center>
                         <h:form id="loginForm">
-                            <p:growl autoUpdate="true" 
+                            <p:growl id="growl"
                                      life="5000"/>
                             <p:panelGrid columns="2"
                                          styleClass="ui-noborder"
@@ -50,7 +50,8 @@
                                 <f:facet name="footer">
                                     <center>
                                         <b:commandButton look="success"
-                                                         value="Acceder"/>
+                                                         value="Acceder"
+                                                         update="growl"/>
                                     </center>
                                 </f:facet>
                             </p:panelGrid>

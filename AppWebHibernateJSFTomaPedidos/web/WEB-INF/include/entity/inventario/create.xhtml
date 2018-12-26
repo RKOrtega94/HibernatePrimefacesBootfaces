@@ -17,46 +17,58 @@
                              styleClass="ui-noborder">
                     <p:row>
                         <p:column>
-                            <p:outputLabel for="txtPerfil"
-                                           value="Perfil"/>
+                            <p:outputLabel for="txtLocal"
+                                           value="Local"/>
                         </p:column>
                         <p:column>
-                            <p:selectOneMenu id="txtPerfil"
-                                             value="#{permisosController.perfilId}"
+                            <p:selectOneMenu id="txtLocal"
+                                             value="#{inventarioController.localId}"
                                              required="true"
                                              requiredMessage="Campo obligatorio"
                                              effect="fade"
                                              filter="true"
                                              filterMatchMode="contains"
                                              style="width: 100%">
-                                <f:selectItem itemLabel="Seleccionar perfil"/>
-                                <f:selectItems value="#{perfilController.perfiles}"
+                                <f:selectItem itemLabel="Seleccionar local"/>
+                                <f:selectItems value="#{localController.locales}"
                                                var="item"
-                                               itemLabel="#{item.perfilDescripcion}"
-                                               itemValue="#{item.perfilId}"/>
+                                               itemLabel="#{item.localNombre}"
+                                               itemValue="#{item.localId}"/>
                             </p:selectOneMenu>
                         </p:column>
                     </p:row>
                     <p:row>
                         <p:column>
-                            <p:outputLabel for="txtOpcion"
-                                           value="Opcion"/>
+                            <p:outputLabel for="txtProducto"
+                                           value="Producto"/>
                         </p:column>
                         <p:column>
-                            <p:selectOneMenu id="txtOpcion"
-                                             value="#{permisosController.opcionId}"
+                            <p:selectOneMenu id="txtProducto"
+                                             value="#{inventarioController.productoId}"
                                              required="true"
                                              requiredMessage="Campo obligatorio"
                                              effect="fade"
                                              filter="true"
                                              filterMatchMode="contains"
                                              style="width: 100%">
-                                <f:selectItem itemLabel="Seleccionar opcion"/>
-                                <f:selectItems value="#{opcionController.opciones}"
+                                <f:selectItem itemLabel="Seleccionar producto"/>
+                                <f:selectItems value="#{productoController.productos}"
                                                var="item"
-                                               itemLabel="#{item.opcionDescripcion} #{item.opcionLink}"
-                                               itemValue="#{item.opcionId}"/>
+                                               itemLabel="#{item.productoNombre}"
+                                               itemValue="#{item.productoId}"/>
                             </p:selectOneMenu>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="txtCantidad"
+                                           value="Cantidad"/>
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="txtCantidad"
+                                         value="#{inventarioController.inventario.inventarioCantidad}"
+                                         required="true"
+                                         requiredMessage="La cantidad es obligatoria"/>
                         </p:column>
                     </p:row>
                     <p:row>
@@ -64,7 +76,7 @@
                             <center>
                                 <b:commandButton id="btnSuccess"
                                                  value="Guardar"
-                                                 actionListener="#{permisosController.save()}"
+                                                 actionListener="#{inventarioController.save()}"
                                                  look="success"
                                                  update=":listForm:dataList, :growl"/>
                             </center>

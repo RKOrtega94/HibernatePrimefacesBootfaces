@@ -28,6 +28,7 @@ public class Inventario implements java.io.Serializable {
     private Local local;
     private Producto producto;
     private Double inventarioCantidad;
+    private Character inventarioMovimiento;
     private Date inventarioFechaCracion;
     private Date inventarioFechaModificacion;
     private Character inventarioEstado;
@@ -41,11 +42,12 @@ public class Inventario implements java.io.Serializable {
         this.producto = producto;
     }
 
-    public Inventario(int inventarioId, Local local, Producto producto, Double inventarioCantidad, Date inventarioFechaCracion, Date inventarioFechaModificacion, Character inventarioEstado) {
+    public Inventario(int inventarioId, Local local, Producto producto, Double inventarioCantidad, Character inventarioMovimiento, Date inventarioFechaCracion, Date inventarioFechaModificacion, Character inventarioEstado) {
         this.inventarioId = inventarioId;
         this.local = local;
         this.producto = producto;
         this.inventarioCantidad = inventarioCantidad;
+        this.inventarioMovimiento = inventarioMovimiento;
         this.inventarioFechaCracion = inventarioFechaCracion;
         this.inventarioFechaModificacion = inventarioFechaModificacion;
         this.inventarioEstado = inventarioEstado;
@@ -91,6 +93,15 @@ public class Inventario implements java.io.Serializable {
         this.inventarioCantidad = inventarioCantidad;
     }
 
+    @Column(name = "inventarioMovimiento", length = 1)
+    public Character getInventarioMovimiento(){
+        return this.inventarioMovimiento;
+    }
+    
+    public void setInventarioMovimiento(Character inventarioMovimiento){
+        this.inventarioMovimiento = inventarioMovimiento;
+    }
+    
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "inventarioFechaCracion", length = 23, insertable = false, updatable = false)
     public Date getInventarioFechaCracion() {

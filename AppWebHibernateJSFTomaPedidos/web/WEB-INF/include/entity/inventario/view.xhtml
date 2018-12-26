@@ -6,35 +6,35 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:composition>
-        <p:dialog id="productoViewDialog"
-                  widgetVar="productoViewDialog"
+        <p:dialog id="permisoViewDialog"
+                  widgetVar="permisoViewDialog"
                   modal="true"
                   resizable="false"
                   appendTo="@(body)"
-                  header="producto"
+                  header="permiso"
                   closeOnEscape="true">
-            <h:form id="productoViewForm">
+            <h:form id="permisoViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2"
                                  styleClass="ui-noborder"
-                                 rendered="#{productoController.selected != null}">
+                                 rendered="#{opcionController.selected != null}">
 
-                        <h:outputText value="Nombre"/>
-                        <h:outputText value="#{productoController.selected.productoNombre}"/>
+                        <h:outputText value="Perfil"/>
+                        <h:outputText value="#{inventarioController.selected.perfil.perfilDescripcion}"/>
 
-                        <h:outputText value="Detalle"/>
-                        <h:outputText value="#{productoController.selected.productoDetalle}"/>
+                        <h:outputText value="Opcion"/>
+                        <h:outputText value="#{inventarioController.selected.opcion.opcionDescripcion} #{inventarioController.selected.opcion.opcionLink}"/>
 
                         <h:outputText value="Fecha de registro"/>
-                        <h:outputText value="#{productoController.selected.productoFechaCreacion}"/>
+                        <h:outputText value="#{inventarioController.selected.opcionPerfilFechaCreacion}"/>
 
-                        <c:if test="#{productoController.selected.productoFechaModificacion!=null}">
+                        <c:if test="#{inventarioController.selected.inventarioFechaModificacion!=null}">
                             <h:outputText value="Última modificación"/>
-                            <h:outputText value="#{productoController.selected.productoFechaModificacion}"/>
+                            <h:outputText value="#{inventarioController.selected.inventarioFechaModificacion}"/>
                         </c:if>
 
                         <h:outputText value="Estado"/>
-                        <h:outputText value="#{productoController.selected.productoEstado=='A'?'Activo':'Inactivo'}"/>
+                        <h:outputText value="#{inventarioController.selected.opcionPerfilEstado=='A'?'Activo':'Inactivo'}"/>
 
                     </p:panelGrid>
                 </h:panelGroup>

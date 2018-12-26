@@ -114,8 +114,14 @@ public class OpcionController implements Serializable {
                 FacesContext.getCurrentInstance().addMessage(null, massage);
             }
         } else {
-            FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error!");
-            FacesContext.getCurrentInstance().addMessage(null, massage);
+            if (opcionDAO.save(opcion)) {
+                FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Dato registrado correctamente!");
+                FacesContext.getCurrentInstance().addMessage(null, massage);
+                opciones = opcionDAO.findAll();
+            } else {
+                FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error!");
+                FacesContext.getCurrentInstance().addMessage(null, massage);
+            }
         }
         selected = null;
     }

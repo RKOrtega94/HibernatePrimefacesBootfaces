@@ -24,17 +24,17 @@
                             icon="ui-icon-trash"/>
             </p:contextMenu>
             <p:dataTable id="dataList"
-                         value="#{productoController.productos}"
+                         value="#{inventarioController.inventarios}"
                          var="item"
                          lazy="false"
-                         rowKey="#{item.productoId}"
+                         rowKey="#{item.inventarioId}"
                          paginator="true"
                          rows="10"
                          rowsPerPageTemplate="10,20,30,40,50"
                          selectionMode="single"
-                         selection="#{productoController.selected}">
+                         selection="#{inventarioController.selected}">
                 <f:facet name="header">
-                    productos
+                    Inventario
                 </f:facet>
 
                 <p:ajax event="rowSelect"
@@ -46,30 +46,48 @@
                 <p:ajax event="rowDblselect"
                         onsuccess="document.getElementById('ListForm:viewButton').click();"/>
 
-                <p:column sortBy="#{item.productoNombre}"
-                          filterBy="#{item.productoNombre}"
+                <p:column sortBy="#{item.producto.productoDetalle}"
+                          filterBy="#{item.producto.productoDetalle}"
                           filterMatchMode="contains">
                     <f:facet name="header">
                         <h:outputText value="Producto"/>
                     </f:facet>
-                    <h:outputText value="#{item.productoNombre}"/>
+                    <h:outputText value="#{item.producto.productoDetalle}"/>
                 </p:column>
-
-                <p:column sortBy="#{item.productoDetalle}"
-                          filterBy="#{item.productoDetalle}"
+                
+                <p:column sortBy="#{item.inventarioCantidad}"
+                          filterBy="#{item.inventarioCantidad}"
                           filterMatchMode="contains">
                     <f:facet name="header">
-                        <h:outputText value="Detalle"/>
+                        <h:outputText value="Cantidad"/>
                     </f:facet>
-                    <h:outputText value="#{item.productoDetalle}"/>
+                    <h:outputText value="#{item.inventarioCantidad}"/>
                 </p:column>
-
-                <p:column sortBy="#{item.productoEstado}"
-                          filterBy="#{item.productoEstado==('A')?'Activo':'Inactivo'}">
+                
+                <p:column sortBy="#{item.inventarioMovimiento}"
+                          filterBy="#{item.inventarioMovimiento=='I'?'Ingreso':'Egreso'}"
+                          filterMatchMode="contains">
+                    <f:facet name="header">
+                        <h:outputText value="Movimiento"/>
+                    </f:facet>
+                    <h:outputText value="#{item.inventarioMovimiento=='I'?'Ingreso':'Egreso'}"/>
+                </p:column>
+                
+                <p:column sortBy="#{item.local.localNombre}"
+                          filterBy="#{item.local.localNombre}"
+                          filterMatchMode="contains">
+                    <f:facet name="header">
+                        <h:outputText value="Local"/>
+                    </f:facet>
+                    <h:outputText value="#{item.local.localNombre}"/>
+                </p:column>
+                
+                <p:column sortBy="#{item.inventarioEstado}"
+                          filterBy="#{item.inventarioEstado==('A')?'Activo':'Inactivo'}">
                     <f:facet name="header">
                         <h:outputText value="Estado"/>
                     </f:facet>
-                    <h:outputText value="#{item.productoEstado==('A')?'Activo':'Inactivo'}"/>
+                    <h:outputText value="#{item.inventarioEstado==('A')?'Activo':'Inactivo'}"/>
                 </p:column>
             </p:dataTable>
             <p:commandButton id="createButton"
@@ -81,20 +99,20 @@
                              icon="ui-icon-search"
                              style="visibility: hidden"
                              value="Ver"
-                             update=":productoViewForm"
-                             oncomplete="PF('productoViewDialog').show()"/>
+                             update=":permisoViewForm"
+                             oncomplete="PF('permisoViewDialog').show()"/>
             <p:commandButton id="editButton"
                              style="visibility: hidden;"
                              icon="ui-icon-pencil"
                              value="Editar"
-                             update="productoEditForm"
-                             oncomplete="PF('productoEditDialog').show()"/>
+                             update="permisoEditForm"
+                             oncomplete="PF('permisoEditDialog').show()"/>
             <p:commandButton id="deleteButton"
                              style="visibility: hidden"
                              icon="ui-icon-trash"
                              value="Eliminar"
                              update=":growl, dataList"
-                             actionListener="#{productoController.delete()}">
+                             actionListener="#{inventarioController.delete()}">
                 <p:confirm header="Confirmación"
                            message="Seguro quiere eliminar el registro?"
                            icon="ui-icon-alert"/>

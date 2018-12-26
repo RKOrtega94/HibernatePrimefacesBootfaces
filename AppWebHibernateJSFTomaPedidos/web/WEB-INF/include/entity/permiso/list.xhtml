@@ -34,7 +34,7 @@
                          selectionMode="single"
                          selection="#{permisosController.selected}">
                 <f:facet name="header">
-                    Permisos
+                    permisos
                 </f:facet>
 
                 <p:ajax event="rowSelect"
@@ -50,7 +50,7 @@
                           filterBy="#{item.perfil.perfilDescripcion}"
                           filterMatchMode="contains">
                     <f:facet name="header">
-                        <h:outputText value="Opcion"/>
+                        <h:outputText value="Perfil"/>
                     </f:facet>
                     <h:outputText value="#{item.perfil.perfilDescripcion}"/>
                 </p:column>
@@ -80,14 +80,14 @@
                              icon="ui-icon-search"
                              style="visibility: hidden"
                              value="Ver"
-                             update=":PermisoViewForm"
+                             update=":permisoViewForm"
                              oncomplete="PF('permisoViewDialog').show()"/>
             <p:commandButton id="editButton"
                              style="visibility: hidden;"
                              icon="ui-icon-pencil"
                              value="Editar"
-                             update="PermisoEditForm"
-                             oncomplete="PF('PermisoEditDialog').show()"/>
+                             update="permisoEditForm"
+                             oncomplete="PF('permisoEditDialog').show()"/>
             <p:commandButton id="deleteButton"
                              style="visibility: hidden"
                              icon="ui-icon-trash"

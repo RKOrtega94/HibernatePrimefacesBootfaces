@@ -18,12 +18,12 @@ import util.HibernateUtil;
  */
 public class ClienteDAO {
 
-    public static final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+    public static final SessionFactory SESSION_FACTORY = HibernateUtil.getSessionFactory();
 
     @SuppressWarnings({"rawtypes", "unchecked"})
     public List<Cliente> findAll() {
         List<Cliente> clientes = null;
-        Session session = sessionFactory.openSession();
+        Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
             Query query = session.createQuery("select c from Cliente c");
@@ -41,7 +41,7 @@ public class ClienteDAO {
     @SuppressWarnings({"rawtypes", "unchecked"})
     public boolean save(Cliente cliente) {
         boolean result = true;
-        Session session = sessionFactory.openSession();
+        Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
             session.save(cliente);
@@ -58,7 +58,7 @@ public class ClienteDAO {
     @SuppressWarnings({"rawtypes", "unchecked"})
     public boolean update(Cliente cliente) {
         boolean result = true;
-        Session session = sessionFactory.openSession();
+        Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
             session.update(cliente);
@@ -75,7 +75,7 @@ public class ClienteDAO {
     @SuppressWarnings({"rawtypes", "unchecked"})
     public boolean delete(Cliente cliente) {
         boolean result = true;
-        Session session = sessionFactory.openSession();
+        Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
             session.delete(cliente);

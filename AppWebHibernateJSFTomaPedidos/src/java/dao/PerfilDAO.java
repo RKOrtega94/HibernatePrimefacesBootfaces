@@ -18,12 +18,12 @@ import util.HibernateUtil;
  */
 public class PerfilDAO {
 
-    private static final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+    private static final SessionFactory SESSION_FACTORY = HibernateUtil.getSessionFactory();
 
     @SuppressWarnings({"rawtypes", "unchecked"})
     public List<Perfil> findAll() {
         List<Perfil> perfiles = null;
-        Session session = sessionFactory.openSession();
+        Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
             Query query = session.createQuery("select p from Perfil p");
@@ -41,7 +41,7 @@ public class PerfilDAO {
     @SuppressWarnings({"rawtypes", "unchecked"})
     public boolean save(Perfil perfil) {
         boolean result = true;
-        Session session = sessionFactory.openSession();
+        Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
             session.save(perfil);
@@ -58,7 +58,7 @@ public class PerfilDAO {
     @SuppressWarnings({"rawtypes", "unchecked"})
     public boolean update(Perfil perfil) {
         boolean result = true;
-        Session session = sessionFactory.openSession();
+        Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
             session.update(perfil);
@@ -75,7 +75,7 @@ public class PerfilDAO {
     @SuppressWarnings({"rawtypes", "unchecked"})
     public boolean delete(Perfil perfil) {
         boolean result = true;
-        Session session = sessionFactory.openSession();
+        Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
             session.delete(perfil);
@@ -92,7 +92,7 @@ public class PerfilDAO {
     @SuppressWarnings({"rawtypes", "unchecked"})
     public Perfil findById(int id){
         Perfil perfil = null;
-        Session session = sessionFactory.openSession();
+        Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
             Query query = session.createQuery("select p from Perfil p where p.perfilId = :id");

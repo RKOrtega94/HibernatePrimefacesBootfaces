@@ -17,6 +17,9 @@
         <property name="inventarioCantidad" type="java.lang.Double">
             <column name="inventarioCantidad" precision="53" scale="0" />
         </property>
+        <property name="inventarioMovimiento" type="java.lang.Character">
+            <column name="inventarioMovimiento" length="1" />
+        </property>
         <property name="inventarioFechaCracion" type="timestamp">
             <column name="inventarioFechaCracion" length="23" />
         </property>

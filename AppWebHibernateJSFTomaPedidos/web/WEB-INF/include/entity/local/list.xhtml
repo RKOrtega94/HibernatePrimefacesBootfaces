@@ -34,7 +34,7 @@
                          selectionMode="single"
                          selection="#{localController.selected}">
                 <f:facet name="header">
-                    Locales
+                    locales
                 </f:facet>
 
                 <p:ajax event="rowSelect"
@@ -90,14 +90,14 @@
                              icon="ui-icon-search"
                              style="visibility: hidden"
                              value="Ver"
-                             update=":LocalViewForm"
+                             update=":localViewForm"
                              oncomplete="PF('localViewDialog').show()"/>
             <p:commandButton id="editButton"
                              style="visibility: hidden;"
                              icon="ui-icon-pencil"
                              value="Editar"
-                             update="LocalEditForm"
-                             oncomplete="PF('LocalEditDialog').show()"/>
+                             update="localEditForm"
+                             oncomplete="PF('localEditDialog').show()"/>
             <p:commandButton id="deleteButton"
                              style="visibility: hidden"
                              icon="ui-icon-trash"

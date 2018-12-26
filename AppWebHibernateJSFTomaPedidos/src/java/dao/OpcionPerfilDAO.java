@@ -18,12 +18,12 @@ import util.HibernateUtil;
  */
 public class OpcionPerfilDAO {
 
-    private static final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+    private static final SessionFactory SESSION_FACTORY = HibernateUtil.getSessionFactory();
 
     @SuppressWarnings({"rawtypes", "unchecked"})
     public List<OpcionXperfil> findAll() {
         List<OpcionXperfil> permisos = null;
-        Session session = sessionFactory.openSession();
+        Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
             Query query = session.createQuery("select o from OpcionXperfil o");
@@ -41,7 +41,7 @@ public class OpcionPerfilDAO {
     @SuppressWarnings({"rawtypes", "unchecked"})
     public boolean save(OpcionXperfil opcionXperfil) {
         boolean result = true;
-        Session session = sessionFactory.openSession();
+        Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
             session.save(opcionXperfil);
@@ -58,7 +58,7 @@ public class OpcionPerfilDAO {
     @SuppressWarnings({"rawtypes", "unchecked"})
     public boolean update(OpcionXperfil opcionXperfil) {
         boolean result = true;
-        Session session = sessionFactory.openSession();
+        Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
             session.update(opcionXperfil);
@@ -75,7 +75,7 @@ public class OpcionPerfilDAO {
     @SuppressWarnings({"rawtypes", "unchecked"})
     public boolean delete(OpcionXperfil opcionXperfil) {
         boolean result = true;
-        Session session = sessionFactory.openSession();
+        Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
             session.delete(opcionXperfil);

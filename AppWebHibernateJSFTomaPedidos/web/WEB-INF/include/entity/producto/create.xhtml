@@ -8,7 +8,7 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition>
-        <h:form id="ProductoCreateForm">
+        <h:form id="productoCreateForm">
             <p:dialog widgetVar="create"
                       header="Registrar"
                       showEffect="fade"
@@ -18,11 +18,11 @@
                              styleClass="ui-noborder">
                     <p:row>
                         <p:column>
-                            <p:outputLabel for="txtProducto"
+                            <p:outputLabel for="txtproducto"
                                            value="Producto"/>
                         </p:column>
                         <p:column>
-                            <p:inputText id="txtProducto"
+                            <p:inputText id="txtproducto"
                                          value="#{productoController.producto.productoNombre}"
                                          required="true"
                                          requiredMessage="El nombre del producto es requerido"/>

@@ -18,12 +18,12 @@ import util.HibernateUtil;
  */
 public class ProductoDAO {
 
-    private static final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+    private static final SessionFactory SESSION_FACTORY = HibernateUtil.getSessionFactory();
 
     @SuppressWarnings({"rawtypes", "unchecked"})
     public List<Producto> findAll() {
         List<Producto> productos = null;
-        Session session = sessionFactory.openSession();
+        Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
             Query query = session.createQuery("select p from Producto p");
@@ -39,9 +39,28 @@ public class ProductoDAO {
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
+    public Producto findById(int id) {
+        Producto producto = null;
+        Session session = SESSION_FACTORY.openSession();
+        try {
+            session.beginTransaction();
+            Query query = session.createQuery("select p from Producto p where p.productoId = :id");
+            query.setParameter("id", id);
+            producto = (Producto) query.uniqueResult();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            producto = null;
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return producto;
+    }
+
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public boolean save(Producto producto) {
         boolean result = true;
-        Session session = sessionFactory.openSession();
+        Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
             session.save(producto);
@@ -58,7 +77,7 @@ public class ProductoDAO {
     @SuppressWarnings({"rawtypes", "unchecked"})
     public boolean update(Producto producto) {
         boolean result = true;
-        Session session = sessionFactory.openSession();
+        Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
             session.update(producto);
@@ -75,7 +94,7 @@ public class ProductoDAO {
     @SuppressWarnings({"rawtypes", "unchecked"})
     public boolean delete(Producto producto) {
         boolean result = true;
-        Session session = sessionFactory.openSession();
+        Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
             session.delete(producto);

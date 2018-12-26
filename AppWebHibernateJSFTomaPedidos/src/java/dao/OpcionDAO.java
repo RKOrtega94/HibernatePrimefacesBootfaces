@@ -18,12 +18,12 @@ import util.HibernateUtil;
  */
 public class OpcionDAO {
 
-    private static final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+    private static final SessionFactory SESSION_FACTORY = HibernateUtil.getSessionFactory();
 
     @SuppressWarnings({"rawtypes", "unchecked"})
     public List<Opcion> findAll() {
         List<Opcion> opciones = null;
-        Session session = sessionFactory.openSession();
+        Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
             Query query = session.createQuery("select o from Opcion o");
@@ -41,7 +41,7 @@ public class OpcionDAO {
     @SuppressWarnings({"rawtypes", "unchecked"})
     public boolean save(Opcion opcion){
         boolean result = true;
-        Session session = sessionFactory.openSession();
+        Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
             session.save(opcion);
@@ -58,7 +58,7 @@ public class OpcionDAO {
     @SuppressWarnings({"rawtypes", "unchecked"})
     public boolean update(Opcion opcion){
         boolean result = true;
-        Session session = sessionFactory.openSession();
+        Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
             session.update(opcion);
@@ -75,7 +75,7 @@ public class OpcionDAO {
     @SuppressWarnings({"rawtypes", "unchecked"})
     public boolean delete(Opcion opcion){
         boolean result = true;
-        Session session = sessionFactory.openSession();
+        Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
             session.delete(opcion);
@@ -92,7 +92,7 @@ public class OpcionDAO {
     @SuppressWarnings({"rawtypes", "unchecked"})
     public Opcion findById(int id){
         Opcion opcion = null;
-        Session session = sessionFactory.openSession();
+        Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
             Query query = session.createQuery("select o from Opcion o where opcionId = :id");

@@ -6,14 +6,14 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:composition>
-        <p:dialog id="LocalViewDialog"
+        <p:dialog id="localViewDialog"
                   widgetVar="localViewDialog"
                   modal="true"
                   resizable="false"
                   appendTo="@(body)"
-                  header="Local"
+                  header="local"
                   closeOnEscape="true">
-            <h:form id="LocalViewForm">
+            <h:form id="localViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2"
                                  styleClass="ui-noborder"
@@ -24,18 +24,20 @@
 
                         <h:outputText value="Local"/>
                         <h:outputText value="#{localController.selected.localNombre}"/>
-                        
+
                         <h:outputText value="Dirección"/>
                         <h:outputText value="#{localController.selected.localDireccion}"/>
-                        
+
                         <h:outputText value="Teléfono"/>
                         <h:outputText value="#{localController.selected.localTelefono}"/>
-                        
+
                         <h:outputText value="Fecha de registro"/>
                         <h:outputText value="#{localController.selected.localFechaCreacion}"/>
-                        
-                        <h:outputText value="Última modificación"/>
-                        <h:outputText value="#{localController.selected.localFechaModificacion}"/>
+
+                        <c:if test="#{localController.selected.localFechaModificacion!=null}">
+                            <h:outputText value="Última modificación"/>
+                            <h:outputText value="#{localController.selected.localFechaModificacion}"/>
+                        </c:if>
 
                         <h:outputText value="Estado"/>
                         <h:outputText value="#{localController.selected.localEstado=='A'?'Activo':'Inactivo'}"/>

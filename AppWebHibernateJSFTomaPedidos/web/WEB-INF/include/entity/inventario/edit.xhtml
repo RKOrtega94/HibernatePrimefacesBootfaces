@@ -19,19 +19,19 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2"
                                  styleClass="ui-noborder"
-                                 rendered="#{permisosController.selected != null}">
+                                 rendered="#{inventarioController.selected != null}">
                         <p:outputLabel for="permisoPerfil"
                                        value="Perfil"/>
                         <p:selectOneMenu id="permisoPerfil"
-                                         value="#{permisosController.perfilId}"
+                                         value="#{inventarioController.perfilId}"
                                          required="true"
                                          requiredMessage="Campo obligatorio"
                                          effect="fade"
                                          filter="true"
                                          filterMatchMode="contains"
                                          style="width: 100%">
-                            <f:selectItem itemLabel="#{permisosController.selected.perfil.perfilDescripcion}"
-                                          itemValue="#{permisosController.selected.perfil.perfilId}"/>
+                            <f:selectItem itemLabel="#{inventarioController.selected.perfil.perfilDescripcion}"
+                                          itemValue="#{inventarioController.selected.perfil.perfilId}"/>
                             <f:selectItems value="#{perfilController.perfiles}"
                                            var="item"
                                            itemLabel="#{item.perfilDescripcion}"
@@ -41,15 +41,15 @@
                         <p:outputLabel for="opcionPerfil"
                                        value="Opción"/>
                         <p:selectOneMenu id="opcionPerfil"
-                                         value="#{permisosController.opcionId}"
+                                         value="#{inventarioController.opcionId}"
                                          required="true"
                                          requiredMessage="Campo obligatorio"
                                          effect="fade"
                                          filter="true"
                                          filterMatchMode="contains"
                                          style="width: 100%">
-                            <f:selectItem itemLabel="#{permisosController.selected.opcion.opcionDescripcion} #{permisosController.selected.opcion.opcionLink}"
-                                          itemValue="#{permisosController.selected.opcion.opcionId}"/>
+                            <f:selectItem itemLabel="#{inventarioController.selected.opcion.opcionDescripcion} #{inventarioController.selected.opcion.opcionLink}"
+                                          itemValue="#{inventarioController.selected.opcion.opcionId}"/>
                             <f:selectItems value="#{opcionController.opciones}"
                                            var="item"
                                            itemLabel="#{item.opcionDescripcion} #{item.opcionLink}"
@@ -59,7 +59,7 @@
                         <p:outputLabel for="perfilEstado"
                                        value="Estado"/>
                         <p:selectOneMenu id="perfilEstado"
-                                         value="#{permisosController.selected.opcionPerfilEstado}"
+                                         value="#{inventarioController.selected.opcionPerfilEstado}"
                                          style="width: 100%">
                             <f:selectItem itemLabel="Activo"
                                           itemValue="A"/>
@@ -71,7 +71,7 @@
                         <b:commandButton id="btnSaveEdit"
                                          value="Guardar"
                                          look="success"
-                                         actionListener="#{permisosController.update()}">
+                                         actionListener="#{inventarioController.update()}">
                             <p:confirm header="Confirmación"
                                        message="Guardar los cambios?"
                                        icon="ui-icon-alert"/>
