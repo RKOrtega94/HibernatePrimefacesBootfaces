@@ -21,7 +21,7 @@ import model.Empresa;
  */
 @Named(value = "empresaController")
 @ApplicationScoped
-public class EmpresaController implements Serializable {
+public class EmpresaController {
 
     private Empresa empresa;
     private Empresa selected;
@@ -71,7 +71,6 @@ public class EmpresaController implements Serializable {
             FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Dato registrado correctamente!");
             FacesContext.getCurrentInstance().addMessage(null, massage);
             empresas = empresaDAO.findAll();
-            empresa = null;
         } else {
             FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error!");
             FacesContext.getCurrentInstance().addMessage(null, massage);

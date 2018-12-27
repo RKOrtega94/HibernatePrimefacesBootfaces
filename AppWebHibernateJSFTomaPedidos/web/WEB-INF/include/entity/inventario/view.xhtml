@@ -19,14 +19,23 @@
                                  styleClass="ui-noborder"
                                  rendered="#{opcionController.selected != null}">
 
-                        <h:outputText value="Perfil"/>
-                        <h:outputText value="#{inventarioController.selected.perfil.perfilDescripcion}"/>
+                        <h:outputText value="Local"/>
+                        <h:outputText value="#{inventarioController.selected.local.localNombre}"/>
 
-                        <h:outputText value="Opcion"/>
-                        <h:outputText value="#{inventarioController.selected.opcion.opcionDescripcion} #{inventarioController.selected.opcion.opcionLink}"/>
+                        <h:outputText value="Producto"/>
+                        <h:outputText value="#{inventarioController.selected.producto.productoNombre}"/>
 
+                        <h:outputText value="Detalle"/>
+                        <h:outputText value="#{inventarioController.selected.producto.productoDetalle}"/>
+                        
+                        <h:outputText value="Movimiento"/>
+                        <h:outputText value="#{inventarioController.selected.inventarioMovimiento=='I'?'Ingreso':'Egreso'}"/>
+                        
+                        <h:outputText value="Cantidad"/>
+                        <h:outputText value="#{inventarioController.selected.inventarioCantidad}"/>
+                        
                         <h:outputText value="Fecha de registro"/>
-                        <h:outputText value="#{inventarioController.selected.opcionPerfilFechaCreacion}"/>
+                        <h:outputText value="#{inventarioController.selected.inventarioFechaCreacion}"/>
 
                         <c:if test="#{inventarioController.selected.inventarioFechaModificacion!=null}">
                             <h:outputText value="Última modificación"/>
@@ -34,7 +43,7 @@
                         </c:if>
 
                         <h:outputText value="Estado"/>
-                        <h:outputText value="#{inventarioController.selected.opcionPerfilEstado=='A'?'Activo':'Inactivo'}"/>
+                        <h:outputText value="#{inventarioController.selected.inventarioEstado=='A'?'Activo':'Inactivo'}"/>
 
                     </p:panelGrid>
                 </h:panelGroup>

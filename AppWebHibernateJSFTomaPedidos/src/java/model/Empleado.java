@@ -1,6 +1,7 @@
 package model;
 // Generated 11-dic-2018 10:09:37 by Hibernate Tools 4.3.1
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,8 +24,8 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "empleado",
-         schema = "dbo",
-         catalog = "restoitsco"
+        schema = "dbo",
+        catalog = "restoitsco"
 )
 public class Empleado implements java.io.Serializable {
 
@@ -189,4 +191,14 @@ public class Empleado implements java.io.Serializable {
         this.usuarios = usuarios;
     }
 
+    @PrePersist
+    public void prepersist() {
+        if (empleadoEstado == null) {
+            empleadoEstado = 'A';
+        }
+        if (empleadoFechaCreacion == null) {
+            Date date = new Date();
+            empleadoFechaCreacion = (new Timestamp(date.getTime()));
+        }
+    }
 }

@@ -1,7 +1,12 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package dao;
 
 import java.util.List;
-import model.Cargo;
+import model.Empleado;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -11,35 +16,35 @@ import util.HibernateUtil;
  *
  * @author RKOrtega
  */
-public class CargoDAO {
+public class EmpleadoDAO {
 
     private static final SessionFactory SESSION_FACTORY = HibernateUtil.getSessionFactory();
 
     @SuppressWarnings({"rawtypes", "unchecked"})
-    public List<Cargo> findAll() {
-        List<Cargo> cargos = null;
+    public List<Empleado> findAll() {
+        List<Empleado> empleados = null;
         Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
-            Query query = session.createQuery("select c from Cargo c");
-            cargos = query.getResultList();
+            Query query = session.createQuery("select e from Empleado e");
+            empleados = query.getResultList();
             session.getTransaction().commit();
         } catch (Exception e) {
-            cargos = null;
+            empleados = null;
             session.getTransaction().rollback();
         } finally {
             session.close();
         }
-        return cargos;
+        return empleados;
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
-    public boolean save(Cargo cargo) {
+    public boolean save(Empleado empleado) {
         boolean result = true;
         Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
-            session.save(cargo);
+            session.save(empleado);
             session.getTransaction().commit();
         } catch (Exception e) {
             result = false;
@@ -51,12 +56,12 @@ public class CargoDAO {
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
-    public boolean update(Cargo cargo) {
+    public boolean update(Empleado empleado) {
         boolean result = true;
         Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
-            session.update(cargo);
+            session.update(empleado);
             session.getTransaction().commit();
         } catch (Exception e) {
             result = false;
@@ -68,12 +73,12 @@ public class CargoDAO {
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
-    public boolean delete(Cargo cargo) {
+    public boolean delete(Empleado empleado) {
         boolean result = true;
         Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
-            session.delete(cargo);
+            session.delete(empleado);
             session.getTransaction().commit();
         } catch (Exception e) {
             result = false;
@@ -82,24 +87,5 @@ public class CargoDAO {
             session.close();
         }
         return result;
-    }
-
-    @SuppressWarnings({"rawtypes", "unchecked"})
-    public Cargo findById(int id) {
-        Cargo cargo = null;
-        Session session = SESSION_FACTORY.openSession();
-        try {
-            session.beginTransaction();
-            Query query = session.createQuery("select c from Cargo c where c.cargoId = :id");
-            query.setParameter("id", id);
-            cargo = (Cargo) query.uniqueResult();
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            cargo = null;
-            session.getTransaction().rollback();
-        } finally {
-            session.close();
-        }
-        return cargo;
     }
 }

@@ -23,7 +23,7 @@ import model.Empresa;
  */
 @Named(value = "clienteController")
 @ApplicationScoped
-public class ClienteController implements Serializable {
+public class ClienteController {
 
     private Cliente cliente;
     private Cliente selected;

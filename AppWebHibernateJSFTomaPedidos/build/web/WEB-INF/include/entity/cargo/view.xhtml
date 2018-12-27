@@ -18,6 +18,7 @@
                     <p:panelGrid columns="2"
                                  styleClass="ui-noborder"
                                  rendered="#{cargoController.selected != null}">
+
                         <h:outputText value="Cargo"/>
                         <h:outputText value="#{cargoController.selected.cargoDescripcion}"/>
 
@@ -31,6 +32,7 @@
 
                         <h:outputText value="Estado"/>
                         <h:outputText value="#{cargoController.selected.cargoEstado=='A'?'Activo':'Inactivo'}"/>
+
                     </p:panelGrid>
                 </h:panelGroup>
             </h:form>

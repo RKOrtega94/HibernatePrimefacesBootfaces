@@ -25,7 +25,7 @@ import model.Perfil;
  */
 @Named(value = "permisosController")
 @ApplicationScoped
-public class PermisosController implements Serializable {
+public class PermisosController {
 
     private OpcionXperfil xperfil;
     private OpcionXperfil selected;

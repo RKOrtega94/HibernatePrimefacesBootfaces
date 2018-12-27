@@ -22,12 +22,19 @@
                         <p:outputLabel for="empresaRazonSocial"
                                        value="Razon social"/>
                         <p:inputText id="empresaRazonSocial"
-                                     value="#{empresaController.selected.empresaRazonSocial}"/>
+                                     value="#{empresaController.selected.empresaRazonSocial}"
+                                     required="true"
+                                     requiredMessage="El nombre de la empresa es obligatorio"/>
 
                         <p:outputLabel for="empresaRuc"
                                        value="Ruc"/>
                         <p:inputText id="empresaRuc"
-                                     value="#{empresaController.selected.empresaRuc}"/>
+                                     value="#{empresaController.selected.empresaRuc}"
+                                     required="true"
+                                     requiredMessage="El número de RUC es obligatorio">
+                            <p:keyFilter regEx="/[\d]/"/>
+                            <f:validateLength minimum="13"/>
+                        </p:inputText>
 
                         <p:outputLabel for="empresaEstado"
                                        value="Estado"/>

@@ -16,7 +16,7 @@ import model.Cargo;
  */
 @Named(value = "cargoController")
 @ApplicationScoped
-public class CargoController implements Serializable {
+public class CargoController {
 
     private Cargo cargo;
     private Cargo selected;

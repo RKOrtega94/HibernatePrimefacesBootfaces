@@ -6,7 +6,7 @@
     <class name="model.Inventario" table="inventario" schema="dbo" catalog="restoitsco" optimistic-lock="version">
         <id name="inventarioId" type="int">
             <column name="inventarioId" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <many-to-one name="local" class="model.Local" fetch="select">
             <column name="localId" not-null="true" />
@@ -20,8 +20,8 @@
         <property name="inventarioMovimiento" type="java.lang.Character">
             <column name="inventarioMovimiento" length="1" />
         </property>
-        <property name="inventarioFechaCracion" type="timestamp">
-            <column name="inventarioFechaCracion" length="23" />
+        <property name="inventarioFechaCreacion" type="timestamp">
+            <column name="inventarioFechaCreacion" length="23" />
         </property>
         <property name="inventarioFechaModificacion" type="timestamp">
             <column name="inventarioFechaModificacion" length="23" />

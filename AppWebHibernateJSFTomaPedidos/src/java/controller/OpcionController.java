@@ -21,7 +21,7 @@ import model.Opcion;
  */
 @Named(value = "opcionController")
 @ApplicationScoped
-public class OpcionController implements Serializable {
+public class OpcionController {
 
     private Opcion opcion;
     private Opcion selected;

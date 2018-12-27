@@ -21,7 +21,7 @@ import model.Producto;
  */
 @Named(value = "productoController")
 @ApplicationScoped
-public class ProductoController implements Serializable {
+public class ProductoController {
 
     private Producto producto;
     private Producto selected;

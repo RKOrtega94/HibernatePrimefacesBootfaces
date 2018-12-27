@@ -7,7 +7,7 @@
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition>
-        <h:form id="permisoCreateForm">
+        <h:form id="empleadoCreateForm">
             <p:dialog widgetVar="create"
                       header="Registrar"
                       showEffect="fade"
@@ -22,7 +22,7 @@
                         </p:column>
                         <p:column>
                             <p:selectOneMenu id="txtLocal"
-                                             value="#{inventarioController.localId}"
+                                             value="#{empleadoController.localId}"
                                              required="true"
                                              requiredMessage="Campo obligatorio"
                                              effect="fade"
@@ -39,53 +39,80 @@
                     </p:row>
                     <p:row>
                         <p:column>
-                            <p:outputLabel for="txtProducto"
-                                           value="Producto"/>
+                            <p:outputLabel for="txtCargo"
+                                           value="Cargo"/>
                         </p:column>
                         <p:column>
-                            <p:selectOneMenu id="txtProducto"
-                                             value="#{inventarioController.productoId}"
+                            <p:selectOneMenu id="txtCargo"
+                                             value="#{empleadoController.cargoId}"
                                              required="true"
                                              requiredMessage="Campo obligatorio"
                                              effect="fade"
                                              filter="true"
                                              filterMatchMode="contains"
                                              style="width: 100%">
-                                <f:selectItem itemLabel="Seleccionar producto"/>
-                                <f:selectItems value="#{productoController.productos}"
+                                <f:selectItem itemLabel="Seleccionar cargo"/>
+                                <f:selectItems value="#{cargoController.cargos}"
                                                var="item"
-                                               itemLabel="#{item.productoNombre}"
-                                               itemValue="#{item.productoId}"/>
+                                               itemLabel="#{item.cargoDescripcion}"
+                                               itemValue="#{item.cargoId}"/>
                             </p:selectOneMenu>
                         </p:column>
                     </p:row>
                     <p:row>
                         <p:column>
-                            <p:outputLabel for="txtCantidad"
-                                           value="Cantidad"/>
+                            <p:outputLabel for="txtPrimerApellido"
+                                           value="Primer apellido"/>
                         </p:column>
                         <p:column>
-                            <p:inputText id="txtCantidad"
-                                         value="#{inventarioController.inventario.inventarioCantidad}"
+                            <p:inputText id="txtPrimerApellido"
+                                         value="#{empleadoController.empleado.empleadoPromerApellido}"
                                          required="true"
-                                         requiredMessage="La cantidad es obligatoria"/>
+                                         requiredMessage="El primer apellido es obligatoria"/>
                         </p:column>
                     </p:row>
                     <p:row>
                         <p:column>
-                            <p:outputLabel for="txtMovimiento"
-                                           value="Movimiento"/>
+                            <p:outputLabel for="txtSegundoApellido"
+                                           value="Segundo apellido"/>
                         </p:column>
                         <p:column>
-                            <p:selectOneMenu id="txtMovimiento"
-                                             value="#{inventarioController.inventario.inventarioMovimiento}"
-                                             required="true"
-                                             requiredMessage="Campo obligatorio">
-                                <f:selectItem itemLabel="Ingreso"
-                                              itemValue="I"/>
-                                <f:selectItem itemLabel="Egreso"
-                                              itemValue="E"/>
-                            </p:selectOneMenu>
+                            <p:inputText id="txtSegundoApellido"
+                                         value="#{empleadoController.empleado.empleadoSegundoApellido}"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="txtPrimerNombre"
+                                           value="Primer nombre"/>
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="txtPrimerNombre"
+                                         value="#{empleadoController.empleado.empleadoPrimernombre}"
+                                         required="true"
+                                         requiredMessage="El primer nombre es obligatoria"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="txtSegundoNombre"
+                                           value="Segundo nombre"/>
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="txtSegundoNombre"
+                                         value="#{empleadoController.empleado.empleadoSegundoNombre}"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="txtNumeroDocumento"
+                                           value="Cédula"/>
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="txtNumeroDocumento"
+                                         value="#{empleadoController.empleado.empleadoNumeroDocumento}"
+                                         required="true"
+                                         requiredMessage="El número de cédula es obligatorio"/>
                         </p:column>
                     </p:row>
                     <p:row>
@@ -93,7 +120,7 @@
                             <center>
                                 <b:commandButton id="btnSuccess"
                                                  value="Guardar"
-                                                 actionListener="#{inventarioController.save()}"
+                                                 actionListener="#{empleadoController.save()}"
                                                  look="success"
                                                  update=":listForm:dataList, :growl"/>
                             </center>

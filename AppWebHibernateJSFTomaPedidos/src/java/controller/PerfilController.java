@@ -21,7 +21,7 @@ import model.Perfil;
  */
 @Named(value = "perfilController")
 @ApplicationScoped
-public class PerfilController implements Serializable {
+public class PerfilController {
 
     private Perfil perfil;
     private Perfil selected;

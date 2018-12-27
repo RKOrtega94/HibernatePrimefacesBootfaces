@@ -23,7 +23,7 @@ import model.Local;
  */
 @Named(value = "localController")
 @ApplicationScoped
-public class LocalController implements Serializable {
+public class LocalController {
 
     private Local local;
     private Local selected;

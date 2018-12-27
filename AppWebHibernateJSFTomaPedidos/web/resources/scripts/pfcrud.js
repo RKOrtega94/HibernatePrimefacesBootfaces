@@ -12,3 +12,4 @@ function fixPFMDialogs() {
         jQuery("body > div[id*='" + pageId + "'][class*='ui-popup']").appendTo("#" + pageId);
     });
 }
+console.log(window.location.pathname);

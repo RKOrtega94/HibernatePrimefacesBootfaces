@@ -6,7 +6,7 @@
     <class name="model.Empleado" table="empleado" schema="dbo" catalog="restoitsco" optimistic-lock="version">
         <id name="empleadoId" type="int">
             <column name="empleadoId" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <many-to-one name="cargo" class="model.Cargo" fetch="select">
             <column name="cargoId" not-null="true" />

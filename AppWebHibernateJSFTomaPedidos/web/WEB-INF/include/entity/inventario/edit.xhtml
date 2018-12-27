@@ -20,50 +20,69 @@
                     <p:panelGrid columns="2"
                                  styleClass="ui-noborder"
                                  rendered="#{inventarioController.selected != null}">
-                        <p:outputLabel for="permisoPerfil"
-                                       value="Perfil"/>
-                        <p:selectOneMenu id="permisoPerfil"
-                                         value="#{inventarioController.perfilId}"
+                        <p:outputLabel for="local"
+                                       value=""/>
+                        <p:selectOneMenu id="local"
+                                         value="#{inventarioController.localId}"
                                          required="true"
                                          requiredMessage="Campo obligatorio"
                                          effect="fade"
                                          filter="true"
                                          filterMatchMode="contains"
-                                         style="width: 100%">
-                            <f:selectItem itemLabel="#{inventarioController.selected.perfil.perfilDescripcion}"
-                                          itemValue="#{inventarioController.selected.perfil.perfilId}"/>
-                            <f:selectItems value="#{perfilController.perfiles}"
+                                         style="width: 100%"
+                                         disabled="true">
+                            <f:selectItem itemLabel="#{inventarioController.selected.local.localNombre}"
+                                          itemValue="#{inventarioController.selected.local.localId}"/>
+                            <f:selectItems value="#{localController.locales}"
                                            var="item"
-                                           itemLabel="#{item.perfilDescripcion}"
-                                           itemValue="#{item.perfilId}"/>
+                                           itemLabel="#{item.localNombre}"
+                                           itemValue="#{item.localId}"/>
                         </p:selectOneMenu>
 
-                        <p:outputLabel for="opcionPerfil"
-                                       value="Opción"/>
-                        <p:selectOneMenu id="opcionPerfil"
-                                         value="#{inventarioController.opcionId}"
+                        <p:outputLabel for="producto"
+                                       value="Producto"/>
+                        <p:selectOneMenu id="producto"
+                                         value="#{inventarioController.productoId}"
                                          required="true"
                                          requiredMessage="Campo obligatorio"
                                          effect="fade"
                                          filter="true"
                                          filterMatchMode="contains"
-                                         style="width: 100%">
-                            <f:selectItem itemLabel="#{inventarioController.selected.opcion.opcionDescripcion} #{inventarioController.selected.opcion.opcionLink}"
-                                          itemValue="#{inventarioController.selected.opcion.opcionId}"/>
-                            <f:selectItems value="#{opcionController.opciones}"
+                                         style="width: 100%"
+                                         disabled="true">
+                            <f:selectItem itemLabel="#{inventarioController.selected.producto.productoNombre} #{inventarioController.selected.producto.productoDetalle}"
+                                          itemValue="#{inventarioController.selected.producto.productoId}"/>
+                            <f:selectItems value="#{productoController.productos}"
                                            var="item"
-                                           itemLabel="#{item.opcionDescripcion} #{item.opcionLink}"
-                                           itemValue="#{item.opcionId}"/>
+                                           itemLabel="#{item.productoNombre} #{item.productoDetalle}"
+                                           itemValue="#{item.productoId}"/>
+                        </p:selectOneMenu>
+                        
+                        <p:outputLabel for="inventarioMovimiento"
+                                       value="Movimiento"/>
+                        <p:selectOneMenu id="inventarioMovimiento"
+                                         value="inventarioController.selected.inventarioMovimiento"
+                                         disabled="true">
+                            <f:selectItem itemLabel="#{inventarioController.selected.inventarioMovimiento=='I'?'Ingreso':'Egreso'}"
+                                          itemValue="#{inventarioController.selected.inventarioMovimiento}"/>
                         </p:selectOneMenu>
 
-                        <p:outputLabel for="perfilEstado"
+                        <p:outputLabel for="inventarioCantidad"
+                                       value="Cantidad"/>
+                        <p:inputText id="inventarioCantidad"
+                                     value="#{inventarioController.selected.inventarioCantidad}"
+                                     required="true"
+                                     requiredMessage="Campo requerido"
+                                     disabled="true"/>
+
+                        <p:outputLabel for="inventarioEstado"
                                        value="Estado"/>
-                        <p:selectOneMenu id="perfilEstado"
-                                         value="#{inventarioController.selected.opcionPerfilEstado}"
+                        <p:selectOneMenu id="inventarioEstado"
+                                         value="#{inventarioController.selected.inventarioEstado}"
                                          style="width: 100%">
                             <f:selectItem itemLabel="Activo"
                                           itemValue="A"/>
-                            <f:selectItem itemLabel="Inactivo"
+                            <f:selectItem itemLabel="Anulado"
                                           itemValue="I"/>
                         </p:selectOneMenu>
                     </p:panelGrid>

@@ -1,6 +1,7 @@
 package model;
 // Generated 11-dic-2018 10:09:37 by Hibernate Tools 4.3.1
 
+import java.sql.Timestamp;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -29,7 +31,7 @@ public class Inventario implements java.io.Serializable {
     private Producto producto;
     private Double inventarioCantidad;
     private Character inventarioMovimiento;
-    private Date inventarioFechaCracion;
+    private Date inventarioFechaCreacion;
     private Date inventarioFechaModificacion;
     private Character inventarioEstado;
 
@@ -42,13 +44,13 @@ public class Inventario implements java.io.Serializable {
         this.producto = producto;
     }
 
-    public Inventario(int inventarioId, Local local, Producto producto, Double inventarioCantidad, Character inventarioMovimiento, Date inventarioFechaCracion, Date inventarioFechaModificacion, Character inventarioEstado) {
+    public Inventario(int inventarioId, Local local, Producto producto, Double inventarioCantidad, Character inventarioMovimiento, Date inventarioFechaCreacion, Date inventarioFechaModificacion, Character inventarioEstado) {
         this.inventarioId = inventarioId;
         this.local = local;
         this.producto = producto;
         this.inventarioCantidad = inventarioCantidad;
         this.inventarioMovimiento = inventarioMovimiento;
-        this.inventarioFechaCracion = inventarioFechaCracion;
+        this.inventarioFechaCreacion = inventarioFechaCreacion;
         this.inventarioFechaModificacion = inventarioFechaModificacion;
         this.inventarioEstado = inventarioEstado;
     }
@@ -103,13 +105,13 @@ public class Inventario implements java.io.Serializable {
     }
     
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "inventarioFechaCracion", length = 23, insertable = false, updatable = false)
-    public Date getInventarioFechaCracion() {
-        return this.inventarioFechaCracion;
+    @Column(name = "inventarioFechaCreacion", length = 23, insertable = false, updatable = false)
+    public Date getInventarioFechaCreacion() {
+        return this.inventarioFechaCreacion;
     }
 
-    public void setInventarioFechaCracion(Date inventarioFechaCracion) {
-        this.inventarioFechaCracion = inventarioFechaCracion;
+    public void setInventarioFechaCreacion(Date inventarioFechaCreacion) {
+        this.inventarioFechaCreacion = inventarioFechaCreacion;
     }
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -131,4 +133,14 @@ public class Inventario implements java.io.Serializable {
         this.inventarioEstado = inventarioEstado;
     }
 
+    @PrePersist
+    public void prepersist(){
+        if(inventarioEstado==null){
+            inventarioEstado = 'A';
+        }
+        if(inventarioFechaCreacion==null){
+            Date date = new Date();
+            inventarioFechaCreacion = (new Timestamp(date.getTime()));
+        }
+    }
 }

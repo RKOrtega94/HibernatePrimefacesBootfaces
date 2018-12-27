@@ -23,7 +23,9 @@
                         </p:column>
                         <p:column>
                             <p:selectOneMenu id="txtEmpresa"
-                                             value="#{clienteController.empresaId}">
+                                             value="#{clienteController.empresaId}"
+                                             required="true"
+                                             requiredMessage="La empresa es obligatoria">
                                 <f:selectItems value="#{empresaController.empresas}"
                                                var="item"
                                                itemLabel="#{item.empresaRazonSocial}"
@@ -41,7 +43,9 @@
                             <p:inputText id="txtNombre"
                                          value="#{clienteController.cliente.clienteNombre}"
                                          required="true"
-                                         requiredMessage="El nombre es obligatorio"/>
+                                         requiredMessage="El nombre es obligatorio">
+                                <p:keyFilter regEx="/[a-z_]/i"/>
+                            </p:inputText>
                         </p:column>
                     </p:row>
 

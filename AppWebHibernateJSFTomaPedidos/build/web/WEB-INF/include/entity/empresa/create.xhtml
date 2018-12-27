@@ -4,7 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:b="http://bootsfaces.net/ui">
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition>
         <h:form id="empresaCreateForm">
             <p:dialog widgetVar="create"
@@ -34,7 +35,11 @@
                             <p:inputText id="txtRuc"
                                          value="#{empresaController.empresa.empresaRuc}"
                                          required="true"
-                                         requiredMessage="Numero de RUC es obligatorio"/>
+                                         requiredMessage="Numero de RUC es obligatorio"
+                                         maxlength="13">
+                                <p:keyFilter regEx="/[\d]/"/>
+                                <f:validateLength minimum="13"/>
+                            </p:inputText>
                         </p:column>
                     </p:row>
                     <p:row>
