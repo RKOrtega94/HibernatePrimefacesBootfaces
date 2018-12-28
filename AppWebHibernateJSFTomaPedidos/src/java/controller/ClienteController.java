@@ -7,7 +7,6 @@ package controller;
 
 import dao.ClienteDAO;
 import dao.EmpresaDAO;
-import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
@@ -96,16 +95,13 @@ public class ClienteController {
                 FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Dato registrado correctamente!");
                 FacesContext.getCurrentInstance().addMessage(null, massage);
                 clientes = clienteDAO.findAll();
-                cliente = null;
             } else {
                 FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error!");
                 FacesContext.getCurrentInstance().addMessage(null, massage);
-                cliente = null;
             }
         } else {
             FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error!", "Ha ocurrido un error!");
             FacesContext.getCurrentInstance().addMessage(null, massage);
-            cliente = null;
         }
     }
 
@@ -119,16 +115,13 @@ public class ClienteController {
                 FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Dato modificado correctamente!");
                 FacesContext.getCurrentInstance().addMessage(null, massage);
                 clientes = clienteDAO.findAll();
-                selected = null;
             } else {
                 FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error!");
                 FacesContext.getCurrentInstance().addMessage(null, massage);
-                selected = null;
             }
         } else {
             FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error!");
             FacesContext.getCurrentInstance().addMessage(null, massage);
-            selected = null;
         }
     }
 
@@ -138,11 +131,9 @@ public class ClienteController {
             FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Dato eliminado correctamente!");
             FacesContext.getCurrentInstance().addMessage(null, massage);
             clientes = clienteDAO.findAll();
-            selected = null;
         } else {
             FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error!");
             FacesContext.getCurrentInstance().addMessage(null, massage);
-            selected = null;
         }
     }
 }

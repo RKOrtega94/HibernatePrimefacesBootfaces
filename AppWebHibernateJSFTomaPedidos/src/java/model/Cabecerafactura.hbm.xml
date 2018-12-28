@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 11-dic-2018 10:09:41 by Hibernate Tools 4.3.1 -->
+<!-- Generated 27-dic-2018 18:11:39 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="model.Cabecerafactura" table="cabecerafactura" schema="dbo" catalog="restoitsco" optimistic-lock="version">
         <id name="cabecerafacturaId" type="int">
             <column name="cabecerafacturaId" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <many-to-one name="cliente" class="model.Cliente" fetch="select">
             <column name="clienteId" not-null="true" />

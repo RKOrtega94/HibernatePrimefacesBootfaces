@@ -1,6 +1,7 @@
 package model;
-// Generated 11-dic-2018 10:09:37 by Hibernate Tools 4.3.1
+// Generated 27-dic-2018 18:11:38 by Hibernate Tools 4.3.1
 
+import java.sql.Timestamp;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,8 +21,8 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "detallefactura",
-         schema = "dbo",
-         catalog = "restoitsco"
+        schema = "dbo",
+        catalog = "restoitsco"
 )
 public class Detallefactura implements java.io.Serializable {
 
@@ -120,4 +122,14 @@ public class Detallefactura implements java.io.Serializable {
         this.detallefacturaEstado = detallefacturaEstado;
     }
 
+    @PrePersist
+    public void prepersist() {
+        if (detallefacturaEstado == null) {
+            detallefacturaEstado = 'A';
+        }
+        if (detallefacturaFechaCreacion == null) {
+            Date date = new Date();
+            detallefacturaFechaCreacion = (new Timestamp(date.getTime()));
+        }
+    }
 }

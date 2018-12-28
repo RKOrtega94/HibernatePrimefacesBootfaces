@@ -1,5 +1,5 @@
 package model;
-// Generated 11-dic-2018 10:09:37 by Hibernate Tools 4.3.1
+// Generated 27-dic-2018 18:11:38 by Hibernate Tools 4.3.1
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -37,8 +37,8 @@ public class Local implements java.io.Serializable {
     private Date localFechaCreacion;
     private Date localFechaModificacion;
     private Character localEstado;
-    private Set empleados = new HashSet(0);
     private Set inventarios = new HashSet(0);
+    private Set empleados = new HashSet(0);
 
     public Local() {
     }
@@ -48,7 +48,7 @@ public class Local implements java.io.Serializable {
         this.empresa = empresa;
     }
 
-    public Local(int localId, Empresa empresa, String localNombre, String localDireccion, String localTelefono, Date localFechaCreacion, Date localFechaModificacion, Character localEstado, Set empleados, Set inventarios) {
+    public Local(int localId, Empresa empresa, String localNombre, String localDireccion, String localTelefono, Date localFechaCreacion, Date localFechaModificacion, Character localEstado, Set inventarios, Set empleados) {
         this.localId = localId;
         this.empresa = empresa;
         this.localNombre = localNombre;
@@ -57,8 +57,8 @@ public class Local implements java.io.Serializable {
         this.localFechaCreacion = localFechaCreacion;
         this.localFechaModificacion = localFechaModificacion;
         this.localEstado = localEstado;
-        this.empleados = empleados;
         this.inventarios = inventarios;
+        this.empleados = empleados;
     }
 
     @Id
@@ -139,21 +139,21 @@ public class Local implements java.io.Serializable {
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "local")
-    public Set getEmpleados() {
-        return this.empleados;
-    }
-
-    public void setEmpleados(Set empleados) {
-        this.empleados = empleados;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "local")
     public Set getInventarios() {
         return this.inventarios;
     }
 
     public void setInventarios(Set inventarios) {
         this.inventarios = inventarios;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "local")
+    public Set getEmpleados() {
+        return this.empleados;
+    }
+
+    public void setEmpleados(Set empleados) {
+        this.empleados = empleados;
     }
 
     @PrePersist
@@ -166,5 +166,4 @@ public class Local implements java.io.Serializable {
             localFechaCreacion = (new Timestamp(date.getTime()));
         }
     }
-
 }

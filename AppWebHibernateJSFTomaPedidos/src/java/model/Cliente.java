@@ -1,5 +1,5 @@
 package model;
-// Generated 11-dic-2018 10:09:37 by Hibernate Tools 4.3.1
+// Generated 27-dic-2018 18:11:38 by Hibernate Tools 4.3.1
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -91,7 +91,7 @@ public class Cliente implements java.io.Serializable {
         this.clienteNombre = clienteNombre;
     }
 
-    @Column(name = "cienteNumeroDocumento", length = 50)
+    @Column(name = "cienteNumeroDocumento", length = 50, unique = true)
     public String getCienteNumeroDocumento() {
         return this.cienteNumeroDocumento;
     }
@@ -138,7 +138,7 @@ public class Cliente implements java.io.Serializable {
         this.clienteFechaModificacion = clienteFechaModificacion;
     }
 
-    @Column(name = "clienteEstado", length = 1, insertable = false)
+    @Column(name = "clienteEstado", length = 1)
     public Character getClienteEstado() {
         return this.clienteEstado;
     }
@@ -164,9 +164,6 @@ public class Cliente implements java.io.Serializable {
         if (clienteFechaCreacion == null) {
             Date date = new Date();
             clienteFechaCreacion = (new Timestamp(date.getTime()));
-        }
-        if (clienteCorreo == null) {
-            clienteCorreo = "no_info@correo.com";
         }
     }
 }

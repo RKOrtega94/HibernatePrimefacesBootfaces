@@ -44,7 +44,7 @@
                 <p:ajax event="contextMenu"
                         update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
                 <p:ajax event="rowDblselect"
-                        onsuccess="document.getElementById('ListForm:viewButton').click();"/>
+                        onsuccess="document.getElementById('listForm:viewButton').click();"/>
 
                 <p:column sortBy="#{item.producto.productoNombre}"
                           filterBy="#{item.producto.productoNombre}"
@@ -99,14 +99,14 @@
                              icon="ui-icon-search"
                              style="visibility: hidden"
                              value="Ver"
-                             update=":permisoViewForm"
-                             oncomplete="PF('permisoViewDialog').show()"/>
+                             update=":inventarioViewForm"
+                             oncomplete="PF('inventarioViewDialog').show()"/>
             <p:commandButton id="editButton"
                              style="visibility: hidden;"
                              icon="ui-icon-pencil"
                              value="Editar"
-                             update="permisoEditForm"
-                             oncomplete="PF('permisoEditDialog').show()"/>
+                             update="inventarioEditForm"
+                             oncomplete="PF('inventarioEditDialog').show()"/>
             <p:commandButton id="deleteButton"
                              style="visibility: hidden"
                              icon="ui-icon-trash"

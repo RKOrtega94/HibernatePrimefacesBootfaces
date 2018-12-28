@@ -68,7 +68,9 @@
                             <p:inputText id="txtPrimerApellido"
                                          value="#{empleadoController.empleado.empleadoPromerApellido}"
                                          required="true"
-                                         requiredMessage="El primer apellido es obligatoria"/>
+                                         requiredMessage="El primer apellido es obligatoria">
+                                <p:keyFilter regEx="/[a-z_]/i"/>
+                            </p:inputText>
                         </p:column>
                     </p:row>
                     <p:row>
@@ -78,7 +80,9 @@
                         </p:column>
                         <p:column>
                             <p:inputText id="txtSegundoApellido"
-                                         value="#{empleadoController.empleado.empleadoSegundoApellido}"/>
+                                         value="#{empleadoController.empleado.empleadoSegundoApellido}">
+                                <p:keyFilter regEx="/[a-z_]/i"/>
+                            </p:inputText>
                         </p:column>
                     </p:row>
                     <p:row>
@@ -90,7 +94,9 @@
                             <p:inputText id="txtPrimerNombre"
                                          value="#{empleadoController.empleado.empleadoPrimernombre}"
                                          required="true"
-                                         requiredMessage="El primer nombre es obligatoria"/>
+                                         requiredMessage="El primer nombre es obligatoria">
+                                <p:keyFilter regEx="/[a-z_]/i"/>
+                            </p:inputText>
                         </p:column>
                     </p:row>
                     <p:row>
@@ -100,7 +106,9 @@
                         </p:column>
                         <p:column>
                             <p:inputText id="txtSegundoNombre"
-                                         value="#{empleadoController.empleado.empleadoSegundoNombre}"/>
+                                         value="#{empleadoController.empleado.empleadoSegundoNombre}">
+                                <p:keyFilter regEx="/[a-z_]/i"/>
+                            </p:inputText>
                         </p:column>
                     </p:row>
                     <p:row>
@@ -112,7 +120,9 @@
                             <p:inputText id="txtNumeroDocumento"
                                          value="#{empleadoController.empleado.empleadoNumeroDocumento}"
                                          required="true"
-                                         requiredMessage="El número de cédula es obligatorio"/>
+                                         requiredMessage="El número de cédula es obligatorio">
+                                <p:keyFilter regEx="/[\d]/"/>
+                            </p:inputText>
                         </p:column>
                     </p:row>
                     <p:row>

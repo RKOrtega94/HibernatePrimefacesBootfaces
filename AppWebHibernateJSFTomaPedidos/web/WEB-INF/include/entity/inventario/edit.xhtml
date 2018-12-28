@@ -5,38 +5,30 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:b="http://bootsfaces.net/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition>
-        <p:dialog id="permisoEditDialog"
-                  widgetVar="permisoEditDialog"
+        <p:dialog id="inventarioEditDialog"
+                  widgetVar="inventarioEditDialog"
                   modal="true"
                   resizable="false"
                   appendTo="@(body)"
-                  header="Editar permiso"
+                  header="Editar inventario"
                   closeOnEscape="true">
-            <h:form id="permisoEditForm">
+            <h:form id="inventarioEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2"
                                  styleClass="ui-noborder"
                                  rendered="#{inventarioController.selected != null}">
                         <p:outputLabel for="local"
-                                       value=""/>
+                                       value="Local"/>
                         <p:selectOneMenu id="local"
                                          value="#{inventarioController.localId}"
                                          required="true"
                                          requiredMessage="Campo obligatorio"
                                          effect="fade"
-                                         filter="true"
-                                         filterMatchMode="contains"
-                                         style="width: 100%"
-                                         disabled="true">
+                                         style="width: 100%">
                             <f:selectItem itemLabel="#{inventarioController.selected.local.localNombre}"
                                           itemValue="#{inventarioController.selected.local.localId}"/>
-                            <f:selectItems value="#{localController.locales}"
-                                           var="item"
-                                           itemLabel="#{item.localNombre}"
-                                           itemValue="#{item.localId}"/>
                         </p:selectOneMenu>
 
                         <p:outputLabel for="producto"
@@ -46,23 +38,16 @@
                                          required="true"
                                          requiredMessage="Campo obligatorio"
                                          effect="fade"
-                                         filter="true"
-                                         filterMatchMode="contains"
-                                         style="width: 100%"
-                                         disabled="true">
+                                         style="width: 100%">
                             <f:selectItem itemLabel="#{inventarioController.selected.producto.productoNombre} #{inventarioController.selected.producto.productoDetalle}"
                                           itemValue="#{inventarioController.selected.producto.productoId}"/>
-                            <f:selectItems value="#{productoController.productos}"
-                                           var="item"
-                                           itemLabel="#{item.productoNombre} #{item.productoDetalle}"
-                                           itemValue="#{item.productoId}"/>
                         </p:selectOneMenu>
-                        
+
                         <p:outputLabel for="inventarioMovimiento"
                                        value="Movimiento"/>
                         <p:selectOneMenu id="inventarioMovimiento"
-                                         value="inventarioController.selected.inventarioMovimiento"
-                                         disabled="true">
+                                         value="#{inventarioController.selected.inventarioMovimiento}"
+                                         style="width: 100%">
                             <f:selectItem itemLabel="#{inventarioController.selected.inventarioMovimiento=='I'?'Ingreso':'Egreso'}"
                                           itemValue="#{inventarioController.selected.inventarioMovimiento}"/>
                         </p:selectOneMenu>

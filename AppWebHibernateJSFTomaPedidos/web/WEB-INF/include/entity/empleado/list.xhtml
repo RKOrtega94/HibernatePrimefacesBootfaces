@@ -44,7 +44,7 @@
                 <p:ajax event="contextMenu"
                         update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
                 <p:ajax event="rowDblselect"
-                        onsuccess="document.getElementById('ListForm:viewButton').click();"/>
+                        onsuccess="document.getElementById('listForm:viewButton').click();"/>
 
                 <p:column sortBy="#{item.empleadoPromerApellido} #{item.empleadoSegundoApellido} #{item.empleadoPrimernombre} #{item.empleadoSegundoNombre}"
                           filterBy="#{item.empleadoPromerApellido} #{item.empleadoSegundoApellido} #{item.empleadoPrimernombre} #{item.empleadoSegundoNombre}"

@@ -1,5 +1,5 @@
 package model;
-// Generated 11-dic-2018 10:09:37 by Hibernate Tools 4.3.1
+// Generated 27-dic-2018 18:11:38 by Hibernate Tools 4.3.1
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -22,8 +22,8 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "perfil",
-         schema = "dbo",
-         catalog = "restoitsco"
+        schema = "dbo",
+        catalog = "restoitsco"
 )
 public class Perfil implements java.io.Serializable {
 
@@ -120,11 +120,11 @@ public class Perfil implements java.io.Serializable {
     }
 
     @PrePersist
-    public void prepersist(){
-        if(perfilEstado == null){
+    public void prepersist() {
+        if (perfilEstado == null) {
             perfilEstado = 'A';
         }
-        if(perfilFechaCreacion == null){
+        if (perfilFechaCreacion == null) {
             Date date = new Date();
             perfilFechaCreacion = (new Timestamp(date.getTime()));
         }

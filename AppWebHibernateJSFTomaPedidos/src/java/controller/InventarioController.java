@@ -8,6 +8,7 @@ package controller;
 import dao.InventarioDAO;
 import dao.LocalDAO;
 import dao.ProductoDAO;
+import dao.TempInventarioDAO;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
@@ -17,6 +18,7 @@ import javax.faces.context.FacesContext;
 import model.Inventario;
 import model.Local;
 import model.Producto;
+import model.TempInventario;
 
 /**
  *
@@ -33,6 +35,7 @@ public class InventarioController {
     private Local local;
     private int localId;
     private List<Inventario> inventarios;
+    private List<TempInventario> inventarioTotal;
 
     public Inventario getInventario() {
         return inventario;
@@ -90,6 +93,14 @@ public class InventarioController {
         this.localId = localId;
     }
 
+    public List<TempInventario> getInventarioTotal() {
+        return inventarioTotal;
+    }
+
+    public void setInventarioTotal(List<TempInventario> inventarioTotal) {
+        this.inventarioTotal = inventarioTotal;
+    }
+
     @PostConstruct
     public void init() {
         inventario = new Inventario();
@@ -103,11 +114,14 @@ public class InventarioController {
      */
     public InventarioController() {
         InventarioDAO inventarioDAO = new InventarioDAO();
+        TempInventarioDAO tempInventarioDAO = new TempInventarioDAO();
         inventarios = inventarioDAO.findAll();
+        inventarioTotal = tempInventarioDAO.findAll();
     }
 
     public void save() {
         InventarioDAO inventarioDAO = new InventarioDAO();
+        TempInventarioDAO tempInventarioDAO = new TempInventarioDAO();
         ProductoDAO productoDAO = new ProductoDAO();
         LocalDAO localDAO = new LocalDAO();
         producto = productoDAO.findById(productoId);
@@ -119,6 +133,7 @@ public class InventarioController {
                 FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Dato registrado correctamente!");
                 FacesContext.getCurrentInstance().addMessage(null, massage);
                 inventarios = inventarioDAO.findAll();
+                inventarioTotal = tempInventarioDAO.findAll();
             } else {
                 FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error!");
                 FacesContext.getCurrentInstance().addMessage(null, massage);
@@ -131,6 +146,7 @@ public class InventarioController {
 
     public void update() {
         InventarioDAO inventarioDAO = new InventarioDAO();
+        TempInventarioDAO tempInventarioDAO = new TempInventarioDAO();
         ProductoDAO productoDAO = new ProductoDAO();
         LocalDAO localDAO = new LocalDAO();
         producto = productoDAO.findById(productoId);
@@ -142,6 +158,7 @@ public class InventarioController {
                 FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Dato modificado correctamente!");
                 FacesContext.getCurrentInstance().addMessage(null, massage);
                 inventarios = inventarioDAO.findAll();
+                inventarioTotal = tempInventarioDAO.findAll();
             } else {
                 FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error!");
                 FacesContext.getCurrentInstance().addMessage(null, massage);
@@ -154,10 +171,12 @@ public class InventarioController {
 
     public void delete() {
         InventarioDAO inventarioDAO = new InventarioDAO();
+        TempInventarioDAO tempInventarioDAO = new TempInventarioDAO();
         if (inventarioDAO.delete(selected)) {
             FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Dato eliminado correctamente!");
             FacesContext.getCurrentInstance().addMessage(null, massage);
             inventarios = inventarioDAO.findAll();
+            inventarioTotal = tempInventarioDAO.findAll();
         } else {
             FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error!\nNo se puede eliminar");
             FacesContext.getCurrentInstance().addMessage(null, massage);

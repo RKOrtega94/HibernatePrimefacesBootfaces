@@ -1,29 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-    <session-factory>
-        <property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
-        <property name="hibernate.connection.url">jdbc:sqlserver://localhost:1433;databaseName=restoitsco</property>
-        <property name="hibernate.connection.username">SQLSERVER</property>
-        <property name="hibernate.connection.password">1234567890</property>
-        <property name="dialect">org.hibernate.dialect.SQLServerDialect</property>
-        <property name="hibernate.search.autoregister_listeners">true</property>
-        <property name="hibernate.validator.apply_to_ddl">false</property>
-        <property name="hibernate.enable_lazy_load_no_trans">true</property>
-        <property name="hibernate.show_sql">true</property>
-        <mapping resource="model/Local.hbm.xml"/>
-        <mapping resource="model/Usuario.hbm.xml"/>
-        <mapping resource="model/Cliente.hbm.xml"/>
-        <mapping resource="model/Perfil.hbm.xml"/>
-        <mapping resource="model/Detallefactura.hbm.xml"/>
-        <mapping resource="model/Cargo.hbm.xml"/>
-        <mapping resource="model/Empleado.hbm.xml"/>
-        <mapping resource="model/Inventario.hbm.xml"/>
-        <mapping resource="model/Menu.hbm.xml"/>
-        <mapping resource="model/OpcionXperfil.hbm.xml"/>
-        <mapping resource="model/Cabecerafactura.hbm.xml"/>
-        <mapping resource="model/Producto.hbm.xml"/>
-        <mapping resource="model/Opcion.hbm.xml"/>
-        <mapping resource="model/Empresa.hbm.xml"/>
-    </session-factory>
+  <session-factory>
+    <property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
+    <property name="hibernate.connection.url">jdbc:sqlserver://localhost:1433;databaseName=restoitsco</property>
+    <property name="hibernate.connection.username">SQLSERVER</property>
+    <property name="hibernate.connection.password">1234567890</property>
+    <property name="dialect">org.hibernate.dialect.SQLServerDialect</property>
+    <property name="hibernate.search.autoregister_listeners">true</property>
+    <property name="hibernate.validator.apply_to_ddl">false</property>
+    <mapping resource="model/Detallefactura.hbm.xml"/>
+    <mapping resource="model/Perfil.hbm.xml"/>
+    <mapping resource="model/TempInventario.hbm.xml"/>
+    <mapping resource="model/Cliente.hbm.xml"/>
+    <mapping resource="model/Empresa.hbm.xml"/>
+    <mapping resource="model/OpcionXperfil.hbm.xml"/>
+    <mapping resource="model/Opcion.hbm.xml"/>
+    <mapping resource="model/Local.hbm.xml"/>
+    <mapping resource="model/Empleado.hbm.xml"/>
+    <mapping resource="model/Menu.hbm.xml"/>
+    <mapping resource="model/Cabecerafactura.hbm.xml"/>
+    <mapping resource="model/Producto.hbm.xml"/>
+    <mapping resource="model/Usuario.hbm.xml"/>
+    <mapping resource="model/Cargo.hbm.xml"/>
+    <mapping resource="model/Inventario.hbm.xml"/>
+  </session-factory>
 </hibernate-configuration>

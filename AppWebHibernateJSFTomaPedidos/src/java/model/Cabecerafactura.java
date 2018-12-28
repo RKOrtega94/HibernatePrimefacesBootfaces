@@ -1,6 +1,7 @@
 package model;
-// Generated 11-dic-2018 10:09:37 by Hibernate Tools 4.3.1
+// Generated 27-dic-2018 18:11:38 by Hibernate Tools 4.3.1
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -134,4 +136,14 @@ public class Cabecerafactura implements java.io.Serializable {
         this.detallefacturas = detallefacturas;
     }
 
+    @PrePersist
+    public void prepersist() {
+        if (cabecerafacturaFechaCreacion == null) {
+            Date date = new Date();
+            cabecerafacturaFechaCreacion = (new Timestamp(date.getTime()));
+        }
+        if (cabecerafacturaEstado == null) {
+            cabecerafacturaEstado = 'A';
+        }
+    }
 }

@@ -9,7 +9,6 @@ import dao.OpcionDAO;
 import dao.OpcionPerfilDAO;
 import dao.PerfilDAO;
 import javax.inject.Named;
-import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;

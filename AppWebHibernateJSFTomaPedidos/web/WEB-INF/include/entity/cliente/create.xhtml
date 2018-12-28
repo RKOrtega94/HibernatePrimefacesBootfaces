@@ -7,7 +7,7 @@
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition>
-        <h:form id="ClienteCreateForm">
+        <h:form id="clienteCreateForm">
             <p:dialog widgetVar="create"
                       header="Registrar"
                       showEffect="fade"
@@ -58,7 +58,11 @@
                             <p:inputText id="txtDocumento"
                                          value="#{clienteController.cliente.cienteNumeroDocumento}"
                                          required="true"
-                                         requiredMessage="El número de documento es obligatorio"/>
+                                         requiredMessage="El número de documento es obligatorio"
+                                         maxlength="13">
+                                <p:keyFilter regEx="/[\d]/"/>
+                                <f:validateLength minimum="10"/>
+                            </p:inputText>
                         </p:column>
                     </p:row>
 
@@ -71,7 +75,11 @@
                             <p:inputText id="txtTelefono"
                                          value="#{clienteController.cliente.clienteTelefono}"
                                          required="true"
-                                         requiredMessage="El número de teléfono es obligatorio"/>
+                                         requiredMessage="El número de teléfono es obligatorio"
+                                         maxlength="10">
+                                <p:keyFilter regEx="/[\d]/"/>
+                                <f:validateLength minimum="8"/>
+                            </p:inputText>
                         </p:column>
                     </p:row>
 
@@ -82,7 +90,9 @@
                         </p:column>
                         <p:column>
                             <p:inputText id="txtCorreo"
-                                         value="#{clienteController.cliente.clienteCorreo}"/>
+                                         value="#{clienteController.cliente.clienteCorreo}">
+                                <p:keyFilter regEx="/[a-z0-9_\.\-@]/i"/>
+                            </p:inputText>
                         </p:column>
                     </p:row>
 

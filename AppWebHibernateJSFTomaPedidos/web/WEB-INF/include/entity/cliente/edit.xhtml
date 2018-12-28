@@ -5,17 +5,16 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:b="http://bootsfaces.net/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition>
-        <p:dialog id="ClienteEditDialog"
-                  widgetVar="ClienteEditDialog"
+        <p:dialog id="clienteEditDialog"
+                  widgetVar="clienteEditDialog"
                   modal="true"
                   resizable="false"
                   appendTo="@(body)"
                   header="Editar cliente"
                   closeOnEscape="true">
-            <h:form id="ClienteEditForm">
+            <h:form id="clienteEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2"
                                  styleClass="ui-noborder"
@@ -43,18 +42,28 @@
                                        value="Cédula / RUC"/>
                         <p:inputText id="clienteDocumento"
                                      value="#{clienteController.selected.cienteNumeroDocumento}"
-                                     required="true"/>
+                                     required="true"
+                                     maxlength="13">
+                            <p:keyFilter regEx="/[\d]/"/>
+                            <f:validateLength minimum="10"/>
+                        </p:inputText>
 
                         <p:outputLabel for="clienteTelefono"
                                        value="Teléfono"/>
                         <p:inputText id="clienteTelefono"
                                      value="#{clienteController.selected.clienteTelefono}"
-                                     required="true"/>
+                                     required="true"
+                                     maxlength="13">
+                            <p:keyFilter regEx="/[\d]/"/>
+                            <f:validateLength minimum="8"/>
+                        </p:inputText>
 
                         <p:outputLabel for="clienteCorreo"
                                        value="Correo"/>
                         <p:inputText id="clienteCorreo"
-                                     value="#{clienteController.selected.clienteCorreo}"/>
+                                     value="#{clienteController.selected.clienteCorreo}">
+                            <p:keyFilter regEx="/[a-z0-9_\.\-@]/i"/>
+                        </p:inputText>
 
                         <p:outputLabel for="clienteEstado"
                                        value="Estado"/>

@@ -55,37 +55,47 @@
                                            itemLabel="#{item.cargoDescripcion}"
                                            itemValue="#{item.cargoId}"/>
                         </p:selectOneMenu>
-                        
+
                         <p:outputLabel for="empleadoPrimerApellido"
                                        value="Primer apellido"/>
                         <p:inputText id="empleadoPrimerApellido"
                                      value="#{empleadoController.selected.empleadoPromerApellido}"
                                      required="true"
-                                     requiredMessage="Primer apellido es obligatorio"/>
-                        
+                                     requiredMessage="Primer apellido es obligatorio">
+                            <p:keyFilter regEx="/[a-z_]/i"/>
+                        </p:inputText>
+
                         <p:outputLabel for="empleadoSegundoApellido"
                                        value="Segundo apellido"/>
                         <p:inputText id="empleadoSegundoApellido"
-                                     value="#{empleadoController.selected.empleadoSegundoApellido}"/>
-                        
+                                     value="#{empleadoController.selected.empleadoSegundoApellido}">
+                            <p:keyFilter regEx="/[a-z_]/i"/>
+                        </p:inputText>
+
                         <p:outputLabel for="empleadoPrimerNombre"
                                        value="Primer nombre"/>
                         <p:inputText id="empleadoPrimerNombre"
                                      value="#{empleadoController.selected.empleadoPrimernombre}"
                                      required="true"
-                                     requiredMessage="El primer nombre es obligatorio"/>
-                        
+                                     requiredMessage="El primer nombre es obligatorio">
+                            <p:keyFilter regEx="/[a-z_]/i"/>
+                        </p:inputText>
+
                         <p:outputLabel for="empleadoSegundoNombre"
                                        value="Segundo nombre"/>
                         <p:inputText id="empleadoSegundoNombre"
-                                     value="#{empleadoController.selected.empleadoSegundoApellido}"/>
-                        
+                                     value="#{empleadoController.selected.empleadoSegundoApellido}">
+                            <p:keyFilter regEx="/[a-z_]/i"/>
+                        </p:inputText>
+
                         <p:outputLabel for="empleadoDocumento"
                                        value="Cédula"/>
                         <p:inputText id="empleadoDocumento"
                                      value="#{empleadoController.selected.empleadoNumeroDocumento}"
                                      required="true"
-                                     requiredMessage="El número de cédula es obligatorio"/>
+                                     requiredMessage="El número de cédula es obligatorio">
+                            <p:keyFilter regEx="/[\d]/"/>
+                        </p:inputText>
 
                         <p:outputLabel for="empleadoEstado"
                                        value="Estado"/>
@@ -94,7 +104,7 @@
                                          style="width: 100%">
                             <f:selectItem itemLabel="Activo"
                                           itemValue="A"/>
-                            <f:selectItem itemLabel="Anulado"
+                            <f:selectItem itemLabel="Inactivo"
                                           itemValue="I"/>
                         </p:selectOneMenu>
                     </p:panelGrid>

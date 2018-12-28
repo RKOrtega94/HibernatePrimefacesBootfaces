@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 27-dic-2018 18:11:39 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="model.TempInventario" table="tempInventario" schema="dbo" catalog="restoitsco" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="localId" type="int">
+            <column name="localId" not-null="true" />
+        </property>
+        <property name="productoId" type="int">
+            <column name="productoId" not-null="true" />
+        </property>
+        <property name="cantidad" type="double">
+            <column name="cantidad" precision="53" scale="0" not-null="true" />
+        </property>
+        <property name="local" type="string">
+            <column name="local" length="150" not-null="true" />
+        </property>
+        <property name="producto" type="string">
+            <column name="producto" length="150" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

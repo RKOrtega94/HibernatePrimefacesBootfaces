@@ -35,7 +35,7 @@
                          selectionMode="single"
                          selection="#{clienteController.selected}">
                 <f:facet name="header">
-                    Clientes
+                    clientes
                 </f:facet>
 
                 <p:ajax event="rowSelect"
@@ -82,14 +82,14 @@
                              icon="ui-icon-search"
                              style="visibility: hidden"
                              value="Ver"
-                             update=":ClienteViewForm"
+                             update=":clienteViewForm"
                              oncomplete="PF('clienteViewDialog').show()"/>
             <p:commandButton id="editButton"
                              style="visibility: hidden;"
                              icon="ui-icon-pencil"
                              value="Editar"
-                             update="ClienteEditForm"
-                             oncomplete="PF('ClienteEditDialog').show()"/>
+                             update="clienteEditForm"
+                             oncomplete="PF('clienteEditDialog').show()"/>
             <p:commandButton id="deleteButton"
                              style="visibility: hidden"
                              icon="ui-icon-trash"
