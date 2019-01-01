@@ -8,6 +8,8 @@ package controller;
 import dao.CargoDAO;
 import dao.EmpleadoDAO;
 import dao.LocalDAO;
+import dao.PerfilDAO;
+import dao.UsuarioDAO;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
@@ -17,6 +19,8 @@ import javax.faces.context.FacesContext;
 import model.Cargo;
 import model.Empleado;
 import model.Local;
+import model.Perfil;
+import model.Usuario;
 
 /**
  *
@@ -33,6 +37,9 @@ public class EmpleadoController {
     private int localId;
     private Cargo cargo;
     private int cargoId;
+    private Usuario usuario;
+    private int perfilId;
+    private Perfil perfil;
 
     public Empleado getEmpleado() {
         return empleado;
@@ -90,11 +97,37 @@ public class EmpleadoController {
         this.cargoId = cargoId;
     }
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public int getPerfilId() {
+        return perfilId;
+    }
+
+    public void setPerfilId(int perfilId) {
+        this.perfilId = perfilId;
+    }
+
+    public Perfil getPerfil() {
+        return perfil;
+    }
+
+    public void setPerfil(Perfil perfil) {
+        this.perfil = perfil;
+    }
+
     @PostConstruct
     public void init() {
         empleado = new Empleado();
         selected = new Empleado();
         cargo = new Cargo();
+        usuario = new Usuario();
+        perfil = new Perfil();
     }
 
     /**
@@ -107,19 +140,38 @@ public class EmpleadoController {
 
     public void save() {
         EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+        PerfilDAO perfilDAO = new PerfilDAO();
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
         CargoDAO cargoDAO = new CargoDAO();
         LocalDAO localDAO = new LocalDAO();
         local = localDAO.findById(localId);
         cargo = cargoDAO.findById(cargoId);
+        perfil = perfilDAO.findById(perfilId);
         if (cargo != null && local != null) {
             empleado.setLocal(local);
             empleado.setCargo(cargo);
-            if (empleadoDAO.save(empleado)) {
-                FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Dato registrado correctamente!");
-                FacesContext.getCurrentInstance().addMessage(null, massage);
-                empleados = empleadoDAO.findAll();
+            if (empleadoDAO.findByDni(empleado.getEmpleadoNumeroDocumento()) == null) {
+                if (empleadoDAO.save(empleado)) {
+                    FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Dato registrado correctamente!");
+                    FacesContext.getCurrentInstance().addMessage(null, massage);
+                    usuario.setEmpleado(empleado);
+                    usuario.setUsuarioNombre(empleado.getEmpleadoNumeroDocumento());
+                    usuario.setUsuarioClave(empleado.getEmpleadoNumeroDocumento());
+                    usuario.setPerfil(perfil);
+                    if (usuarioDAO.save(usuario)) {
+                        massage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Usuario Registrado!");
+                        FacesContext.getCurrentInstance().addMessage(null, massage);
+                    } else {
+                        massage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error en la creacion del usuario");
+                        FacesContext.getCurrentInstance().addMessage(null, massage);
+                    }
+                    empleados = empleadoDAO.findAll();
+                } else {
+                    FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error!");
+                    FacesContext.getCurrentInstance().addMessage(null, massage);
+                }
             } else {
-                FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error!");
+                FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error!", "El numero de cédula ya existe!");
                 FacesContext.getCurrentInstance().addMessage(null, massage);
             }
         } else {

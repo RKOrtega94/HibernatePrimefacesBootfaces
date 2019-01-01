@@ -6,7 +6,7 @@
 package dao;
 
 import java.util.List;
-import model.Empleado;
+import model.Usuario;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -16,35 +16,35 @@ import util.HibernateUtil;
  *
  * @author RKOrtega
  */
-public class EmpleadoDAO {
+public class UsuarioDAO {
 
     private static final SessionFactory SESSION_FACTORY = HibernateUtil.getSessionFactory();
 
     @SuppressWarnings({"rawtypes", "unchecked"})
-    public List<Empleado> findAll() {
-        List<Empleado> empleados = null;
+    public List<Usuario> findAll() {
+        List<Usuario> usuarios = null;
         Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
-            Query query = session.createQuery("select e from Empleado e");
-            empleados = query.getResultList();
+            Query query = session.createQuery("select u from Usuario u");
+            usuarios = query.getResultList();
             session.getTransaction().commit();
         } catch (Exception e) {
-            empleados = null;
+            usuarios = null;
             session.getTransaction().rollback();
         } finally {
             session.close();
         }
-        return empleados;
+        return usuarios;
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
-    public boolean save(Empleado empleado) {
+    public boolean save(Usuario usuario) {
         boolean result = true;
         Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
-            session.save(empleado);
+            session.save(usuario);
             session.getTransaction().commit();
         } catch (Exception e) {
             result = false;
@@ -56,12 +56,12 @@ public class EmpleadoDAO {
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
-    public boolean update(Empleado empleado) {
+    public boolean update(Usuario usuario) {
         boolean result = true;
         Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
-            session.update(empleado);
+            session.update(usuario);
             session.getTransaction().commit();
         } catch (Exception e) {
             result = false;
@@ -73,12 +73,12 @@ public class EmpleadoDAO {
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
-    public boolean delete(Empleado empleado) {
+    public boolean delete(Usuario usuario) {
         boolean result = true;
         Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
-            session.delete(empleado);
+            session.delete(usuario);
             session.getTransaction().commit();
         } catch (Exception e) {
             result = false;
@@ -87,43 +87,5 @@ public class EmpleadoDAO {
             session.close();
         }
         return result;
-    }
-
-    @SuppressWarnings({"rawtypes", "unchecked"})
-    public Empleado findById(int id) {
-        Empleado empleado = null;
-        Session session = SESSION_FACTORY.openSession();
-        try {
-            session.beginTransaction();
-            Query query = session.createQuery("select e from Empleado e where e.empleadoNumeroDocumento = :id");
-            query.setParameter("id", id);
-            empleado = (Empleado) query.uniqueResult();
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            empleado = null;
-            session.getTransaction().rollback();
-        } finally {
-            session.close();
-        }
-        return empleado;
-    }
-
-    @SuppressWarnings({"rawtypes", "unchecked"})
-    public Empleado findByDni(String dni) {
-        Empleado empleado = null;
-        Session session = SESSION_FACTORY.openSession();
-        try {
-            session.beginTransaction();
-            Query query = session.createQuery("select e from Empleado e where e.empleadoNumeroDocumento = :dni");
-            query.setParameter("dni", dni);
-            empleado = (Empleado) query.uniqueResult();
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            empleado = null;
-            session.getTransaction().rollback();
-        } finally {
-            session.close();
-        }
-        return empleado;
     }
 }
