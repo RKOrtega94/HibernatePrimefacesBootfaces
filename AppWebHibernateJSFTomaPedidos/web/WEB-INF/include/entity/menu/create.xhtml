@@ -1,0 +1,132 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition>
+        <h:form id="menuCreateForm"
+                enctype="multipart/form-data">
+            <p:dialog widgetVar="create"
+                      header="Registrar"
+                      showEffect="fade"
+                      hideEffect="fade"
+                      resizable="false">
+                <p:panelGrid id="EditPanel"
+                             styleClass="ui-noborder">
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="txtEmpresa"
+                                           value="Empresa"/>
+                        </p:column>
+                        <p:column>
+                            <p:selectOneMenu id="txtEmpresa"
+                                             value="#{menuController.empresaId}"
+                                             required="true"
+                                             requiredMessage="Campo obligatorio"
+                                             effect="fade"
+                                             filter="true"
+                                             filterMatchMode="contains"
+                                             style="width: 100%">
+                                <f:selectItem itemLabel="Seleccionar local"/>
+                                <f:selectItems value="#{empresaController.empresas}"
+                                               var="item"
+                                               itemLabel="#{item.empresaRazonSocial}"
+                                               itemValue="#{item.empresaId}"/>
+                            </p:selectOneMenu>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="txtMenu"
+                                           value="Nombre"/>
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="txtMenu"
+                                         value="#{menuController.menu.menuNombre}"
+                                         required="true"
+                                         requiredMessage="El nombre es obligatorio">
+                                <p:keyFilter regEx="/[a-z_]/i"/>
+                            </p:inputText>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="txtDescripcion"
+                                           value="Descripción"/>
+                        </p:column>
+                        <p:column>
+                            <p:inputTextarea id="txtDescripcion"
+                                             value="#{menuController.menu.menuDescriocion}"
+                                             required="true">
+                            </p:inputTextarea>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="txtTipo"
+                                           value="Tipo"/>
+                        </p:column>
+                        <p:column>
+                            <p:selectOneMenu id="txtTipo"
+                                             value="#{menuController.menu.menuTipo}"
+                                             required="true"
+                                             requiredMessage="El tipo es obligatorio">
+                                <f:selectItem itemLabel="Entrada"
+                                              itemValue="E"/>
+                                <f:selectItem itemLabel="Plato fuerte"
+                                              itemValue="F"/>
+                                <f:selectItem itemLabel="Postre"
+                                              itemValue="P"/>
+                                <f:selectItem itemValue="B"
+                                              itemLabel="Bebida"/>
+                            </p:selectOneMenu>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="txtImage"
+                                           value="Foto/Imagen"/>
+                        </p:column>
+                        <p:column>
+                            <p:fileUpload id="txtImage"
+                                          value="#{menuController.file}"
+                                          mode="simple"
+                                          allowTypes="/(\.|\/)(jpe?g|png)$/"
+                                          skinSimple="true"
+                                          required="true"
+                                          requiredMessage="La iamagen es obligatoria"/>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="txtValor"
+                                           value="Valor"/>
+                        </p:column>
+                        <p:column>
+                            <p:inputText id="txtValor"
+                                         value="#{menuController.menu.menuValor}"
+                                         required="true"
+                                         requiredMessage="El valo es obligatoria">
+                                <p:keyFilter regEx="/[\d\.]/"/>
+                            </p:inputText>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="2">
+                            <center>
+                                <b:commandButton id="btnSuccess"
+                                                 value="Guardar"
+                                                 actionListener="#{menuController.save()}"
+                                                 look="success"
+                                                 update=":listForm:dataList, :growl"/>
+                            </center>
+                        </p:column>
+                    </p:row>
+                </p:panelGrid>
+            </p:dialog>
+        </h:form>
+    </ui:composition>
+</html>

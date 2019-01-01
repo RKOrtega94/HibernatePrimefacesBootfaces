@@ -24,3 +24,9 @@
 .ui-panel{
     border: none;
 }
+
+.ui-tabs, .ui-datagrid{
+    border: none;
+    background: rgba(0,0,0,0);
+}
+

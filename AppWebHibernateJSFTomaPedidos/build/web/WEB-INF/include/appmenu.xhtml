@@ -11,33 +11,45 @@
                       inverse="true"
                       position="top"
                       sticky="false"
+                      fluid="true"
                       style="margin: 0px">
                 <b:navbarLinks>
                     <b:navLink value="Home"
                                href="/appmenu/home.jsf"
                                iconAwesome="fa-home"/>
-                    <b:dropMenu value="Mantenimiento"
-                                iconAwesome="fa-cogs">
-                        <b:navLink value="Empresa"
-                                   href="/appmenu/app/empresa/index.jsf"/>
-                        <b:navLink value="Cargos"
-                                   href="/appmenu/app/cargo/index.jsf"/>
+                    <b:navLink value="Menu"
+                               href="/appmenu/app/menu/index.jsf"
+                               iconAwesome="fa-cutlery"/>
+                    <b:navLink value="Clientes"
+                               href="/appmenu/app/cliente/index.jsf"
+                               iconAwesome="fa-user"/>
+                    <b:navLink value="Empleados"
+                               href="/appmenu/app/empleado/index.jsf"
+                               iconAwesome="fa-group"/>
+                    <b:dropMenu value="Bodega"
+                                iconAwesome="fa-archive">
+                        <b:navLink value="Productos"
+                                   href="/appmenu/app/producto/index.jsf"/>
+                        <b:navLink value="Inventario"
+                                   href="/appmenu/app/inventario/index.jsf"/>
+                    </b:dropMenu>
+                    <b:dropMenu value="Seguridad"
+                                iconAwesome="fa-lock">
                         <b:navLink value="Perfiles"
                                    href="/appmenu/app/perfil/index.jsf"/>
                         <b:navLink value="Opciones"
                                    href="/appmenu/app/opcion/index.jsf"/>
                         <b:navLink value="Permisos"
                                    href="/appmenu/app/permisos/index.jsf"/>
-                        <b:navLink value="Productos"
-                                   href="/appmenu/app/producto/index.jsf"/>
+                    </b:dropMenu>
+                    <b:dropMenu value="Mantenimiento"
+                                iconAwesome="fa-cogs">
+                        <b:navLink value="Empresa"
+                                   href="/appmenu/app/empresa/index.jsf"/>
+                        <b:navLink value="Cargos"
+                                   href="/appmenu/app/cargo/index.jsf"/>
                         <b:navLink value="Locales"
                                    href="/appmenu/app/local/index.jsf"/>
-                        <b:navLink value="Clientes"
-                                   href="/appmenu/app/cliente/index.jsf"/>
-                        <b:navLink value="Inventario"
-                                   href="/appmenu/app/inventario/index.jsf"/>
-                        <b:navLink value="Empleado"
-                                   href="/appmenu/app/empleado/index.jsf"/>
                     </b:dropMenu>
                 </b:navbarLinks>
             </b:navBar>

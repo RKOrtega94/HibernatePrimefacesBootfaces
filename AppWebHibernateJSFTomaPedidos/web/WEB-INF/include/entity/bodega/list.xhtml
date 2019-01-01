@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:b="http://bootsfaces.net/ui">
+    <b:container>
+        <h:form id="bodegaListForm">
+            <p:dataTable id="dataListBodega"
+                         value="#{inventarioController.inventarioTotal}"
+                         var="item"
+                         lazy="false"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50">
+                <f:facet name="header">
+                    Inventario
+                </f:facet>
+
+                <p:column sortBy="#{item.local}"
+                          filterBy="#{item.local}"
+                          filterMatchMode="contains">
+                    <f:facet name="header">
+                        <h:outputText value="Local"/>
+                    </f:facet>
+                    <h:outputText value="#{item.local}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.producto}"
+                          filterBy="#{item.producto}"
+                          filterMatchMode="contains">
+                    <f:facet name="header">
+                        <h:outputText value="Producto"/>
+                    </f:facet>
+                    <h:outputText value="#{item.producto}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.cantidad}"
+                          filterBy="#{item.cantidad}"
+                          filterMatchMode="contains">
+                    <f:facet name="header">
+                        <h:outputText value="Cantidad"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cantidad}"/>
+                </p:column>
+
+            </p:dataTable>
+        </h:form>
+    </b:container>
+    <p:separator/>
+</ui:composition>

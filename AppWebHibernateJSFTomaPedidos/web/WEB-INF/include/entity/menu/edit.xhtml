@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition>
+        <p:dialog id="menuEditDialog"
+                  widgetVar="menuEditDialog"
+                  modal="true"
+                  resizable="false"
+                  appendTo="@(body)"
+                  header="Editar menu"
+                  closeOnEscape="true">
+            <h:form id="menuEditForm"
+                    enctype="multipart/form-data">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2"
+                                 styleClass="ui-noborder"
+                                 rendered="#{menuController.selected != null}">
+                        <p:outputLabel for="empresa"
+                                       value="Empresa"/>
+                        <p:selectOneMenu id="empresa"
+                                         value="#{menuController.empresaId}"
+                                         required="true"
+                                         requiredMessage="Campo obligatorio"
+                                         effect="fade"
+                                         filter="true"
+                                         filterMatchMode="contains"
+                                         style="width: 100%">
+                            <f:selectItem itemLabel="#{menuController.selected.empresa.empresaRazonSocial}"
+                                          itemValue="#{menuController.selected.empresa.empresaId}"/>
+                            <f:selectItems value="#{empresaController.empresas}"
+                                           var="item"
+                                           itemLabel="#{item.empresaRazonSocial}"
+                                           itemValue="#{item.empresaId}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="menu"
+                                       value="Nombre"/>
+                        <p:inputText id="menu"
+                                     value="#{menuController.selected.menuNombre}"
+                                     required="true"
+                                     requiredMessage="El nombre es obligatorio"/>
+
+                        <p:outputLabel for="descripcion"
+                                       value="Primer apellido"/>
+                        <p:inputText id="descripcion"
+                                     value="#{menuController.selected.menuDescriocion}"
+                                     required="true"
+                                     requiredMessage="Primer apellido es obligatorio">
+                        </p:inputText>
+
+                        <p:outputLabel for="tipo"
+                                       value="Tipo"/>
+                        <p:selectOneMenu id="tipo"
+                                         value="#{menuController.selected.menuTipo}"
+                                         required="true"
+                                         requiredMessage="El tipo es obligatorio">
+                            <f:selectItem itemLabel="Entrada"
+                                          itemValue="E"/>
+                            <f:selectItem itemLabel="Plato fuerte"
+                                          itemValue="F"/>
+                            <f:selectItem itemLabel="Postre"
+                                          itemValue="P"/>
+                            <f:selectItem itemValue="Bebida"
+                                          itemLabel="B"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="image"
+                                       value="Foto/Imagen"/>
+                        <p:fileUpload id="image"
+                                      value="#{menuController.file}"
+                                      mode="simple"
+                                      required="true"
+                                      skinSimple="true"/>
+
+                        <p:outputLabel for="valor"
+                                       value="Valor"/>
+                        <p:inputText id="valor"
+                                     value="#{menuController.selected.menuValor}">
+                            <p:keyFilter regEx="/[\d\.]/"/>
+                        </p:inputText>
+
+                        <p:outputLabel for="menuEstado"
+                                       value="Estado"/>
+                        <p:selectOneMenu id="menuEstado"
+                                         value="#{menuController.selected.menuEstado}"
+                                         style="width: 100%">
+                            <f:selectItem itemLabel="Activo"
+                                          itemValue="A"/>
+                            <f:selectItem itemLabel="Inactivo"
+                                          itemValue="I"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <center>
+                        <b:commandButton id="btnSaveEdit"
+                                         value="Guardar"
+                                         look="success"
+                                         actionListener="#{menuController.update()}">
+                            <p:confirm header="Confirmación"
+                                       message="Guardar los cambios?"
+                                       icon="ui-icon-alert"/>
+                        </b:commandButton>
+                    </center>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+    </ui:composition>
+</html>

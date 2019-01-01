@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:b="http://bootsfaces.net/ui">
+    <b:container fluid="true">
+        <h:form id="listForm">
+            <p:tabView>
+                <p:tab title="Entradas">
+                    <p:dataGrid var="item"
+                                value="#{menuViewController.entrada}"
+                                columns="4"
+                                paginator="true"
+                                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                layout="grid">
+                        <f:facet name="header">
+                            Entradas
+                        </f:facet>
+                        <p:panel header="#{item.menuNombre}"
+                                 style="text-align: center">
+                            <h:panelGrid columns="1"
+                                         style="width: 100%">
+                                <p:graphicImage value="#{item.menuFoto}"
+                                                style="width: 200px"/>
+
+                                <p:column>
+                                    $
+                                    <h:outputText value="#{item.menuValor}">
+                                        <f:convertNumber pattern="#0.00"/>
+                                    </h:outputText>
+                                </p:column>
+
+                                <p:commandLink update=":listForm:detail"
+                                               oncomplete="PF('cartaDialog').show()"
+                                               title="Ver detalles">
+                                    <i class="fa fa-search"></i>
+                                    <f:setPropertyActionListener value="#{item}"
+                                                                 target="#{menuViewController.selected}"/>
+                                </p:commandLink>
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:dataGrid>
+                </p:tab>
+                <p:tab title="Platos fuertes">
+
+                </p:tab>
+                <p:tab title="Postres">
+
+                </p:tab>
+                <p:tab title="Bebidas">
+
+                </p:tab>
+            </p:tabView>
+            <p:dialog header="Detalle"
+                      widgetVar="cartaDialog"
+                      modal="true"
+                      showEffect="fade"
+                      hideEffect="fade"
+                      resizable="false"
+                      responsive="true">
+                <p:outputPanel id="detail"
+                               style="text-align: center">
+                    <p:panelGrid columns="2"
+                                 rendered="#{not empty menuViewController.selected}"
+                                 styleClass="ui-noborder">
+                        <f:facet name="header">
+                            <p:graphicImage value="#{menuViewController.selected.menuFoto}"
+                                            style="width: 200px"/>
+                        </f:facet>
+                        <h:outputText value="Nombre"/>
+                        <h:outputText value="#{menuViewController.selected.menuNombre}"/>
+
+                        <h:outputText value="Detalle"/>
+                        <h:outputText value="#{menuViewController.selected.menuDescriocion}"/>
+
+                        <h:outputText value="Valor"/>
+                        <h:outputText value="$#{menuViewController.selected.menuValor}"/>
+                    </p:panelGrid>
+                </p:outputPanel>
+            </p:dialog>
+        </h:form>
+    </b:container>
+</ui:composition>

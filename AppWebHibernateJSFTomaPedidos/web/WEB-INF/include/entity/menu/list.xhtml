@@ -24,16 +24,17 @@
                             icon="ui-icon-trash"/>
             </p:contextMenu>
             <p:dataTable id="dataList"
-                         value="#{inventarioController.inventarios}"
+                         value="#{menuController.menus}"
                          var="item"
                          lazy="false"
-                         rowKey="#{item.inventarioId}"
+                         rowKey="#{item.menuId}"
                          paginator="true"
-                         rows="5"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
                          selectionMode="single"
-                         selection="#{inventarioController.selected}">
+                         selection="#{menuController.selected}">
                 <f:facet name="header">
-                    Movimientos
+                    menu
                 </f:facet>
 
                 <p:ajax event="rowSelect"
@@ -45,57 +46,33 @@
                 <p:ajax event="rowDblselect"
                         onsuccess="document.getElementById('listForm:viewButton').click();"/>
 
-                <p:column sortBy="#{item.producto.productoNombre}"
-                          filterBy="#{item.producto.productoNombre}"
+                <p:column sortBy="#{item.menuNombre}"
+                          filterBy="#{item.menuNombre}"
                           filterMatchMode="contains">
                     <f:facet name="header">
-                        <h:outputText value="Producto"/>
+                        <h:outputText value="Nombre"/>
                     </f:facet>
-                    <h:outputText value="#{item.producto.productoNombre}"/>
+                    <h:outputText value="#{item.menuNombre}"/>
                 </p:column>
 
-                <p:column sortBy="#{item.inventarioCantidad}"
-                          filterBy="#{item.inventarioCantidad}"
+                <p:column sortBy="#{item.menuValor}"
+                          filterBy="#{item.menuValor}"
                           filterMatchMode="contains">
                     <f:facet name="header">
-                        <h:outputText value="Cantidad"/>
+                        <h:outputText value="Valor"/>
                     </f:facet>
-                    <h:outputText value="#{item.inventarioCantidad}"/>
+                    $
+                    <h:outputText value="#{item.menuValor}">
+                        <f:convertNumber pattern="#0.00"/>
+                    </h:outputText>
                 </p:column>
 
-                <p:column sortBy="#{item.inventarioMovimiento}"
-                          filterBy="#{item.inventarioMovimiento=='I'?'Ingreso':'Egreso'}"
-                          filterMatchMode="contains">
-                    <f:facet name="header">
-                        <h:outputText value="Movimiento"/>
-                    </f:facet>
-                    <h:outputText value="#{item.inventarioMovimiento=='I'?'Ingreso':'Egreso'}"/>
-                </p:column>
-
-                <p:column sortBy="#{item.local.localNombre}"
-                          filterBy="#{item.local.localNombre}"
-                          filterMatchMode="contains">
-                    <f:facet name="header">
-                        <h:outputText value="Local"/>
-                    </f:facet>
-                    <h:outputText value="#{item.local.localNombre}"/>
-                </p:column>
-
-                <p:column sortBy="#{item.inventarioFechaCreacion}"
-                          filterBy="#{item.inventarioFechaCreacion}"
-                          filterMatchMode="contains">
-                    <f:facet name="header">
-                        <h:outputText value="Fecha"/>
-                    </f:facet>
-                    <h:outputText value="#{item.inventarioFechaCreacion}"/>
-                </p:column>
-
-                <p:column sortBy="#{item.inventarioEstado}"
-                          filterBy="#{item.inventarioEstado==('A')?'Activo':'Anulado'}">
+                <p:column sortBy="#{item.menuEstado}"
+                          filterBy="#{item.menuEstado==('A')?'Activo':'Inactivo'}">
                     <f:facet name="header">
                         <h:outputText value="Estado"/>
                     </f:facet>
-                    <h:outputText value="#{item.inventarioEstado==('A')?'Activo':'Anulado'}"/>
+                    <h:outputText value="#{item.menuEstado==('A')?'Activo':'Inactivo'}"/>
                 </p:column>
             </p:dataTable>
             <p:commandButton id="createButton"
@@ -107,20 +84,20 @@
                              icon="ui-icon-search"
                              style="visibility: hidden"
                              value="Ver"
-                             update=":inventarioViewForm"
-                             oncomplete="PF('inventarioViewDialog').show()"/>
+                             update=":menuViewForm"
+                             oncomplete="PF('menuViewDialog').show()"/>
             <p:commandButton id="editButton"
                              style="visibility: hidden;"
                              icon="ui-icon-pencil"
                              value="Editar"
-                             update="inventarioEditForm"
-                             oncomplete="PF('inventarioEditDialog').show()"/>
+                             update="menuEditForm"
+                             oncomplete="PF('menuEditDialog').show()"/>
             <p:commandButton id="deleteButton"
                              style="visibility: hidden"
                              icon="ui-icon-trash"
                              value="Eliminar"
-                             update="dataList, :growl, :bodegaListForm:dataListBodega"
-                             actionListener="#{inventarioController.delete()}">
+                             update=":growl, dataList"
+                             actionListener="#{menuController.delete()}">
                 <p:confirm header="Confirmación"
                            message="Seguro quiere eliminar el registro?"
                            icon="ui-icon-alert"/>

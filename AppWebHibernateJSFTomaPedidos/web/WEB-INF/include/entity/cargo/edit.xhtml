@@ -39,7 +39,8 @@
                         <b:commandButton id="btnSaveEdit"
                                          value="Guardar"
                                          look="success"
-                                         actionListener="#{cargoController.update()}">
+                                         actionListener="#{cargoController.update()}"
+                                         update=":listForm:dataList, :growl, createPanel, :bodegaListForm:dataListBodega">
                         </b:commandButton>
                     </center>
                 </h:panelGroup>
