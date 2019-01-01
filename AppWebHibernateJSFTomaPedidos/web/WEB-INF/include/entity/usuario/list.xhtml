@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:b="http://bootsfaces.net/ui">
+    <b:container>
+        <h:form id="listForm">
+            <p:contextMenu id="dataConextMenu"
+                           for="dataList">
+                <p:menuitem value="Ver"
+                            onclick="document.getElementById('listForm:viewButton').click()"
+                            icon="ui-icon-search"/>
+                <p:menuitem value="Editar"
+                            onclick="document.getElementById('listForm:editButton').click()"
+                            icon="ui-icon-pencil"/>
+                <p:menuitem value="Eliminar"
+                            onclick="document.getElementById('listForm:deleteButton').click()"
+                            icon="ui-icon-trash"/>
+            </p:contextMenu>
+            <p:dataTable id="dataList"
+                         value="#{usuarioController.usuarios}"
+                         var="item"
+                         lazy="false"
+                         rowKey="#{item.usuarioId}"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{usuarioController.selected}">
+                <f:facet name="header">
+                    usuario
+                </f:facet>
+
+                <p:ajax event="rowSelect"
+                        update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:dataConextMenu"/>
+                <p:ajax event="rowUnselect"
+                        update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:dataConextMenu"/>
+                <p:ajax event="contextMenu"
+                        update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect"
+                        onsuccess="document.getElementById('listForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.empleado.empleadoPrimernombre} #{item.empleado.empleadoPromerApellido}"
+                          filterBy="#{item.empleado.empleadoPrimernombre} #{item.empleado.empleadoPromerApellido}"
+                          filterMatchMode="contains">
+                    <f:facet name="header">
+                        <h:outputText value="Nombre"/>
+                    </f:facet>
+                    <h:outputText value="#{item.empleado.empleadoPrimernombre} #{item.empleado.empleadoPromerApellido}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.usuarioNombre}"
+                          filterBy="#{item.usuarioNombre}"
+                          filterMatchMode="contains">
+                    <f:facet name="header">
+                        <h:outputText value="Usuario"/>
+                    </f:facet>
+                    <h:outputText value="#{item.usuarioNombre}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.usuarioEstado}"
+                          filterBy="#{item.usuarioEstado==('A')?'Activo':'Inactivo'}">
+                    <f:facet name="header">
+                        <h:outputText value="Estado"/>
+                    </f:facet>
+                    <h:outputText value="#{item.usuarioEstado==('A')?'Activo':'Inactivo'}"/>
+                </p:column>
+            </p:dataTable>
+            <p:commandButton id="viewButton"
+                             process="dataList"
+                             icon="ui-icon-search"
+                             style="visibility: hidden"
+                             value="Ver"
+                             update=":usuarioViewForm"
+                             oncomplete="PF('usuarioViewDialog').show()"/>
+            <p:commandButton id="editButton"
+                             style="visibility: hidden;"
+                             icon="ui-icon-pencil"
+                             value="Editar"
+                             update="usuarioEditForm"
+                             oncomplete="PF('usuarioEditDialog').show()"/>
+            <p:commandButton id="deleteButton"
+                             style="visibility: hidden"
+                             icon="ui-icon-trash"
+                             value="Eliminar"
+                             update=":growl, dataList"
+                             actionListener="#{usuarioController.delete()}">
+                <p:confirm header="Confirmación"
+                           message="Seguro quiere eliminar el registro?"
+                           icon="ui-icon-alert"/>
+            </p:commandButton>
+            <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+        </h:form>
+    </b:container>
+</ui:composition>

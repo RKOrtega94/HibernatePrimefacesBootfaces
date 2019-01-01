@@ -6,13 +6,13 @@
 package controller;
 
 import dao.PerfilDAO;
-import javax.inject.Named;
 import java.io.Serializable;
+import javax.inject.Named;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import model.Perfil;
 
 /**
@@ -20,8 +20,8 @@ import model.Perfil;
  * @author RKOrtega
  */
 @Named(value = "perfilController")
-@ApplicationScoped
-public class PerfilController {
+@ViewScoped
+public class PerfilController implements Serializable{
 
     private Perfil perfil;
     private Perfil selected;

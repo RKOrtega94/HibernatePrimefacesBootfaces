@@ -12,12 +12,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
-import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.servlet.ServletContext;
 import model.Empresa;
 import model.Menu;
@@ -29,8 +30,8 @@ import org.primefaces.model.UploadedFile;
  * @author RKOrtega
  */
 @Named(value = "menuController")
-@ApplicationScoped
-public class MenuController {
+@ViewScoped
+public class MenuController implements Serializable{
 
     private Menu menu;
     private Menu selected;

@@ -6,13 +6,13 @@
 package controller;
 
 import dao.EmpresaDAO;
-import javax.inject.Named;
 import java.io.Serializable;
+import javax.inject.Named;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import model.Empresa;
 
 /**
@@ -20,8 +20,8 @@ import model.Empresa;
  * @author RKOrtega
  */
 @Named(value = "empresaController")
-@ApplicationScoped
-public class EmpresaController {
+@ViewScoped
+public class EmpresaController implements Serializable{
 
     private Empresa empresa;
     private Empresa selected;

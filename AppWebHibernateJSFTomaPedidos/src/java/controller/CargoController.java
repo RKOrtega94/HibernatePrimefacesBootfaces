@@ -1,13 +1,13 @@
 package controller;
 
 import dao.CargoDAO;
-import javax.inject.Named;
 import java.io.Serializable;
+import javax.inject.Named;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import model.Cargo;
 
 /**
@@ -15,8 +15,8 @@ import model.Cargo;
  * @author RKOrtega
  */
 @Named(value = "cargoController")
-@ApplicationScoped
-public class CargoController {
+@ViewScoped
+public class CargoController implements Serializable{
 
     private Cargo cargo;
     private Cargo selected;

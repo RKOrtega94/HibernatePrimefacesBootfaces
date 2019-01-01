@@ -75,7 +75,8 @@
                         <b:commandButton id="btnSaveEdit"
                                          value="Guardar"
                                          look="success"
-                                         actionListener="#{inventarioController.update()}">
+                                         actionListener="#{inventarioController.update()}"
+                                         update=":listForm:dataList, :growl, :bodegaListForm:dataListBodega">
                             <p:confirm header="Confirmación"
                                        message="Guardar los cambios?"
                                        icon="ui-icon-alert"/>

@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition>
+        <p:dialog id="empleadoEditDialog"
+                  widgetVar="empleadoEditDialog"
+                  modal="true"
+                  resizable="false"
+                  appendTo="@(body)"
+                  header="Editar empleado"
+                  closeOnEscape="true">
+            <h:form id="empleadoEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2"
+                                 styleClass="ui-noborder"
+                                 rendered="#{empleadoController.selected != null}">
+                        <p:outputLabel for="local"
+                                       value="Local"/>
+                        <p:selectOneMenu id="local"
+                                         value="#{empleadoController.localId}"
+                                         required="true"
+                                         requiredMessage="Campo obligatorio"
+                                         effect="fade"
+                                         filter="true"
+                                         filterMatchMode="contains"
+                                         style="width: 100%">
+                            <f:selectItem itemLabel="#{empleadoController.selected.local.localNombre}"
+                                          itemValue="#{empleadoController.selected.local.localId}"/>
+                            <f:selectItems value="#{localController.locales}"
+                                           var="item"
+                                           itemLabel="#{item.localNombre}"
+                                           itemValue="#{item.localId}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="cargo"
+                                       value="Cargo"/>
+                        <p:selectOneMenu id="cargo"
+                                         value="#{empleadoController.cargoId}"
+                                         required="true"
+                                         requiredMessage="Campo obligatorio"
+                                         effect="fade"
+                                         filter="true"
+                                         filterMatchMode="contains"
+                                         style="width: 100%">
+                            <f:selectItem itemLabel="#{empleadoController.selected.cargo.cargoDescripcion}"
+                                          itemValue="#{empleadoController.selected.cargo.cargoId}"/>
+                            <f:selectItems value="#{cargoController.cargos}"
+                                           var="item"
+                                           itemLabel="#{item.cargoDescripcion}"
+                                           itemValue="#{item.cargoId}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="empleadoPrimerApellido"
+                                       value="Primer apellido"/>
+                        <p:inputText id="empleadoPrimerApellido"
+                                     value="#{empleadoController.selected.empleadoPromerApellido}"
+                                     required="true"
+                                     requiredMessage="Primer apellido es obligatorio">
+                            <p:keyFilter regEx="/[a-z_]/i"/>
+                        </p:inputText>
+
+                        <p:outputLabel for="empleadoSegundoApellido"
+                                       value="Segundo apellido"/>
+                        <p:inputText id="empleadoSegundoApellido"
+                                     value="#{empleadoController.selected.empleadoSegundoApellido}">
+                            <p:keyFilter regEx="/[a-z_]/i"/>
+                        </p:inputText>
+
+                        <p:outputLabel for="empleadoPrimerNombre"
+                                       value="Primer nombre"/>
+                        <p:inputText id="empleadoPrimerNombre"
+                                     value="#{empleadoController.selected.empleadoPrimernombre}"
+                                     required="true"
+                                     requiredMessage="El primer nombre es obligatorio">
+                            <p:keyFilter regEx="/[a-z_]/i"/>
+                        </p:inputText>
+
+                        <p:outputLabel for="empleadoSegundoNombre"
+                                       value="Segundo nombre"/>
+                        <p:inputText id="empleadoSegundoNombre"
+                                     value="#{empleadoController.selected.empleadoSegundoApellido}">
+                            <p:keyFilter regEx="/[a-z_]/i"/>
+                        </p:inputText>
+
+                        <p:outputLabel for="empleadoDocumento"
+                                       value="Cédula"/>
+                        <p:inputText id="empleadoDocumento"
+                                     value="#{empleadoController.selected.empleadoNumeroDocumento}"
+                                     required="true"
+                                     requiredMessage="El número de cédula es obligatorio">
+                            <p:keyFilter regEx="/[\d]/"/>
+                        </p:inputText>
+
+                        <p:outputLabel for="empleadoEstado"
+                                       value="Estado"/>
+                        <p:selectOneMenu id="empleadoEstado"
+                                         value="#{empleadoController.selected.empleadoEstado}"
+                                         style="width: 100%">
+                            <f:selectItem itemLabel="Activo"
+                                          itemValue="A"/>
+                            <f:selectItem itemLabel="Inactivo"
+                                          itemValue="I"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <center>
+                        <b:commandButton id="btnSaveEdit"
+                                         value="Guardar"
+                                         look="success"
+                                         actionListener="#{empleadoController.update()}">
+                            <p:confirm header="Confirmación"
+                                       message="Guardar los cambios?"
+                                       icon="ui-icon-alert"/>
+                        </b:commandButton>
+                    </center>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+    </ui:composition>
+</html>

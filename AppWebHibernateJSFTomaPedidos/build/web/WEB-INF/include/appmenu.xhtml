@@ -35,6 +35,8 @@
                     </b:dropMenu>
                     <b:dropMenu value="Seguridad"
                                 iconAwesome="fa-lock">
+                        <b:navLink value="Usuarios"
+                                   href="/appmenu/app/usuarios/index.jsf"/>
                         <b:navLink value="Perfiles"
                                    href="/appmenu/app/perfil/index.jsf"/>
                         <b:navLink value="Opciones"
@@ -50,6 +52,15 @@
                                    href="/appmenu/app/cargo/index.jsf"/>
                         <b:navLink value="Locales"
                                    href="/appmenu/app/local/index.jsf"/>
+                    </b:dropMenu>
+                </b:navbarLinks>
+                <b:navbarLinks pull="right">
+                    <b:dropMenu value="Usuario"
+                                iconAwesome="fa-user">
+                        <b:navLink value="Cambiar clave"
+                                   href="#"/>
+                        <b:navLink value="Cerrar sesión"
+                                   href="#"/>
                     </b:dropMenu>
                 </b:navbarLinks>
             </b:navBar>

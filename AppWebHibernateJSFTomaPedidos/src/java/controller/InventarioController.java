@@ -9,12 +9,13 @@ import dao.InventarioDAO;
 import dao.LocalDAO;
 import dao.ProductoDAO;
 import dao.TempInventarioDAO;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
-import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import model.Inventario;
 import model.Local;
 import model.Producto;
@@ -25,8 +26,8 @@ import model.TempInventario;
  * @author RKOrtega
  */
 @Named(value = "inventarioController")
-@ApplicationScoped
-public class InventarioController {
+@ViewScoped
+public class InventarioController implements Serializable{
 
     private Inventario inventario;
     private Inventario selected;

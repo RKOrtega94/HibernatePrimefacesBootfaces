@@ -6,13 +6,13 @@
 package controller;
 
 import dao.OpcionDAO;
-import javax.inject.Named;
 import java.io.Serializable;
+import javax.inject.Named;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import model.Opcion;
 
 /**
@@ -20,8 +20,8 @@ import model.Opcion;
  * @author RKOrtega
  */
 @Named(value = "opcionController")
-@ApplicationScoped
-public class OpcionController {
+@ViewScoped
+public class OpcionController implements Serializable{
 
     private Opcion opcion;
     private Opcion selected;

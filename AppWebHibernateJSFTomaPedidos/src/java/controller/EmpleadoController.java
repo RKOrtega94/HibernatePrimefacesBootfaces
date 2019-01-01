@@ -10,12 +10,14 @@ import dao.EmpleadoDAO;
 import dao.LocalDAO;
 import dao.PerfilDAO;
 import dao.UsuarioDAO;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import model.Cargo;
 import model.Empleado;
 import model.Local;
@@ -27,8 +29,8 @@ import model.Usuario;
  * @author RKOrtega
  */
 @Named(value = "empleadoController")
-@ApplicationScoped
-public class EmpleadoController {
+@ViewScoped
+public class EmpleadoController implements Serializable{
 
     private Empleado empleado;
     private Empleado selected;
@@ -38,6 +40,7 @@ public class EmpleadoController {
     private Cargo cargo;
     private int cargoId;
     private Usuario usuario;
+    private List<Usuario> usuarios;
     private int perfilId;
     private Perfil perfil;
 
@@ -135,7 +138,9 @@ public class EmpleadoController {
      */
     public EmpleadoController() {
         EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
         empleados = empleadoDAO.findAll();
+        usuarios = usuarioDAO.findAll();
     }
 
     public void save() {

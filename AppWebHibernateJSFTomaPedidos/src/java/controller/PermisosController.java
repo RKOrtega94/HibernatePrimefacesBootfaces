@@ -8,12 +8,13 @@ package controller;
 import dao.OpcionDAO;
 import dao.OpcionPerfilDAO;
 import dao.PerfilDAO;
+import java.io.Serializable;
 import javax.inject.Named;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import model.Opcion;
 import model.OpcionXperfil;
 import model.Perfil;
@@ -23,8 +24,8 @@ import model.Perfil;
  * @author RKOrtega
  */
 @Named(value = "permisosController")
-@ApplicationScoped
-public class PermisosController {
+@ViewScoped
+public class PermisosController implements Serializable{
 
     private OpcionXperfil xperfil;
     private OpcionXperfil selected;

@@ -7,12 +7,13 @@ package controller;
 
 import dao.ClienteDAO;
 import dao.EmpresaDAO;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
-import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import model.Cliente;
 import model.Empresa;
 
@@ -21,8 +22,8 @@ import model.Empresa;
  * @author RKOrtega
  */
 @Named(value = "clienteController")
-@ApplicationScoped
-public class ClienteController {
+@ViewScoped
+public class ClienteController implements Serializable{
 
     private Cliente cliente;
     private Cliente selected;

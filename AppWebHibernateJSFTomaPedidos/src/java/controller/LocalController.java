@@ -7,13 +7,13 @@ package controller;
 
 import dao.EmpresaDAO;
 import dao.LocalDAO;
-import javax.inject.Named;
 import java.io.Serializable;
+import javax.inject.Named;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import model.Empresa;
 import model.Local;
 
@@ -22,8 +22,8 @@ import model.Local;
  * @author RKOrtega
  */
 @Named(value = "localController")
-@ApplicationScoped
-public class LocalController {
+@ViewScoped
+public class LocalController implements Serializable{
 
     private Local local;
     private Local selected;
