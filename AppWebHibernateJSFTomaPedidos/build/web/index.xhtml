@@ -28,7 +28,8 @@
                     <center>
                         <h:form id="loginForm">
                             <p:growl id="growl"
-                                     life="5000"/>
+                                     life="5000"
+                                     showDetail="true"/>
                             <p:panelGrid columns="2"
                                          styleClass="ui-noborder"
                                          style="width: 100%">
@@ -40,17 +41,20 @@
                                 <p:inputText id="txtUsername"
                                              required="true"
                                              placeholder="Nombre de usuario"
+                                             value="#{usuarioSessionController.username}"
                                              style="width: 100%"/>
                                 <p:outputLabel for="txtPassword"
                                                value="Calve"/>
                                 <p:password id="txtPassword"
                                             required="true"
                                             placeholder="Clave de usuario"
+                                            value="#{usuarioSessionController.password}"
                                             style="width: 100%"/>
                                 <f:facet name="footer">
                                     <center>
                                         <b:commandButton look="success"
                                                          value="Acceder"
+                                                         actionListener="#{usuarioSessionController.login()}"
                                                          update="growl"/>
                                     </center>
                                 </f:facet>

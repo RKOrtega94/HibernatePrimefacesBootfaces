@@ -7,6 +7,7 @@ package dao;
 
 import java.util.List;
 import model.OpcionXperfil;
+import model.Perfil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -87,5 +88,24 @@ public class OpcionPerfilDAO {
             session.close();
         }
         return result;
+    }
+
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public List<OpcionXperfil> findByPerfil(Perfil perfil) {
+        List<OpcionXperfil> opcionXperfil = null;
+        Session session = SESSION_FACTORY.openSession();
+        try {
+            session.beginTransaction();
+            Query query = session.createQuery("select op from OpcionXperfil op where op.perfil = :perfil");
+            query.setParameter("perfil", perfil);
+            opcionXperfil = query.getResultList();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            opcionXperfil = null;
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return opcionXperfil;
     }
 }

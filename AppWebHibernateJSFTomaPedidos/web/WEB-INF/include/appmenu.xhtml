@@ -11,7 +11,6 @@
                       inverse="true"
                       position="top"
                       sticky="false"
-                      fluid="true"
                       style="margin: 0px">
                 <b:navbarLinks>
                     <b:navLink value="Home"
@@ -36,7 +35,7 @@
                     <b:dropMenu value="Seguridad"
                                 iconAwesome="fa-lock">
                         <b:navLink value="Usuarios"
-                                   href="/appmenu/app/usuarios/index.jsf"/>
+                                   href="/appmenu/app/usuario/index.jsf"/>
                         <b:navLink value="Perfiles"
                                    href="/appmenu/app/perfil/index.jsf"/>
                         <b:navLink value="Opciones"
@@ -55,16 +54,16 @@
                     </b:dropMenu>
                 </b:navbarLinks>
                 <b:navbarLinks pull="right">
-                    <b:dropMenu value="Usuario"
+                    <b:dropMenu value="#{usuarioSessionController.usuario.empleado.empleadoPrimernombre} #{usuarioSessionController.usuario.empleado.empleadoPromerApellido}"
                                 iconAwesome="fa-user">
                         <b:navLink value="Cambiar clave"
                                    href="#"/>
                         <b:navLink value="Cerrar sesión"
-                                   href="#"/>
+                                   href="#"
+                                   actionListener="#{usuarioSessionController.logout()}"/>
                     </b:dropMenu>
                 </b:navbarLinks>
             </b:navBar>
         </h:form>
     </ui:composition>
 </html>
-

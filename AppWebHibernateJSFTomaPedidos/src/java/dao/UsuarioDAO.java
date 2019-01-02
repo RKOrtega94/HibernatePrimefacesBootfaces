@@ -88,4 +88,23 @@ public class UsuarioDAO {
         }
         return result;
     }
+
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public Usuario findByUsername(String username) {
+        Usuario usuario = null;
+        Session session = SESSION_FACTORY.openSession();
+        try {
+            session.beginTransaction();
+            Query query = session.createQuery("select u from Usuario u where u.usuarioNombre = :username");
+            query.setParameter("username", username);
+            usuario = (Usuario) query.uniqueResult();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            usuario = null;
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return usuario;
+    }
 }

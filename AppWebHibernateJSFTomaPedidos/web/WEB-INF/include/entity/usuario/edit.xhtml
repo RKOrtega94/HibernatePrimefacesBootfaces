@@ -4,115 +4,45 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:b="http://bootsfaces.net/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:b="http://bootsfaces.net/ui">
     <ui:composition>
-        <p:dialog id="empleadoEditDialog"
-                  widgetVar="empleadoEditDialog"
+        <p:dialog id="usuarioEditDialog"
+                  widgetVar="usuarioEditDialog"
                   modal="true"
                   resizable="false"
                   appendTo="@(body)"
-                  header="Editar empleado"
+                  header="Editar usuario"
                   closeOnEscape="true">
-            <h:form id="empleadoEditForm">
+            <h:form id="usuarioEditForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2"
                                  styleClass="ui-noborder"
-                                 rendered="#{empleadoController.selected != null}">
-                        <p:outputLabel for="local"
-                                       value="Local"/>
-                        <p:selectOneMenu id="local"
-                                         value="#{empleadoController.localId}"
-                                         required="true"
-                                         requiredMessage="Campo obligatorio"
-                                         effect="fade"
-                                         filter="true"
-                                         filterMatchMode="contains"
-                                         style="width: 100%">
-                            <f:selectItem itemLabel="#{empleadoController.selected.local.localNombre}"
-                                          itemValue="#{empleadoController.selected.local.localId}"/>
-                            <f:selectItems value="#{localController.locales}"
-                                           var="item"
-                                           itemLabel="#{item.localNombre}"
-                                           itemValue="#{item.localId}"/>
-                        </p:selectOneMenu>
+                                 rendered="#{usuarioController.selected != null}">
+                        <p:outputLabel for="empleado"
+                                       value="Empleado"/>
+                        <h:outputText id="empleado"
+                                      value="#{usuarioController.selected.empleado.empleadoPromerApellido} #{usuarioController.selected.empleado.empleadoPrimernombre}"/>
 
-                        <p:outputLabel for="cargo"
-                                       value="Cargo"/>
-                        <p:selectOneMenu id="cargo"
-                                         value="#{empleadoController.cargoId}"
-                                         required="true"
-                                         requiredMessage="Campo obligatorio"
-                                         effect="fade"
-                                         filter="true"
-                                         filterMatchMode="contains"
-                                         style="width: 100%">
-                            <f:selectItem itemLabel="#{empleadoController.selected.cargo.cargoDescripcion}"
-                                          itemValue="#{empleadoController.selected.cargo.cargoId}"/>
-                            <f:selectItems value="#{cargoController.cargos}"
-                                           var="item"
-                                           itemLabel="#{item.cargoDescripcion}"
-                                           itemValue="#{item.cargoId}"/>
-                        </p:selectOneMenu>
+                        <p:outputLabel for="usuario"
+                                       value="Usuario"/>
+                        <h:outputText id="usuario"
+                                      value="#{usuarioController.selected.usuarioNombre}"/>
 
-                        <p:outputLabel for="empleadoPrimerApellido"
-                                       value="Primer apellido"/>
-                        <p:inputText id="empleadoPrimerApellido"
-                                     value="#{empleadoController.selected.empleadoPromerApellido}"
-                                     required="true"
-                                     requiredMessage="Primer apellido es obligatorio">
-                            <p:keyFilter regEx="/[a-z_]/i"/>
-                        </p:inputText>
+                        <p:outputLabel for="perfil"
+                                       value="Perfil"/>
+                        <h:outputText id="perfil"
+                                      value="#{usuarioController.selected.perfil.perfilDescripcion}"/>
 
-                        <p:outputLabel for="empleadoSegundoApellido"
-                                       value="Segundo apellido"/>
-                        <p:inputText id="empleadoSegundoApellido"
-                                     value="#{empleadoController.selected.empleadoSegundoApellido}">
-                            <p:keyFilter regEx="/[a-z_]/i"/>
-                        </p:inputText>
-
-                        <p:outputLabel for="empleadoPrimerNombre"
-                                       value="Primer nombre"/>
-                        <p:inputText id="empleadoPrimerNombre"
-                                     value="#{empleadoController.selected.empleadoPrimernombre}"
-                                     required="true"
-                                     requiredMessage="El primer nombre es obligatorio">
-                            <p:keyFilter regEx="/[a-z_]/i"/>
-                        </p:inputText>
-
-                        <p:outputLabel for="empleadoSegundoNombre"
-                                       value="Segundo nombre"/>
-                        <p:inputText id="empleadoSegundoNombre"
-                                     value="#{empleadoController.selected.empleadoSegundoApellido}">
-                            <p:keyFilter regEx="/[a-z_]/i"/>
-                        </p:inputText>
-
-                        <p:outputLabel for="empleadoDocumento"
-                                       value="Cédula"/>
-                        <p:inputText id="empleadoDocumento"
-                                     value="#{empleadoController.selected.empleadoNumeroDocumento}"
-                                     required="true"
-                                     requiredMessage="El número de cédula es obligatorio">
-                            <p:keyFilter regEx="/[\d]/"/>
-                        </p:inputText>
-
-                        <p:outputLabel for="empleadoEstado"
+                        <p:outputLabel for="usuarioEstado"
                                        value="Estado"/>
-                        <p:selectOneMenu id="empleadoEstado"
-                                         value="#{empleadoController.selected.empleadoEstado}"
-                                         style="width: 100%">
-                            <f:selectItem itemLabel="Activo"
-                                          itemValue="A"/>
-                            <f:selectItem itemLabel="Inactivo"
-                                          itemValue="I"/>
-                        </p:selectOneMenu>
+                        <h:outputText id="usuarioEstado"
+                                      value="#{usuarioController.selected.usuarioEstado=='A'?'Activo':'Inactivo'}"/>
                     </p:panelGrid>
                     <center>
                         <b:commandButton id="btnSaveEdit"
                                          value="Guardar"
                                          look="success"
-                                         actionListener="#{empleadoController.update()}">
+                                         actionListener="#{usuarioController.restablecer()}">
                             <p:confirm header="Confirmación"
                                        message="Guardar los cambios?"
                                        icon="ui-icon-alert"/>

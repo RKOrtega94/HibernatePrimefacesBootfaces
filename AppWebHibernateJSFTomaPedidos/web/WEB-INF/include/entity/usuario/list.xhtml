@@ -5,15 +5,13 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:b="http://bootsfaces.net/ui">
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <b:container>
         <h:form id="listForm">
             <p:contextMenu id="dataConextMenu"
                            for="dataList">
-                <p:menuitem value="Ver"
-                            onclick="document.getElementById('listForm:viewButton').click()"
-                            icon="ui-icon-search"/>
-                <p:menuitem value="Editar"
+                <p:menuitem value="Restablecer"
                             onclick="document.getElementById('listForm:editButton').click()"
                             icon="ui-icon-pencil"/>
                 <p:menuitem value="Eliminar"
@@ -35,11 +33,11 @@
                 </f:facet>
 
                 <p:ajax event="rowSelect"
-                        update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:dataConextMenu"/>
+                        update="@form:editButton,@form:deleteButton,@form:dataConextMenu"/>
                 <p:ajax event="rowUnselect"
-                        update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:dataConextMenu"/>
+                        update="@form:editButton,@form:deleteButton,@form:dataConextMenu"/>
                 <p:ajax event="contextMenu"
-                        update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                        update="@form:editButton,@form:deleteButton"/>
                 <p:ajax event="rowDblselect"
                         onsuccess="document.getElementById('listForm:viewButton').click();"/>
 
@@ -50,6 +48,15 @@
                         <h:outputText value="Nombre"/>
                     </f:facet>
                     <h:outputText value="#{item.empleado.empleadoPrimernombre} #{item.empleado.empleadoPromerApellido}"/>
+                </p:column>
+
+                <p:column sortBy="#{item.perfil.perfilDescripcion}"
+                          filterBy="#{item.perfil.perfilDescripcion}"
+                          filterMatchMode="contains">
+                    <f:facet name="header">
+                        <h:outputText value="Perfil"/>
+                    </f:facet>
+                    <h:outputText value="#{item.perfil.perfilDescripcion}"/>
                 </p:column>
 
                 <p:column sortBy="#{item.usuarioNombre}"
@@ -69,13 +76,6 @@
                     <h:outputText value="#{item.usuarioEstado==('A')?'Activo':'Inactivo'}"/>
                 </p:column>
             </p:dataTable>
-            <p:commandButton id="viewButton"
-                             process="dataList"
-                             icon="ui-icon-search"
-                             style="visibility: hidden"
-                             value="Ver"
-                             update=":usuarioViewForm"
-                             oncomplete="PF('usuarioViewDialog').show()"/>
             <p:commandButton id="editButton"
                              style="visibility: hidden;"
                              icon="ui-icon-pencil"
@@ -92,6 +92,17 @@
                            message="Seguro quiere eliminar el registro?"
                            icon="ui-icon-alert"/>
             </p:commandButton>
+            <b:alert severity="info" 
+                     title="Restablecimiento de clave" 
+                     closable="true">
+                <strong>#{usuarioController.selected.usuarioNombre}</strong>
+                <c:if test="#{usuarioController.claveTemporal!=null}">
+                    La nueva clave es: #{usuarioController.claveTemporal}
+                </c:if>
+                <c:if test="#{usuarioController.claveTemporal==null}">
+                    Al restablecer un usaurio aqui se vera la nueva clave.
+                </c:if>
+            </b:alert>
             <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
         </h:form>
     </b:container>
