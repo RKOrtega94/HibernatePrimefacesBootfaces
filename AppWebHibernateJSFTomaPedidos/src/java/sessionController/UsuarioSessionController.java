@@ -131,6 +131,7 @@ public class UsuarioSessionController implements Serializable {
 
     public void logout() {
         isLogin = false;
+        doRedirect("/appmenu");
     }
 
     public void doRedirect(String url) {

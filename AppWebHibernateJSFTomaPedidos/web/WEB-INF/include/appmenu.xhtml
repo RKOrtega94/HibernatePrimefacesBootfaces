@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:b="http://bootsfaces.net/ui">
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:composition>
         <h:form id="appMenu">
             <b:navBar brand="MenuAPP"
@@ -16,42 +17,31 @@
                     <b:navLink value="Home"
                                href="/appmenu/home.jsf"
                                iconAwesome="fa-home"/>
-                    <b:navLink value="Menu"
-                               href="/appmenu/app/menu/index.jsf"
-                               iconAwesome="fa-cutlery"/>
-                    <b:navLink value="Clientes"
-                               href="/appmenu/app/cliente/index.jsf"
-                               iconAwesome="fa-user"/>
-                    <b:navLink value="Empleados"
-                               href="/appmenu/app/empleado/index.jsf"
-                               iconAwesome="fa-group"/>
-                    <b:dropMenu value="Bodega"
-                                iconAwesome="fa-archive">
-                        <b:navLink value="Productos"
-                                   href="/appmenu/app/producto/index.jsf"/>
-                        <b:navLink value="Inventario"
-                                   href="/appmenu/app/inventario/index.jsf"/>
-                    </b:dropMenu>
-                    <b:dropMenu value="Seguridad"
-                                iconAwesome="fa-lock">
-                        <b:navLink value="Usuarios"
-                                   href="/appmenu/app/usuario/index.jsf"/>
-                        <b:navLink value="Perfiles"
-                                   href="/appmenu/app/perfil/index.jsf"/>
-                        <b:navLink value="Opciones"
-                                   href="/appmenu/app/opcion/index.jsf"/>
-                        <b:navLink value="Permisos"
-                                   href="/appmenu/app/permisos/index.jsf"/>
-                    </b:dropMenu>
-                    <b:dropMenu value="Mantenimiento"
-                                iconAwesome="fa-cogs">
-                        <b:navLink value="Empresa"
-                                   href="/appmenu/app/empresa/index.jsf"/>
-                        <b:navLink value="Cargos"
-                                   href="/appmenu/app/cargo/index.jsf"/>
-                        <b:navLink value="Locales"
-                                   href="/appmenu/app/local/index.jsf"/>
-                    </b:dropMenu>
+                    <c:forEach var="item1"
+                               items="#{usuarioSessionController.opciones}">
+                        <c:choose>
+                            <c:when test="#{item1.opcion.opcion == null}">
+                                <c:if test="#{!item1.opcion.opcionLink.equals('')}">
+                                    <b:navLink value="#{item1.opcion.opcionDescripcion}"
+                                               href="#{item1.opcion.opcionLink}"
+                                               iconAwesome="#{item1.opcion.opcionIcon}"/>
+                                </c:if>
+                                <c:if test="#{item1.opcion.opcionLink.equals('')}">
+                                    <b:dropMenu value="#{item1.opcion.opcionDescripcion}"
+                                                iconAwesome="#{item1.opcion.opcionIcon}">
+                                        <c:forEach var="item2"
+                                                   items="#{usuarioSessionController.opciones}">
+                                            <c:if test="#{item1.opcion.opcionId == item2.opcion.opcion.opcionId}">
+                                                <b:navLink value="#{item2.opcion.opcionDescripcion}"
+                                                           href="#{item2.opcion.opcionLink}"
+                                                           iconAwesome="#{item2.opcion.opcionIcon}"/>
+                                            </c:if>
+                                        </c:forEach>
+                                    </b:dropMenu>
+                                </c:if>
+                            </c:when>
+                        </c:choose>
+                    </c:forEach>
                 </b:navbarLinks>
                 <b:navbarLinks pull="right">
                     <b:dropMenu value="#{usuarioSessionController.usuario.empleado.empleadoPrimernombre} #{usuarioSessionController.usuario.empleado.empleadoPromerApellido}"
@@ -59,7 +49,6 @@
                         <b:navLink value="Cambiar clave"
                                    href="#"/>
                         <b:navLink value="Cerrar sesión"
-                                   href="#"
                                    actionListener="#{usuarioSessionController.logout()}"/>
                     </b:dropMenu>
                 </b:navbarLinks>

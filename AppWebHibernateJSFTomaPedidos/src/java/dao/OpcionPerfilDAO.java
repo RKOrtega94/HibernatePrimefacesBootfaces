@@ -96,7 +96,7 @@ public class OpcionPerfilDAO {
         Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
-            Query query = session.createQuery("select op from OpcionXperfil op where op.perfil = :perfil");
+            Query query = session.createQuery("select op from OpcionXperfil op where op.perfil = :perfil and op.opcionPerfilEstado = 'A'");
             query.setParameter("perfil", perfil);
             opcionXperfil = query.getResultList();
             session.getTransaction().commit();
