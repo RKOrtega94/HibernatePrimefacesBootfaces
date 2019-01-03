@@ -7,7 +7,8 @@
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition>
-        <h:form id="empleadoCreateForm">
+        <h:form id="empleadoCreateForm"
+                enctype="multipart/form-data">
             <p:dialog widgetVar="create"
                       header="Registrar"
                       showEffect="fade"
@@ -123,6 +124,21 @@
                                          requiredMessage="El número de cédula es obligatorio">
                                 <p:keyFilter regEx="/[\d]/"/>
                             </p:inputText>
+                        </p:column>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <p:outputLabel for="txtImage"
+                                           value="Foto/Imagen"/>
+                        </p:column>
+                        <p:column>
+                            <p:fileUpload id="txtImage"
+                                          value="#{empleadoController.file}"
+                                          mode="simple"
+                                          allowTypes="/(\.|\/)(jpe?g|png)$/"
+                                          skinSimple="true"
+                                          required="true"
+                                          requiredMessage="La iamagen es obligatoria"/>
                         </p:column>
                     </p:row>
                     <p:row>

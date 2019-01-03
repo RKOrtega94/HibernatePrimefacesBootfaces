@@ -10,6 +10,11 @@ import dao.EmpleadoDAO;
 import dao.LocalDAO;
 import dao.PerfilDAO;
 import dao.UsuarioDAO;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -18,11 +23,14 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.servlet.ServletContext;
 import model.Cargo;
 import model.Empleado;
 import model.Local;
 import model.Perfil;
 import model.Usuario;
+import org.apache.commons.io.IOUtils;
+import org.primefaces.model.UploadedFile;
 
 /**
  *
@@ -30,7 +38,7 @@ import model.Usuario;
  */
 @Named(value = "empleadoController")
 @ViewScoped
-public class EmpleadoController implements Serializable{
+public class EmpleadoController implements Serializable {
 
     private Empleado empleado;
     private Empleado selected;
@@ -43,6 +51,7 @@ public class EmpleadoController implements Serializable{
     private List<Usuario> usuarios;
     private int perfilId;
     private Perfil perfil;
+    private UploadedFile file;
 
     public Empleado getEmpleado() {
         return empleado;
@@ -124,6 +133,22 @@ public class EmpleadoController implements Serializable{
         this.perfil = perfil;
     }
 
+    public List<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
+    }
+
+    public UploadedFile getFile() {
+        return file;
+    }
+
+    public void setFile(UploadedFile file) {
+        this.file = file;
+    }
+
     @PostConstruct
     public void init() {
         empleado = new Empleado();
@@ -143,68 +168,84 @@ public class EmpleadoController implements Serializable{
         usuarios = usuarioDAO.findAll();
     }
 
-    public void save() {
+    public void save() throws IOException {
         EmpleadoDAO empleadoDAO = new EmpleadoDAO();
         PerfilDAO perfilDAO = new PerfilDAO();
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         CargoDAO cargoDAO = new CargoDAO();
         LocalDAO localDAO = new LocalDAO();
-        local = localDAO.findById(localId);
-        cargo = cargoDAO.findById(cargoId);
-        perfil = perfilDAO.findById(perfilId);
-        if (cargo != null && local != null) {
-            empleado.setLocal(local);
-            empleado.setCargo(cargo);
-            if (empleadoDAO.findByDni(empleado.getEmpleadoNumeroDocumento()) == null) {
-                if (empleadoDAO.save(empleado)) {
-                    FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Dato registrado correctamente!");
-                    FacesContext.getCurrentInstance().addMessage(null, massage);
-                    usuario.setEmpleado(empleado);
-                    usuario.setUsuarioNombre(empleado.getEmpleadoNumeroDocumento());
-                    usuario.setUsuarioClave(empleado.getEmpleadoNumeroDocumento());
-                    usuario.setPerfil(perfil);
-                    if (usuarioDAO.save(usuario)) {
-                        massage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Usuario Registrado!");
+        FacesContext context = FacesContext.getCurrentInstance();
+        ServletContext servletContext = (ServletContext) context.getExternalContext().getContext();
+        String rootpath = servletContext.getRealPath("/");
+        File fileImage = new File(rootpath + "upload" + File.separator + "temp" + File.separator + file.getFileName());
+        InputStream inputStream = file.getInputstream();
+        if (SaveImage(inputStream, fileImage)) {
+            local = localDAO.findById(localId);
+            cargo = cargoDAO.findById(cargoId);
+            perfil = perfilDAO.findById(perfilId);
+            if (cargo != null && local != null) {
+                empleado.setLocal(local);
+                empleado.setCargo(cargo);
+                if (empleadoDAO.findByDni(empleado.getEmpleadoNumeroDocumento()) == null) {
+                    empleado.setEmleadoFoto("/upload/temp/" + file.getFileName());
+                    if (empleadoDAO.save(empleado)) {
+                        FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Dato registrado correctamente!");
                         FacesContext.getCurrentInstance().addMessage(null, massage);
+                        usuario.setEmpleado(empleado);
+                        usuario.setUsuarioNombre(empleado.getEmpleadoNumeroDocumento());
+                        usuario.setUsuarioClave(empleado.getEmpleadoNumeroDocumento());
+                        usuario.setPerfil(perfil);
+                        if (usuarioDAO.save(usuario)) {
+                            massage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Usuario Registrado!");
+                            FacesContext.getCurrentInstance().addMessage(null, massage);
+                        } else {
+                            massage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error en la creacion del usuario");
+                            FacesContext.getCurrentInstance().addMessage(null, massage);
+                        }
+                        empleados = empleadoDAO.findAll();
                     } else {
-                        massage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error en la creacion del usuario");
+                        FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error!");
                         FacesContext.getCurrentInstance().addMessage(null, massage);
                     }
+                } else {
+                    FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error!", "El numero de cédula ya existe!");
+                    FacesContext.getCurrentInstance().addMessage(null, massage);
+                }
+            } else {
+                FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error!", "Ha ocurrido un error!");
+                FacesContext.getCurrentInstance().addMessage(null, massage);
+            }
+        }
+    }
+
+    public void update() throws IOException {
+        EmpleadoDAO empleadoDAO = new EmpleadoDAO();
+        CargoDAO cargoDAO = new CargoDAO();
+        LocalDAO localDAO = new LocalDAO();
+        local = localDAO.findById(localId);
+        cargo = cargoDAO.findById(cargoId);
+        FacesContext context = FacesContext.getCurrentInstance();
+        ServletContext servletContext = (ServletContext) context.getExternalContext().getContext();
+        String rootpath = servletContext.getRealPath("/");
+        File fileImage = new File(rootpath + "upload" + File.separator + "temp" + File.separator + file.getFileName());
+        InputStream inputStream = file.getInputstream();
+        if (SaveImage(inputStream, fileImage)) {
+            if (cargo != null && local != null) {
+                selected.setLocal(local);
+                selected.setCargo(cargo);
+                empleado.setEmleadoFoto("/upload/temp/" + file.getFileName());
+                if (empleadoDAO.update(selected)) {
+                    FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Dato modificado correctamente!");
+                    FacesContext.getCurrentInstance().addMessage(null, massage);
                     empleados = empleadoDAO.findAll();
                 } else {
                     FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error!");
                     FacesContext.getCurrentInstance().addMessage(null, massage);
                 }
             } else {
-                FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error!", "El numero de cédula ya existe!");
-                FacesContext.getCurrentInstance().addMessage(null, massage);
-            }
-        } else {
-            FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error!", "Ha ocurrido un error!");
-            FacesContext.getCurrentInstance().addMessage(null, massage);
-        }
-    }
-
-    public void update() {
-        EmpleadoDAO empleadoDAO = new EmpleadoDAO();
-        CargoDAO cargoDAO = new CargoDAO();
-        LocalDAO localDAO = new LocalDAO();
-        local = localDAO.findById(localId);
-        cargo = cargoDAO.findById(cargoId);
-        if (cargo != null && local != null) {
-            selected.setLocal(local);
-            selected.setCargo(cargo);
-            if (empleadoDAO.update(selected)) {
-                FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Dato modificado correctamente!");
-                FacesContext.getCurrentInstance().addMessage(null, massage);
-                empleados = empleadoDAO.findAll();
-            } else {
                 FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error!");
                 FacesContext.getCurrentInstance().addMessage(null, massage);
             }
-        } else {
-            FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error!");
-            FacesContext.getCurrentInstance().addMessage(null, massage);
         }
     }
 
@@ -218,5 +259,16 @@ public class EmpleadoController implements Serializable{
             FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Ha ocurrido un error!");
             FacesContext.getCurrentInstance().addMessage(null, massage);
         }
+    }
+
+    public boolean SaveImage(InputStream inputStream, File ImageFile) {
+        boolean result = true;
+        try {
+            OutputStream outputStream = new FileOutputStream(ImageFile);
+            IOUtils.copy(inputStream, outputStream);
+        } catch (IOException e) {
+            result = false;
+        }
+        return result;
     }
 }

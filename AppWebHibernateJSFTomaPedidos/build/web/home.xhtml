@@ -22,7 +22,7 @@
                             <p:panelGrid styleClass="ui-noborder"
                                          style="width: 100%">
                                 <f:facet name="header">
-                                    <p:graphicImage value="/resources/images/app/default/user.jpg"
+                                    <p:graphicImage value="#{usuarioSessionController.usuario.empleado.emleadoFoto}"
                                                     style="width: 100%"/>
                                 </f:facet>
                                 <p:row>
@@ -30,7 +30,7 @@
                                         <h:outputText value="Nombres"/>
                                     </p:column>
                                     <p:column>
-                                        <h:outputText value="Nombres de usuario"/>
+                                        <h:outputText value="#{usuarioSessionController.usuario.empleado.empleadoPromerApellido} #{usuarioSessionController.usuario.empleado.empleadoSegundoApellido} #{usuarioSessionController.usuario.empleado.empleadoPrimernombre} #{usuarioSessionController.usuario.empleado.empleadoSegundoNombre}"/>
                                     </p:column>
                                 </p:row>
                                 <p:row>
@@ -38,7 +38,7 @@
                                         <h:outputText value="Cargo"/>
                                     </p:column>
                                     <p:column>
-                                        <h:outputText value="Cargo de usuario"/>
+                                        <h:outputText value="#{usuarioSessionController.usuario.empleado.cargo.cargoDescripcion}"/>
                                     </p:column>
                                 </p:row>
                                 <p:row>
@@ -46,7 +46,7 @@
                                         <h:outputText value="Perfil"/>
                                     </p:column>
                                     <p:column>
-                                        <h:outputText value="Perfil de usuario"/>
+                                        <h:outputText value="#{usuarioSessionController.usuario.perfil.perfilDescripcion}"/>
                                     </p:column>
                                 </p:row>
                             </p:panelGrid>
@@ -71,12 +71,13 @@
                                     laborales y un mejor nivel de vida para nuestros colaboradores y sus familias, en beneficio de
                                     la organización.
                                 </p>
+                                <h:outputText value="#{usuarioSessionController.usuario.empleado.emleadoFoto}"/>
                             </p:panel>
                         </b:column>
                     </b:row>
                 </b:container>
             </ui:define>
-            
+
 
         </ui:composition>
 

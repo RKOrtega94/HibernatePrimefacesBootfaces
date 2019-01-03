@@ -5,8 +5,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:b="http://bootsfaces.net/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition>
         <p:dialog id="empleadoEditDialog"
                   widgetVar="empleadoEditDialog"
@@ -15,7 +14,8 @@
                   appendTo="@(body)"
                   header="Editar empleado"
                   closeOnEscape="true">
-            <h:form id="empleadoEditForm">
+            <h:form id="empleadoEditForm"
+                    enctype="multipart/form-data">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2"
                                  styleClass="ui-noborder"
@@ -96,6 +96,15 @@
                                      requiredMessage="El número de cédula es obligatorio">
                             <p:keyFilter regEx="/[\d]/"/>
                         </p:inputText>
+
+                        <p:outputLabel for="image"
+                                       value="Foto/Imagen"/>
+                        <p:fileUpload id="image"
+                                      value="#{empleadoController.file}"
+                                      allowTypes="/(\.|\/)(jpe?g|png)$/"
+                                      mode="simple"
+                                      required="true"
+                                      skinSimple="true"/>
 
                         <p:outputLabel for="empleadoEstado"
                                        value="Estado"/>
