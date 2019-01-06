@@ -57,17 +57,14 @@
                                                          look="success"
                                                          value="Acceder"
                                                          actionListener="#{usuarioSessionController.login()}"
+                                                         onclick="ajax:blockUIBean.waitFiveSeconds()"
                                                          update="growl"/>
                                     </center>
                                 </f:facet>
                             </p:panelGrid>
-                            <p:blockUI block="loginPanel"
-                                       trigger="bntLogin">
-                                           <b:iconAwesome name="spinner" 
-                                                          pulse="true" 
-                                                          size="3x" 
-                                                          solid="true"/> 
-                            </p:blockUI>
+                            <script>
+                                $.blockUI.defaults.message = '<div style="padding-top:1em">Por favor espere...</div>';
+                            </script>
                         </h:form>
                     </center>
                 </b:column>

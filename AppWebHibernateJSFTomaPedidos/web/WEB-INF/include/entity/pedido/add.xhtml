@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <b:container>
+        <h:form id="listForm">
+            <p:wizard nextLabel="Siguiente"
+                      backLabel="Regresar">
+                <p:tab id="pedido"
+                       title="Pedido">
+                    <p:panel header="Toma de pedido">
+                        <p:outputLabel for="txtMenu"
+                                       value="Menu: "/>
+                        <p:selectOneMenu id="txtMenu"
+                                         value="#{pedidoViewController.menuId}"
+                                         effect="fade"
+                                         filter="true"
+                                         var="i"
+                                         filterMatchMode="startsWith"
+                                         panelStyle="width:180px"
+                                         style="width: 20em">
+                            <f:selectItems value="#{menuController.menus}"
+                                           var="item"
+                                           itemLabel="#{item.menuNombre}"
+                                           itemValue="#{item.menuId}"/>
+                        </p:selectOneMenu>
+                        <p:inputText id="txtCantidad"
+                                     value="#{pedidoViewController.pedido.cantidad}">
+                            <p:keyFilter regEx="/[\d]/"/>
+                        </p:inputText>
+                        <p:commandButton id="btnAdd"
+                                         value="Agregar"
+                                         icon="fa fa-plus"
+                                         actionListener="#{pedidoViewController.addPedido()}"
+                                         update="pedidoTable"/>
+                        <p:separator/>
+                        <p:dataTable id="pedidoTable"
+                                     value="#{pedidoViewController.pedidos}"
+                                     var="p"
+                                     emptyMessage="Tomar orden">
+                            <p:column>
+                                <f:facet name="header">
+                                    Producto
+                                </f:facet>
+                                <h:outputText value="#{pedidoViewController.pedido.menu}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    Precio unitario
+                                </f:facet>
+                                <h:outputText value="#{pedidoViewController.pedido.valor}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    Cantidad
+                                </f:facet>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    Total
+                                </f:facet>
+                            </p:column>
+                        </p:dataTable>
+                    </p:panel>
+                </p:tab>
+                <p:tab id="resimen"
+                       title="Resumen">
+
+                </p:tab>
+            </p:wizard>
+            <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+        </h:form>
+    </b:container>
+</ui:composition>

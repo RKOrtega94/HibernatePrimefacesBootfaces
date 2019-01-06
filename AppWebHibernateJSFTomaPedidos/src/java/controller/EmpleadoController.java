@@ -19,7 +19,6 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Named;
-import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -233,7 +232,7 @@ public class EmpleadoController implements Serializable {
             if (cargo != null && local != null) {
                 selected.setLocal(local);
                 selected.setCargo(cargo);
-                empleado.setEmleadoFoto("/upload/temp/" + file.getFileName());
+                selected.setEmleadoFoto("/upload/temp/" + file.getFileName());
                 if (empleadoDAO.update(selected)) {
                     FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Dato modificado correctamente!");
                     FacesContext.getCurrentInstance().addMessage(null, massage);

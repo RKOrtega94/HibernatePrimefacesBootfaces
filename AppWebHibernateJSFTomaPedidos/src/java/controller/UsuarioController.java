@@ -106,7 +106,7 @@ public class UsuarioController implements Serializable {
 
     public void restablecer() {
         UsuarioDAO usuarioDAO = new UsuarioDAO();
-        int numeroRandom = (int) (Math.random() * 10000000) + 1;
+        int numeroRandom = (int) (Math.random() * 100000000) + 1;
         claveTemporal = Integer.toString(numeroRandom);
         selected.setUsuarioClave(claveTemporal);
         selected.setUsuarioEstado('A');

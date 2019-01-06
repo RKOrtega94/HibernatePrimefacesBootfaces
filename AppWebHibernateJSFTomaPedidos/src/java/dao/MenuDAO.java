@@ -90,6 +90,25 @@ public class MenuDAO {
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
+    public Menu findById(int id) {
+        Menu menu = null;
+        Session session = SESSION_FACTORY.openSession();
+        try {
+            session.beginTransaction();
+            Query query = session.createQuery("select m from Menu m where m.menuId = :id");
+            query.setParameter("id", id);
+            menu = (Menu) query.uniqueResult();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            menu = null;
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return menu;
+    }
+
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public List<Menu> findEntradas() {
         List<Menu> menus = null;
         Session session = SESSION_FACTORY.openSession();

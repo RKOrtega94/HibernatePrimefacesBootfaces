@@ -1,7 +1,7 @@
 function handleSubmit(xhr, status, args, dialog) {
-    var jqDialog = jQuery('#'+dialog.id);
-    if(args.validationFailed) {
-        jqDialog.effect('shake', { times:3 }, 100);
+    var jqDialog = jQuery('#' + dialog.id);
+    if (args.validationFailed) {
+        jqDialog.effect('shake', {times: 3}, 100);
     } else {
         dialog.hide();
     }
@@ -12,4 +12,5 @@ function fixPFMDialogs() {
         jQuery("body > div[id*='" + pageId + "'][class*='ui-popup']").appendTo("#" + pageId);
     });
 }
-console.log(window.location.pathname);
+
+$.blockUI.defaults.message = '<div style="padding-top:1em">Por favor espere...</div>';
