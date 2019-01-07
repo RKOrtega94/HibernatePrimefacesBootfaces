@@ -5,10 +5,12 @@
  */
 package viewController;
 
-import dao.MenuDAO;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import model.Menu;
@@ -27,7 +29,8 @@ public class PedidoViewController implements Serializable {
     private int menuId;
     private Pedido pedido;
     private List<Pedido> pedidos;
-    private int pedidoId = 1;
+    private int pedidoId;
+    private int cantidad;
 
     public Pedido getSelected() {
         return selected;
@@ -76,13 +79,21 @@ public class PedidoViewController implements Serializable {
     public void setMenuId(int menuId) {
         this.menuId = menuId;
     }
-    
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
 
     @PostConstruct
     public void init() {
         pedido = new Pedido();
         selected = new Pedido();
         menu = new Menu();
+        pedidos = new ArrayList<>();
     }
 
     /**
@@ -91,18 +102,19 @@ public class PedidoViewController implements Serializable {
     public PedidoViewController() {
     }
 
-    public void addPedido() {
-        MenuDAO menuDAO = new MenuDAO();
-        menu = menuDAO.findById(menuId);
-        if(menu != null){
-            pedido.setId(pedidoId);
-            pedido.setMenuId(menu.getMenuId());
-            pedido.setMenu(menu.getMenuNombre());
-            pedido.setValor(menu.getMenuValor());
-            if(pedido != null){
-                pedidos.add(pedido);
-            }
-            pedidoId++;
+    public List<Pedido> createPedido(int size) {
+        List<Pedido> list = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            list.add(new Pedido(pedidoId, menuId, menu.getMenuNombre(), menu.getMenuValor(), cantidad));
         }
+        return list;
+    }
+
+    public void addPedido() {
+        PedidoViewController pvc = new PedidoViewController();
+        Pedido pedidoAdd = pvc.createPedido(1).get(0);
+        pedidos.add(pedidoAdd);
+        FacesMessage msg = new FacesMessage("Pedido agregado", pedidoAdd.getMenu());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 }

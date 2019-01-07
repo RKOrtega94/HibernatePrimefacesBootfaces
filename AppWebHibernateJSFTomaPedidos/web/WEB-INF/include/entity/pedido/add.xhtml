@@ -29,40 +29,59 @@
                                            itemValue="#{item.menuId}"/>
                         </p:selectOneMenu>
                         <p:inputText id="txtCantidad"
-                                     value="#{pedidoViewController.pedido.cantidad}">
+                                     value="#{pedidoViewController.cantidad}">
                             <p:keyFilter regEx="/[\d]/"/>
                         </p:inputText>
                         <p:commandButton id="btnAdd"
                                          value="Agregar"
                                          icon="fa fa-plus"
                                          actionListener="#{pedidoViewController.addPedido()}"
-                                         update="pedidoTable"/>
+                                         update="dataTable"/>
                         <p:separator/>
-                        <p:dataTable id="pedidoTable"
+
+                        <!--Data table-->
+                        <p:dataTable id="dataTable"
+                                     widgetVar="data"
                                      value="#{pedidoViewController.pedidos}"
-                                     var="p"
-                                     emptyMessage="Tomar orden">
-                            <p:column>
-                                <f:facet name="header">
-                                    Producto
-                                </f:facet>
-                                <h:outputText value="#{pedidoViewController.pedido.menu}"/>
+                                     var="item"
+                                     editable="true">
+                            <f:facet name="header">
+                                Pedido
+                            </f:facet>
+                            <p:column headerText="Menu">
+                                <p:cellEditor>
+                                    <f:facet name="output">
+                                        <h:outputText value="#{item.menu}"/>
+                                    </f:facet>
+                                    <f:facet name="input">
+                                        <p:selectOneMenu id="menu"
+                                                         value="#{pedidoViewController.menuId}"
+                                                         style="width: 100%">
+                                            <f:selectItems value="#{menuController.menus}"
+                                                           var="menu"
+                                                           itemLabel="#{menu.menuNombre}"
+                                                           itemValue="#{menu.menuId}"/>
+                                        </p:selectOneMenu>
+                                    </f:facet>
+                                </p:cellEditor>
                             </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    Precio unitario
-                                </f:facet>
-                                <h:outputText value="#{pedidoViewController.pedido.valor}"/>
+                            <p:column headerText="Valor unitario">
+                                <h:outputText value="#{item.valor}"/>
                             </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    Cantidad
+                            <p:column headerText="Cantidad">
+                                <f:facet name="output">
+                                    <h:outputText value="#{item.cantidad}"/>
+                                </f:facet>
+                                <f:facet name="input">
+                                    <h:inputText value="#{pedidoViewController.cantidad}"/>
                                 </f:facet>
                             </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    Total
-                                </f:facet>
+                            <p:column headerText="Total">
+                                <h:outputText value="#{item.cantidad * item.valor}"/>
+                            </p:column>
+                            <p:column headerText="Editar"
+                                      style="width:52px">
+                                <p:rowEditor />
                             </p:column>
                         </p:dataTable>
                     </p:panel>
