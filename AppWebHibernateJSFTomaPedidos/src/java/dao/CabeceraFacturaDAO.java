@@ -6,7 +6,9 @@
 package dao;
 
 import java.util.List;
+import model.Cabecerafactura;
 import model.Cliente;
+import model.Usuario;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -16,35 +18,21 @@ import util.HibernateUtil;
  *
  * @author RKOrtega
  */
-public class ClienteDAO {
+public class CabeceraFacturaDAO {
 
-    public static final SessionFactory SESSION_FACTORY = HibernateUtil.getSessionFactory();
-
-    @SuppressWarnings({"rawtypes", "unchecked"})
-    public List<Cliente> findAll() {
-        List<Cliente> clientes = null;
-        Session session = SESSION_FACTORY.openSession();
-        try {
-            session.beginTransaction();
-            Query query = session.createQuery("select c from Cliente c");
-            clientes = query.getResultList();
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            clientes = null;
-            session.getTransaction().rollback();
-        } finally {
-            session.close();
-        }
-        return clientes;
-    }
+    private static final SessionFactory SESSION_FACTORY = HibernateUtil.getSessionFactory();
 
     @SuppressWarnings({"rawtypes", "unchecked"})
-    public boolean save(Cliente cliente) {
+    public boolean save(Cliente cliente, Usuario usuario, Double descuento) {
         boolean result = true;
+        Cabecerafactura cabecerafactura = new Cabecerafactura();
         Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
-            session.save(cliente);
+            cabecerafactura.setCliente(cliente);
+            cabecerafactura.setUsuario(usuario);
+            cabecerafactura.setCabecerafacturaValor(descuento);
+            session.save(cabecerafactura);
             session.getTransaction().commit();
         } catch (Exception e) {
             result = false;
@@ -56,12 +44,32 @@ public class ClienteDAO {
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
-    public boolean update(Cliente cliente) {
+    public Cabecerafactura findFactura(Usuario usuario, Cliente cliente) {
+        Cabecerafactura cabecerafactura = null;
+        Session session = SESSION_FACTORY.openSession();
+        try {
+            session.beginTransaction();
+            Query query = session.createQuery("select c from Cabecerafactura c where c.cliente = :cliente and c.usuario = :usuario and c.cabecerafacturaEstado = 'A'");
+            query.setParameter("cliente", cliente);
+            query.setParameter("usuario", usuario);
+            cabecerafactura = (Cabecerafactura) query.uniqueResult();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            cabecerafactura = null;
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return cabecerafactura;
+    }
+
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public boolean update(Cabecerafactura cabecerafactura) {
         boolean result = true;
         Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
-            session.update(cliente);
+            session.update(cabecerafactura);
             session.getTransaction().commit();
         } catch (Exception e) {
             result = false;
@@ -73,38 +81,38 @@ public class ClienteDAO {
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
-    public boolean delete(Cliente cliente) {
-        boolean result = true;
+    public List<String> count() {
+        List<String> result = null;
         Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
-            session.delete(cliente);
+            Query query = session.createQuery("select count(c.cabecerafacturaValor) from Cabecerafactura c");
+            result = query.getResultList();
             session.getTransaction().commit();
         } catch (Exception e) {
-            result = false;
+            result = null;
             session.getTransaction().rollback();
         } finally {
             session.close();
         }
         return result;
     }
-    
+
     @SuppressWarnings({"rawtypes", "unchecked"})
-    public Cliente findByDni(String dni){
-        Cliente cliente = null;
+    public List<Cabecerafactura> findPendiente() {
+        List<Cabecerafactura> result = null;
         Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
-            Query query = session.createQuery("select c from Cliente c where c.cienteNumeroDocumento = :dni");
-            query.setParameter("dni", dni);
-            cliente = (Cliente) query.uniqueResult();
+            Query query = session.createQuery("select c from Cabecerafactura c where c.cabecerafacturaEstado = 'P' oder by c.cabecerafacturaId desc");
+            result = query.getResultList();
             session.getTransaction().commit();
         } catch (Exception e) {
-            cliente = null;
+            result = null;
             session.getTransaction().rollback();
         } finally {
             session.close();
         }
-        return cliente;
+        return result;
     }
 }

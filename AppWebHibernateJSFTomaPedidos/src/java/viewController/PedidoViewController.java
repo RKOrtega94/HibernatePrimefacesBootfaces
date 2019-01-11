@@ -5,40 +5,57 @@
  */
 package viewController;
 
+import dao.CabeceraFacturaDAO;
+import dao.ClienteDAO;
+import dao.DetallefacturaDAO;
+import dao.MenuDAO;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.inject.Named;
-import javax.faces.view.ViewScoped;
+import model.Cabecerafactura;
+import model.Cliente;
+import model.Detallefactura;
 import model.Menu;
 import model.Pedido;
+import model.Usuario;
+import org.primefaces.PrimeFaces;
+import org.primefaces.component.datatable.DataTable;
+import org.primefaces.event.CellEditEvent;
+import org.primefaces.event.RowEditEvent;
+import sessionController.UsuarioSessionController;
 
 /**
  *
  * @author RKOrtega
  */
-@Named(value = "pedidoViewController")
+@ManagedBean(name = "pedidoViewController")
 @ViewScoped
 public class PedidoViewController implements Serializable {
 
-    private Pedido selected;
-    private Menu menu;
-    private int menuId;
     private Pedido pedido;
     private List<Pedido> pedidos;
+    private Menu menu;
+    private int menuId;
     private int pedidoId;
     private int cantidad;
+    private Cliente cliente;
+    private Detallefactura detallefactura;
+    private Cabecerafactura cabecerafactura;
+    private Usuario usuario;
+    private int usuarioId;
+    private List<String> claveFactura;
+    private String claveFacturaInt;
+    private List<Cabecerafactura> facturas;
+    private Cabecerafactura selected;
 
-    public Pedido getSelected() {
-        return selected;
-    }
-
-    public void setSelected(Pedido selected) {
-        this.selected = selected;
-    }
+    @ManagedProperty(value = "#{usuarioSessionController}")
+    private UsuarioSessionController usuarioSessionController = new UsuarioSessionController();
 
     public Pedido getPedido() {
         return pedido;
@@ -88,33 +105,171 @@ public class PedidoViewController implements Serializable {
         this.cantidad = cantidad;
     }
 
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Detallefactura getDetallefactura() {
+        return detallefactura;
+    }
+
+    public void setDetallefactura(Detallefactura detallefactura) {
+        this.detallefactura = detallefactura;
+    }
+
+    public Cabecerafactura getCabecerafactura() {
+        return cabecerafactura;
+    }
+
+    public void setCabecerafactura(Cabecerafactura cabecerafactura) {
+        this.cabecerafactura = cabecerafactura;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public int getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(int usuarioId) {
+        this.usuarioId = usuarioId;
+    }
+
+    public void setUsuarioSessionController(UsuarioSessionController usuarioSessionController) {
+        this.usuarioSessionController = usuarioSessionController;
+    }
+
+    public List<String> getClaveFactura() {
+        return claveFactura;
+    }
+
+    public void setClaveFactura(List<String> claveFactura) {
+        this.claveFactura = claveFactura;
+    }
+
+    public String getClaveFacturaInt() {
+        return claveFacturaInt;
+    }
+
+    public void setClaveFacturaInt(String claveFacturaInt) {
+        this.claveFacturaInt = claveFacturaInt;
+    }
+
+    public List<Cabecerafactura> getFacturas() {
+        return facturas;
+    }
+
+    public void setFacturas(List<Cabecerafactura> facturas) {
+        this.facturas = facturas;
+    }
+
+    public Cabecerafactura getSelected() {
+        return selected;
+    }
+
+    public void setSelected(Cabecerafactura selected) {
+        this.selected = selected;
+    }
+
     @PostConstruct
     public void init() {
         pedido = new Pedido();
-        selected = new Pedido();
         menu = new Menu();
+        cliente = new Cliente();
+        detallefactura = new Detallefactura();
         pedidos = new ArrayList<>();
+        usuario = new Usuario();
+        selected = new Cabecerafactura();
     }
 
     /**
      * Creates a new instance of PedidoViewController
      */
     public PedidoViewController() {
-    }
-
-    public List<Pedido> createPedido(int size) {
-        List<Pedido> list = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
-            list.add(new Pedido(pedidoId, menuId, menu.getMenuNombre(), menu.getMenuValor(), cantidad));
-        }
-        return list;
+        CabeceraFacturaDAO facturaDAO = new CabeceraFacturaDAO();
+        facturas = facturaDAO.findPendiente();
     }
 
     public void addPedido() {
-        PedidoViewController pvc = new PedidoViewController();
-        Pedido pedidoAdd = pvc.createPedido(1).get(0);
-        pedidos.add(pedidoAdd);
-        FacesMessage msg = new FacesMessage("Pedido agregado", pedidoAdd.getMenu());
+        MenuDAO menuDAO = new MenuDAO();
+        menu = menuDAO.findById(menuId);
+        List<Pedido> list = new ArrayList<>();
+        for (int i = 0; i < 1; i++) {
+            list.add(new Pedido(pedidoId + 1, menuId, menu.getMenuNombre(), menu.getMenuValor(), cantidad));
+        }
+        pedidos.add(list.get(0));
+        FacesMessage msg = new FacesMessage("Pedido agregado", menu.getMenuNombre());
         FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+    public void onRowEdit(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("Pedido modificado", ((Pedido) event.getObject()).getMenu());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+    public void onRowCancel(RowEditEvent event) {
+        FacesMessage msg = new FacesMessage("Modificación cancelada", ((Pedido) event.getObject()).getMenu());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+    public void onCellEdit(CellEditEvent event) {
+        Object oldValue = event.getOldValue();
+        Object newValue = event.getNewValue();
+        if (newValue != null && !newValue.equals(oldValue)) {
+            DataTable table = (DataTable) event.getSource();
+            int index = (int) event.getRowIndex();
+            pedido = (Pedido) table.getRowData();
+            pedidos.set(index, pedido);
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Pedido modificado", "Anteriguo: " + oldValue + ", Nuevo:" + newValue);
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        }
+    }
+
+    public void ordenar() {
+        CabeceraFacturaDAO facturaDAO = new CabeceraFacturaDAO();
+        ClienteDAO clienteDAO = new ClienteDAO();
+        DetallefacturaDAO detallefacturaDAO = new DetallefacturaDAO();
+        cliente = clienteDAO.findByDni("9999999999");
+        if (cliente != null) {
+            Double descuento = 0.0;
+            if (facturaDAO.save(cliente, usuarioSessionController.getUsuario(), descuento)) {
+                cabecerafactura = facturaDAO.findFactura(usuarioSessionController.getUsuario(), cliente);
+                for (Pedido p : pedidos) {
+                    MenuDAO menuDAO = new MenuDAO();
+                    menu = menuDAO.findById(p.getMenuId());
+                    cantidad = p.getCantidad();
+                    if (detallefacturaDAO.save(cabecerafactura, menu, cantidad)) {
+                        FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado!", menu.getMenuNombre());
+                        FacesContext.getCurrentInstance().addMessage(null, msg);
+                    }
+                }
+                cabecerafactura.setCabecerafacturaEstado('P');
+                if (facturaDAO.update(cabecerafactura)) {
+                    claveFactura = facturaDAO.count();
+                    FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado!", "Factura creada: " + claveFactura);
+                    PrimeFaces.current().dialog().showMessageDynamic(msg);
+                    facturas = facturaDAO.findPendiente();
+                } else {
+                    FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error!", "Ha ocurrido un error en la creación de la factura!");
+                    FacesContext.getCurrentInstance().addMessage(null, msg);
+                }
+            } else {
+                FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Error!", "Ha ocurrido un error!");
+                FacesContext.getCurrentInstance().addMessage(null, msg);
+            }
+        } else {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error!", "Ha ocurrido un error!");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        }
     }
 }

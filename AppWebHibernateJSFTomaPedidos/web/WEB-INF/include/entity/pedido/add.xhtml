@@ -7,91 +7,83 @@
                 xmlns:b="http://bootsfaces.net/ui"
                 xmlns:f="http://xmlns.jcp.org/jsf/core">
     <b:container>
-        <h:form id="listForm">
-            <p:wizard nextLabel="Siguiente"
-                      backLabel="Regresar">
-                <p:tab id="pedido"
-                       title="Pedido">
-                    <p:panel header="Toma de pedido">
-                        <p:outputLabel for="txtMenu"
-                                       value="Menu: "/>
-                        <p:selectOneMenu id="txtMenu"
-                                         value="#{pedidoViewController.menuId}"
-                                         effect="fade"
-                                         filter="true"
-                                         var="i"
-                                         filterMatchMode="startsWith"
-                                         panelStyle="width:180px"
-                                         style="width: 20em">
-                            <f:selectItems value="#{menuController.menus}"
-                                           var="item"
-                                           itemLabel="#{item.menuNombre}"
-                                           itemValue="#{item.menuId}"/>
-                        </p:selectOneMenu>
-                        <p:inputText id="txtCantidad"
-                                     value="#{pedidoViewController.cantidad}">
-                            <p:keyFilter regEx="/[\d]/"/>
-                        </p:inputText>
-                        <p:commandButton id="btnAdd"
-                                         value="Agregar"
-                                         icon="fa fa-plus"
-                                         actionListener="#{pedidoViewController.addPedido()}"
-                                         update="dataTable"/>
-                        <p:separator/>
+        <p:panel header="Toma de pedido">
+            <p:outputLabel for="txtMenu"
+                           value="Menu"/>
+            <p:spacer width="5"/>
+            <p:selectOneMenu id="txtMenu"
+                             value="#{pedidoViewController.menuId}"
+                             effect="fade"
+                             filter="true"
+                             filterMatchMode="startsWith"
+                             panelStyle="width:180px"
+                             style="width: 15em">
+                <f:selectItems value="#{menuController.menus}"
+                               var="item"
+                               itemLabel="#{item.menuNombre}"
+                               itemValue="#{item.menuId}"/>
+            </p:selectOneMenu>
+            <p:spacer width="5"/>
+            <p:outputLabel for="txtCantidad"
+                           value="Cantidad"/>
+            <p:spacer width="5"/>
+            <p:inputText id="txtCantidad"
+                         value="#{pedidoViewController.cantidad}"
+                         style="width: 5em">
+                <p:keyFilter regEx="/[\d]/"/>
+            </p:inputText>
+            <p:spacer width="5"/>
+            <p:commandButton id="btnAdd"
+                             value="Agregar"
+                             icon="fa fa-plus"
+                             actionListener="#{pedidoViewController.addPedido()}"
+                             update="dataTable, :growl"/>
+            <p:separator/>
 
-                        <!--Data table-->
-                        <p:dataTable id="dataTable"
-                                     widgetVar="data"
-                                     value="#{pedidoViewController.pedidos}"
-                                     var="item"
-                                     editable="true">
-                            <f:facet name="header">
-                                Pedido
-                            </f:facet>
-                            <p:column headerText="Menu">
-                                <p:cellEditor>
-                                    <f:facet name="output">
-                                        <h:outputText value="#{item.menu}"/>
-                                    </f:facet>
-                                    <f:facet name="input">
-                                        <p:selectOneMenu id="menu"
-                                                         value="#{pedidoViewController.menuId}"
-                                                         style="width: 100%">
-                                            <f:selectItems value="#{menuController.menus}"
-                                                           var="menu"
-                                                           itemLabel="#{menu.menuNombre}"
-                                                           itemValue="#{menu.menuId}"/>
-                                        </p:selectOneMenu>
-                                    </f:facet>
-                                </p:cellEditor>
-                            </p:column>
-                            <p:column headerText="Valor unitario">
-                                <h:outputText value="#{item.valor}"/>
-                            </p:column>
-                            <p:column headerText="Cantidad">
-                                <f:facet name="output">
-                                    <h:outputText value="#{item.cantidad}"/>
-                                </f:facet>
-                                <f:facet name="input">
-                                    <h:inputText value="#{pedidoViewController.cantidad}"/>
-                                </f:facet>
-                            </p:column>
-                            <p:column headerText="Total">
-                                <h:outputText value="#{item.cantidad * item.valor}"/>
-                            </p:column>
-                            <p:column headerText="Editar"
-                                      style="width:52px">
-                                <p:rowEditor />
-                            </p:column>
-                        </p:dataTable>
-                    </p:panel>
-                </p:tab>
-                <p:tab id="resimen"
-                       title="Resumen">
+            <!--Data table-->
+            <p:dataTable id="dataTable"
+                         widgetVar="data"
+                         value="#{pedidoViewController.pedidos}"
+                         var="item"
+                         editable="true"
+                         editMode="cell">
+                <f:facet name="header">
+                    Pedido
+                </f:facet>
 
-                </p:tab>
-            </p:wizard>
-            <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
-        </h:form>
+                <p:ajax event="cellEdit"
+                        listener="#{pedidoViewController.onCellEdit}"
+                        update="dataTable, :growl"/>
+
+                <p:column headerText="Menu">
+                    <h:outputText value="#{item.menu}"/>
+                </p:column>
+                <p:column headerText="Valor unitario">
+                    $<h:outputText value="#{item.valor}">
+                        <f:convertNumber pattern="#0.00"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Cantidad">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{item.cantidad}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{item.cantidad}"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+            </p:dataTable>
+            <p:contextMenu for="dataTable" widgetVar="cMenu">   
+                <p:menuitem value="Edit Cell" icon="pi pi-search" onclick="PF('cellCars').showCellEditor();return false;"/>  
+                <p:menuitem value="Hide Menu" icon="pi pi-times" onclick="PF('cMenu').hide()"/>  
+            </p:contextMenu> 
+        </p:panel>
+        <b:commandButton id="btnSave"
+                         value="Guardar"
+                         look="success"
+                         actionListener="#{pedidoViewController.ordenar()}"
+                         iconAwesome="fa-floppy-o"/>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
     </b:container>
 </ui:composition>

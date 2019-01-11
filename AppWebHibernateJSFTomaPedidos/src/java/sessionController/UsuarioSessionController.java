@@ -8,12 +8,12 @@ package sessionController;
 import dao.OpcionPerfilDAO;
 import dao.UsuarioDAO;
 import java.io.IOException;
-import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.bean.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import model.OpcionXperfil;
 import model.Usuario;
@@ -22,7 +22,7 @@ import model.Usuario;
  *
  * @author RKOrtega
  */
-@Named(value = "usuarioSessionController")
+@ManagedBean(name = "usuarioSessionController")
 @SessionScoped
 public class UsuarioSessionController implements Serializable {
 
@@ -107,8 +107,8 @@ public class UsuarioSessionController implements Serializable {
                 if (usuario.getUsuarioClave().equals(password)) {
                     if (usuario.getUsuarioEstado() == 'A') {
                         isLogin = true;
-                        doRedirect("/appmenu/home.jsf");
                         opciones = opcionPerfilDAO.findByPerfil(usuario.getPerfil());
+                        doRedirect("/appmenu/home.jsf");
                     } else {
                         FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", usuario.getEmpleado().getEmpleadoPrimernombre() + " su cuenta se encuentra bloqueada!");
                         FacesContext.getCurrentInstance().addMessage(null, massage);

@@ -21,9 +21,9 @@
         </b:container>
         <b:container style="margin-top: 30px">
             <b:row>
-                <b:column offset-lg="3"
+                <b:column offset-lg="4"
                           offset-xs="1"
-                          col-lg="6"
+                          col-lg="4"
                           col-xs="10">
                     <center>
                         <h:form id="loginForm">
@@ -63,7 +63,12 @@
                                 </f:facet>
                             </p:panelGrid>
                             <script>
-                                $.blockUI.defaults.message = '<div style="padding-top:1em">Por favor espere...</div>';
+                                $.blockUI.defaults.css.width = '20%';
+                                $.blockUI.defaults.css.left = '40%';
+                                $.blockUI.defaults.css.height = '5em';
+                                $.blockUI.defaults.css.borderRadius = '10px';
+                                $.blockUI.defaults.overlayCSS.opacity = 0.5;
+                                $.blockUI.defaults.message = '<div style="padding-top:1em"><b:spinner name="circle-o-notch" size="2x" /> Espere... </div>';
                             </script>
                         </h:form>
                     </center>

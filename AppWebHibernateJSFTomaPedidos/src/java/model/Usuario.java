@@ -157,4 +157,12 @@ public class Usuario implements java.io.Serializable {
             usuarioFechaCreacion = (new Timestamp(date.getTime()));
         }
     }
+
+    @Override
+    public String toString() {
+        return "Usuario{" + "usuarioId=" + usuarioId + ", empleado=" + empleado + ", perfil=" + perfil + ", usuarioNombre=" + usuarioNombre + ", usuarioClave=" + usuarioClave + ", usuarioFechaCreacion=" + usuarioFechaCreacion + ", usuarioFechaModificacion=" + usuarioFechaModificacion + ", usuarioEstado=" + usuarioEstado + ", cabecerafacturas=" + cabecerafacturas + '}';
+    }
+
+    
+    
 }
