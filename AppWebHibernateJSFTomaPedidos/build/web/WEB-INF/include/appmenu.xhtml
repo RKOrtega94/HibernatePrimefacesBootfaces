@@ -12,14 +12,20 @@
                       brand-href="/appmenu/home.jsf"
                       inverse="true"
                       position="top"
+                      fluid="true"
                       sticky="false"
                       style="margin: 0px">
                 <b:navbarLinks>
                     <b:navLink value="Home"
                                href="/appmenu/home.jsf"
                                iconAwesome="fa-home"/>
-                    <b:navLink value="Pedido"
-                               href="/appmenu/app/pedido/index.jsf"/>
+                    <b:dropMenu value="Pedidos"
+                                iconAwesome="fa-edit">
+                        <b:navLink value="Tomar pedido"
+                                   href="/appmenu/app/tomarpedido/index.jsf"/>
+                        <b:navLink value="Editar pedido"
+                                   href="/appmenu/app/editarpedido/index.jsf"/>
+                    </b:dropMenu>
                     <c:forEach var="item1"
                                items="#{usuarioSessionController.opciones}">
                         <c:choose>
@@ -55,5 +61,8 @@
                 </b:navbarLinks>
             </b:navBar>
         </h:form>
+<!--        <p:poll interval="3"
+                update=":appMenu"
+                listener="#{pedidoViewController.listFactura()}"/>-->
     </ui:composition>
 </html>

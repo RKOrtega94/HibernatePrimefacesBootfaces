@@ -50,9 +50,11 @@ public class PedidoViewController implements Serializable {
     private Usuario usuario;
     private int usuarioId;
     private List<String> claveFactura;
+    private List<String> facturaPendiente;
     private String claveFacturaInt;
     private List<Cabecerafactura> facturas;
     private Cabecerafactura selected;
+    private List<Cabecerafactura> ultima;
 
     @ManagedProperty(value = "#{usuarioSessionController}")
     private UsuarioSessionController usuarioSessionController = new UsuarioSessionController();
@@ -181,6 +183,22 @@ public class PedidoViewController implements Serializable {
         this.selected = selected;
     }
 
+    public List<String> getFacturaPendiente() {
+        return facturaPendiente;
+    }
+
+    public void setFacturaPendiente(List<String> facturaPendiente) {
+        this.facturaPendiente = facturaPendiente;
+    }
+
+    public List<Cabecerafactura> getUltima() {
+        return ultima;
+    }
+
+    public void setUltima(List<Cabecerafactura> ultima) {
+        this.ultima = ultima;
+    }
+
     @PostConstruct
     public void init() {
         pedido = new Pedido();
@@ -198,6 +216,16 @@ public class PedidoViewController implements Serializable {
     public PedidoViewController() {
         CabeceraFacturaDAO facturaDAO = new CabeceraFacturaDAO();
         facturas = facturaDAO.findPendiente();
+        facturaPendiente = facturaDAO.countPendientes();
+        claveFactura = facturaDAO.count();
+        ultima = facturaDAO.ultimaFactura();
+    }
+
+    public void listFactura() {
+        CabeceraFacturaDAO facturaDAO = new CabeceraFacturaDAO();
+        facturas = facturaDAO.findPendiente();
+        facturaPendiente = facturaDAO.countPendientes();
+        claveFactura = facturaDAO.count();
     }
 
     public void addPedido() {
@@ -240,7 +268,7 @@ public class PedidoViewController implements Serializable {
         ClienteDAO clienteDAO = new ClienteDAO();
         DetallefacturaDAO detallefacturaDAO = new DetallefacturaDAO();
         cliente = clienteDAO.findByDni("9999999999");
-        if (cliente != null) {
+        if (cliente != null && pedidos.size() > 0) {
             Double descuento = 0.0;
             if (facturaDAO.save(cliente, usuarioSessionController.getUsuario(), descuento)) {
                 cabecerafactura = facturaDAO.findFactura(usuarioSessionController.getUsuario(), cliente);
@@ -255,8 +283,8 @@ public class PedidoViewController implements Serializable {
                 }
                 cabecerafactura.setCabecerafacturaEstado('P');
                 if (facturaDAO.update(cabecerafactura)) {
-                    claveFactura = facturaDAO.count();
-                    FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado!", "Factura creada: " + claveFactura);
+                    ultima = facturaDAO.ultimaFactura();
+                    FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado!", "Factura creada: " + ultima.toString());
                     PrimeFaces.current().dialog().showMessageDynamic(msg);
                     facturas = facturaDAO.findPendiente();
                 } else {
@@ -268,7 +296,7 @@ public class PedidoViewController implements Serializable {
                 FacesContext.getCurrentInstance().addMessage(null, msg);
             }
         } else {
-            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error!", "Ha ocurrido un error!");
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error!", "Debe ingresar almenos un producto!");
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
     }

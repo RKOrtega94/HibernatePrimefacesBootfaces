@@ -99,12 +99,49 @@ public class CabeceraFacturaDAO {
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
+    public List<String> countPendientes() {
+        List<String> result = null;
+        Session session = SESSION_FACTORY.openSession();
+        try {
+            session.beginTransaction();
+            Query query = session.createQuery("select count(c) from Cabecerafactura c where c.cabecerafacturaEstado = 'P'");
+            result = query.getResultList();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            result = null;
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return result;
+    }
+
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public List<Cabecerafactura> findPendiente() {
         List<Cabecerafactura> result = null;
         Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
-            Query query = session.createQuery("select c from Cabecerafactura c where c.cabecerafacturaEstado = 'P' oder by c.cabecerafacturaId desc");
+            Query query = session.createQuery("select c from Cabecerafactura c where c.cabecerafacturaEstado = 'P' order by c.cabecerafacturaId desc");
+            result = query.getResultList();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            result = null;
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return result;
+    }
+    
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public List<Cabecerafactura> ultimaFactura(){
+        List<Cabecerafactura> result = null;
+        Session session = SESSION_FACTORY.openSession();
+        try {
+            session.beginTransaction();
+            Query query = session.createQuery("select c.cabecerafacturaId from Cabecerafactura c order by c.cabecerafacturaId desc");
+            query.setMaxResults(1);
             result = query.getResultList();
             session.getTransaction().commit();
         } catch (Exception e) {

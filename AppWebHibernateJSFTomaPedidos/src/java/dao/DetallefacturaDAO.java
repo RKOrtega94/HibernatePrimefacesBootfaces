@@ -5,11 +5,13 @@
  */
 package dao;
 
+import java.util.List;
 import model.Cabecerafactura;
 import model.Detallefactura;
 import model.Menu;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import util.HibernateUtil;
 
 /**
@@ -39,5 +41,24 @@ public class DetallefacturaDAO {
             session.close();
         }
         return result;
+    }
+
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public List<Detallefactura> findDetalle(Cabecerafactura cabecera) {
+        List<Detallefactura> detalle = null;
+        Session session = SESSION_FACTORY.openSession();
+        try {
+            session.beginTransaction();
+            Query query = session.createQuery("select d from Detallefactura d where d.cabecerafactura = :cabecera");
+            query.setParameter("cabecera", cabecera);
+            detalle = query.getResultList();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            detalle = null;
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return detalle;
     }
 }

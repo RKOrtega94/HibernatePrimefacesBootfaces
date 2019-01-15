@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:b="http://bootsfaces.net/ui"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
 
     <body>
 
@@ -15,16 +16,9 @@
             </ui:define>
             <ui:define name="content">
                 <b:container>
-                    <h:form>
-                        <b:tabView>
-                            <b:tab title="Tomar orden">
-                                <ui:include src="/WEB-INF/include/entity/pedido/add.xhtml"/>
-                            </b:tab>
-                            <b:tab title="Editar / Facturar">
-                                <ui:include src="/WEB-INF/include/entity/pedido/facturar.xhtml"/>
-                            </b:tab>
-
-                        </b:tabView>
+                    <h:form id="form">
+                        <ui:include src="/WEB-INF/include/entity/pedido/add.xhtml"/>
+                        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
                     </h:form>
                 </b:container>
             </ui:define>
