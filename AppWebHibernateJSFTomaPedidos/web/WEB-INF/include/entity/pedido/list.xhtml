@@ -34,10 +34,15 @@
                     Pedidos #{pedidoViewController.facturaPendiente}
                 </f:facet>
 
-                <p:ajax event="rowSelect"   update="@form:viewButton,@form:editButton,@form:deleteButton,@form:dataConextMenu"/>
-                <p:ajax event="rowUnselect" update="@form:viewButton,@form:editButton,@form:deleteButton,@form:dataConextMenu"/>
-                <p:ajax event="contextMenu" update="@form:viewButton @form:editButton @form:deleteButton"/>
-                <p:ajax event="rowDblselect" onsuccess="document.getElementById('ListForm:viewButton').click();"/>
+                <p:ajax event="rowSelect"   
+                        update="@form:viewButton,@form:editButton,@form:deleteButton,@form:dataConextMenu"
+                        listener="#{facturaViewController.updateSelected()}"/>
+                <p:ajax event="rowUnselect" 
+                        update="@form:viewButton,@form:editButton,@form:deleteButton,@form:dataConextMenu"/>
+                <p:ajax event="contextMenu" 
+                        update="@form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" 
+                        onsuccess="document.getElementById('ListForm:viewButton').click();"/>
 
                 <p:column sortBy="#{item.cabecerafacturaId}"
                           filterBy="#{item.cabecerafacturaId}"

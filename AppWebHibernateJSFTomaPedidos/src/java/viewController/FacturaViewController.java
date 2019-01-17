@@ -6,6 +6,7 @@
 package viewController;
 
 import dao.CabeceraFacturaDAO;
+import dao.DetallefacturaDAO;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -93,6 +94,11 @@ public class FacturaViewController implements Serializable{
         cabeceras = facturaDAO.findPendiente();
     }
     
-    
-
+    public void updateSelected(){
+        DetallefacturaDAO detalleDAO = new DetallefacturaDAO();
+        detalles = detalleDAO.findDetalle(cabeceraSelected);
+        for(Detallefactura detallefactura : detalles){
+            System.out.println(detallefactura.getDetallefacturaCantidad());
+        }
+    }
 }
