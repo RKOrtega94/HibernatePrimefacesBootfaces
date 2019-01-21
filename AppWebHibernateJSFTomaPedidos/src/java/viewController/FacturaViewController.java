@@ -97,8 +97,5 @@ public class FacturaViewController implements Serializable{
     public void updateSelected(){
         DetallefacturaDAO detalleDAO = new DetallefacturaDAO();
         detalles = detalleDAO.findDetalle(cabeceraSelected);
-        for(Detallefactura detallefactura : detalles){
-            System.out.println(detallefactura.getDetallefacturaCantidad());
-        }
     }
 }

@@ -8,34 +8,38 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition>
         <p:dialog id="facturaEditDialog"
-                  widgetVar="perfilEditDialog"
+                  widgetVar="facturaEditDialog"
                   modal="true"
                   resizable="false"
                   appendTo="@(body)"
-                  header="Editar perfil"
+                  header="Editar pedido"
                   closeOnEscape="true">
             <h:form id="facturaEditForm">
                 <h:panelGroup id="display">
-                    <p:panelGrid columns="2"
-                                 styleClass="ui-noborder"
+                    <p:panelGrid styleClass="ui-noborder"
                                  rendered="#{facturaViewController.cabeceraSelected != null}">
-                        <p:outputLabel for="perfilNombre"
-                                       value="Perfil"/>
-                        <p:inputText id="perfilNombre"
-                                     value="#{perfilController.selected.perfilDescripcion}"
-                                     required="true"
-                                     requiredMessage="El perfil es obligatorio"/>
-
-                        <p:outputLabel for="perfilEstado"
-                                       value="Estado"/>
-                        <p:selectOneMenu id="perfilEstado"
-                                         value="#{perfilController.selected.perfilEstado}"
-                                         style="width: 100%">
-                            <f:selectItem itemLabel="Activo"
-                                          itemValue="A"/>
-                            <f:selectItem itemLabel="Inactivo"
-                                          itemValue="I"/>
-                        </p:selectOneMenu>
+                        <p:row>
+                            <p:column>
+                                Número de pedido:
+                                <h:outputText value="#{facturaViewController.cabeceraSelected.cabecerafacturaId}">
+                                    <f:convertNumber pattern="0000000000"/>
+                                </h:outputText>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:dataTable id="detalleData"
+                                             value="#{facturaViewController.detalles}"
+                                             var="item">
+                                    <p:column headerText="Menu">
+                                        #{item.menu.menuNombre}
+                                    </p:column>
+                                    <p:column headerText="Valor unitario">
+                                        <h:outputText value="#{item.menu.menuValor}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </p:column>
+                        </p:row>
                     </p:panelGrid>
                     <center>
                         <b:commandButton id="btnSaveEdit"
