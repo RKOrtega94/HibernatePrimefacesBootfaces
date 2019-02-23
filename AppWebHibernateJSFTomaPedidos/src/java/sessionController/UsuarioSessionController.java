@@ -119,9 +119,11 @@ public class UsuarioSessionController implements Serializable {
                     intento++;
                 }
             } else {
-                FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", usuario.getEmpleado().getEmpleadoPrimernombre() + " su cuenta se encuentra bloqueada!");
-                FacesContext.getCurrentInstance().addMessage(null, massage);
                 usuario.setUsuarioEstado('I');
+                if (usuarioDAO.update(usuario)) {
+                    FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", usuario.getEmpleado().getEmpleadoPrimernombre() + " su cuenta se encuentra bloqueada!");
+                    FacesContext.getCurrentInstance().addMessage(null, massage);
+                }
             }
         } else {
             FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Usuario incorrecto!");
