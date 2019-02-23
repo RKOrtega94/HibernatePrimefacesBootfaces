@@ -101,6 +101,9 @@ public class UsuarioSessionController implements Serializable {
     public void login() {
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         OpcionPerfilDAO opcionPerfilDAO = new OpcionPerfilDAO();
+        if (usuario != null && usuario.getUsuarioNombre() != username) {
+            intento = 0;
+        }
         usuario = usuarioDAO.findByUsername(username);
         if (usuario != null) {
             if (intento != 3) {
