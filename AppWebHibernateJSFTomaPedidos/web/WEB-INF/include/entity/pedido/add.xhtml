@@ -8,6 +8,11 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions">
     <b:container>
+        <style type="text/css">
+            .ui-row-editor .ui-row-editor-pencil {
+                margin-left:8px;
+            }
+        </style>
         <p:panel header="Toma de pedido">
             <center>
                 <p:outputLabel for="txtMenu"
@@ -49,12 +54,19 @@
                          widgetVar="data"
                          value="#{tomaPedidoViewController.pedidos}"
                          var="item"
-                         editable="true"
-                         editMode="cell">
+                         editable="true">
+
+                <p:ajax event="cellEdit"
+                        listener="#{tomaPedidoViewController.onCellEdit}"
+                        update="dataTable, :growl"/>
+
                 <f:facet name="header">
                     Pedido
                 </f:facet>
 
+                <p:column style="width:35px">
+                    <p:rowEditor />
+                </p:column>
                 <p:column headerText="Menu">
                     <h:outputText value="#{item.menu.menuNombre}"/>
                 </p:column>
@@ -78,12 +90,26 @@
                         <f:convertNumber pattern="#0.00"/>
                     </h:outputText>
                 </p:column>
-                <f:facet name="footer">
-                    Subtotal:
-                    $<h:outputText value="#{tomaPedidoViewController.subtotal}">
-                        <f:convertNumber pattern="#0.00"/>
-                    </h:outputText>
-                </f:facet>
+                <p:columnGroup type="footer">
+                    <p:row>
+                        <p:column colspan="4"
+                                  style="text-align:right"
+                                  footerText="Subtotal"/>
+                        <p:column footerText="#{tomaPedidoViewController.subtotal}"/>
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="4"
+                                  style="text-align:right"
+                                  footerText="Iva (%12)"/>
+                        <p:column footerText="#{tomaPedidoViewController.subtotal*0.12}"/>
+                    </p:row>
+                    <p:row>
+                        <p:column colspan="4"
+                                  style="text-align:right"
+                                  footerText="Total"/>
+                        <p:column footerText="#{tomaPedidoViewController.subtotal*1.12}"/>
+                    </p:row>
+                </p:columnGroup>
             </p:dataTable>
             <p:contextMenu for="dataTable" widgetVar="cMenu">   
                 <p:menuitem value="Edit Cell" icon="pi pi-search" onclick="PF('cellCars').showCellEditor();return false;"/>  

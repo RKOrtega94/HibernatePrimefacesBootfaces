@@ -155,9 +155,17 @@ public class TomaPedidoViewController implements Serializable {
             subtotal = subtotal + sumaFactura.suma(p.getMenu().getMenuValor().doubleValue(), p.getCantidad());
         }
     }
+    
+    //On row edit
+    public void onRowEdit(){
+        
+    }
+    
+    //On row cancel
 
     //Editar orden
     public void onCellEdit(CellEditEvent event) {
+        SumaFactura sumaFactura = new SumaFactura();
         MessagesUtil message = new MessagesUtil();
         Object oldValue = event.getOldValue();
         Object newValue = event.getNewValue();
@@ -165,6 +173,10 @@ public class TomaPedidoViewController implements Serializable {
             message.infoMessage("Pedido modificado!");
         } else {
             message.errorMessage("Ha ocurrido un error!");
+        }
+        //Suma el subtotal
+        for (Pedido p : pedidos) {
+            subtotal = subtotal + sumaFactura.suma(p.getMenu().getMenuValor().doubleValue(), p.getCantidad());
         }
     }
 
