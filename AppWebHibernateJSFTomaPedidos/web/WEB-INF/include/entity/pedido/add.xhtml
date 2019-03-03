@@ -24,7 +24,7 @@
                                  filter="true"
                                  filterMatchMode="startsWith"
                                  panelStyle="width:180px"
-                                 style="width: 15em">
+                                 style="width: 20em">
                     <f:selectItems value="#{menuController.menus}"
                                    var="item"
                                    itemLabel="#{item.menuNombre}"
@@ -56,8 +56,8 @@
                          var="item"
                          editable="true">
 
-                <p:ajax event="cellEdit"
-                        listener="#{tomaPedidoViewController.onCellEdit}"
+                <p:ajax event="rowEdit"
+                        listener="#{tomaPedidoViewController.onRowEdit}"
                         update="dataTable, :growl"/>
 
                 <f:facet name="header">
@@ -81,7 +81,8 @@
                             <h:outputText value="#{item.cantidad}"/>
                         </f:facet>
                         <f:facet name="input">
-                            <h:inputText value="#{item.cantidad}"/>
+                            <h:inputText value="#{item.cantidad}"
+                                         style="width: 100%"/>
                         </f:facet>
                     </p:cellEditor>
                 </p:column>
@@ -107,7 +108,7 @@
                         <p:column colspan="4"
                                   style="text-align:right"
                                   footerText="Total"/>
-                        <p:column footerText="#{tomaPedidoViewController.subtotal*1.12}"/>
+                        <p:column footerText="#{(tomaPedidoViewController.subtotal*1.12)}"/>
                     </p:row>
                 </p:columnGroup>
             </p:dataTable>

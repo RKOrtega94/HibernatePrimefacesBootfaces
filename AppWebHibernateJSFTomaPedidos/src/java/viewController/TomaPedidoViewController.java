@@ -18,6 +18,7 @@ import model.Menu;
 import model.Pedido;
 import model.Usuario;
 import org.primefaces.event.CellEditEvent;
+import org.primefaces.event.RowEditEvent;
 import sessionController.UsuarioSessionController;
 import util.MessagesUtil;
 import util.SumaFactura;
@@ -38,6 +39,7 @@ public class TomaPedidoViewController implements Serializable {
     private Usuario usuario;
     private List<Integer> idMenu;
     private Double subtotal = 0.0;
+    private String format = "%.2f";
 
     @ManagedProperty(value = "#{usuarioSessionController}")
     private UsuarioSessionController sessionController;
@@ -124,6 +126,14 @@ public class TomaPedidoViewController implements Serializable {
         this.subtotal = subtotal;
     }
 
+    public String getFormat() {
+        return format;
+    }
+
+    public void setFormat(String format) {
+        this.format = format;
+    }
+
     //Agregar pedido a la lista
     public void addPedido() {
         subtotal = 0.0;
@@ -155,14 +165,17 @@ public class TomaPedidoViewController implements Serializable {
             subtotal = subtotal + sumaFactura.suma(p.getMenu().getMenuValor().doubleValue(), p.getCantidad());
         }
     }
-    
-    //On row edit
-    public void onRowEdit(){
-        
-    }
-    
-    //On row cancel
 
+    //On row edit
+    public void onRowEdit(RowEditEvent event) {
+        System.out.println("Index: " + idMenu.indexOf(((Pedido) event.getObject()).getMenu().getMenuId()));
+        int idIndex = idMenu.indexOf(((Pedido) event.getObject()).getMenu().getMenuId());
+        if(idIndex >= 0){
+            System.out.print("Cantidad: " + ((Pedido) event.getObject()).getCantidad());
+        }
+    }
+
+    //On row cancel
     //Editar orden
     public void onCellEdit(CellEditEvent event) {
         SumaFactura sumaFactura = new SumaFactura();
@@ -171,12 +184,12 @@ public class TomaPedidoViewController implements Serializable {
         Object newValue = event.getNewValue();
         if (newValue != null && !newValue.equals(oldValue)) {
             message.infoMessage("Pedido modificado!");
+            //Suma el sub
+            for (Pedido p : pedidos) {
+                subtotal = subtotal + sumaFactura.suma(p.getMenu().getMenuValor().doubleValue(), p.getCantidad());
+            }
         } else {
             message.errorMessage("Ha ocurrido un error!");
-        }
-        //Suma el subtotal
-        for (Pedido p : pedidos) {
-            subtotal = subtotal + sumaFactura.suma(p.getMenu().getMenuValor().doubleValue(), p.getCantidad());
         }
     }
 
