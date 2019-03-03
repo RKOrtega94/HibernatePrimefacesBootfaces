@@ -17,6 +17,7 @@ import javax.faces.bean.ViewScoped;
 import model.Menu;
 import model.Pedido;
 import model.Usuario;
+import org.primefaces.event.CellEditEvent;
 import sessionController.UsuarioSessionController;
 import util.MessagesUtil;
 import util.SumaFactura;
@@ -152,6 +153,18 @@ public class TomaPedidoViewController implements Serializable {
         //Suma el subtotal
         for (Pedido p : pedidos) {
             subtotal = subtotal + sumaFactura.suma(p.getMenu().getMenuValor().doubleValue(), p.getCantidad());
+        }
+    }
+
+    //Editar orden
+    public void onCellEdit(CellEditEvent event) {
+        MessagesUtil message = new MessagesUtil();
+        Object oldValue = event.getOldValue();
+        Object newValue = event.getNewValue();
+        if (newValue != null && !newValue.equals(oldValue)) {
+            message.infoMessage("Pedido modificado!");
+        } else {
+            message.errorMessage("Ha ocurrido un error!");
         }
     }
 

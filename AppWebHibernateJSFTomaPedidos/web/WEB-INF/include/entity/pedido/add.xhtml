@@ -79,7 +79,10 @@
                     </h:outputText>
                 </p:column>
                 <f:facet name="footer">
-                    Subtotal: $#{tomaPedidoViewController.subtotal}
+                    Subtotal:
+                    $<h:outputText value="#{tomaPedidoViewController.subtotal}">
+                        <f:convertNumber pattern="#0.00"/>
+                    </h:outputText>
                 </f:facet>
             </p:dataTable>
             <p:contextMenu for="dataTable" widgetVar="cMenu">   
