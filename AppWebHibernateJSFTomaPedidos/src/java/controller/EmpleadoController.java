@@ -176,7 +176,7 @@ public class EmpleadoController implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         ServletContext servletContext = (ServletContext) context.getExternalContext().getContext();
         String rootpath = servletContext.getRealPath("/");
-        File fileImage = new File(rootpath + "upload" + File.separator + "temp" + File.separator + file.getFileName());
+        File fileImage = new File(rootpath + "upload" + File.separator + "temp" + File.separator + file);
         InputStream inputStream = file.getInputstream();
         if (SaveImage(inputStream, fileImage)) {
             local = localDAO.findById(localId);
@@ -186,7 +186,7 @@ public class EmpleadoController implements Serializable {
                 empleado.setLocal(local);
                 empleado.setCargo(cargo);
                 if (empleadoDAO.findByDni(empleado.getEmpleadoNumeroDocumento()) == null) {
-                    empleado.setEmleadoFoto("/upload/temp/" + file.getFileName());
+                    empleado.setEmleadoFoto("/upload/temp/" + file);
                     if (empleadoDAO.save(empleado)) {
                         FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Dato registrado correctamente!");
                         FacesContext.getCurrentInstance().addMessage(null, massage);
@@ -226,13 +226,13 @@ public class EmpleadoController implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         ServletContext servletContext = (ServletContext) context.getExternalContext().getContext();
         String rootpath = servletContext.getRealPath("/");
-        File fileImage = new File(rootpath + "upload" + File.separator + "temp" + File.separator + file.getFileName());
+        File fileImage = new File(rootpath + "upload" + File.separator + "temp" + File.separator + file);
         InputStream inputStream = file.getInputstream();
         if (SaveImage(inputStream, fileImage)) {
             if (cargo != null && local != null) {
                 selected.setLocal(local);
                 selected.setCargo(cargo);
-                selected.setEmleadoFoto("/upload/temp/" + file.getFileName());
+                selected.setEmleadoFoto("/upload/temp/" + file);
                 if (empleadoDAO.update(selected)) {
                     FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Dato modificado correctamente!");
                     FacesContext.getCurrentInstance().addMessage(null, massage);

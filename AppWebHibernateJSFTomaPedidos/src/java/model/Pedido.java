@@ -5,53 +5,28 @@
  */
 package model;
 
-import java.math.BigDecimal;
-
 /**
  *
  * @author RKOrtega
  */
 public class Pedido {
-
-    private int Id;
-    private int menuId;
-    private String menu;
-    private BigDecimal valor;
+    private Menu menu;
     private int cantidad;
 
     public Pedido() {
     }
 
-    public Pedido(int Id, int menuId, String menu, BigDecimal valor, int cantidad) {
-        this.Id = Id;
-        this.menuId = menuId;
+    public Pedido(Menu menu, int cantidad) {
         this.menu = menu;
-        this.valor = valor;
         this.cantidad = cantidad;
     }
 
-    public int getId() {
-        return Id;
-    }
-
-    public void setId(int Id) {
-        this.Id = Id;
-    }
-
-    public String getMenu() {
+    public Menu getMenu() {
         return menu;
     }
 
-    public void setMenu(String menu) {
+    public void setMenu(Menu menu) {
         this.menu = menu;
-    }
-
-    public BigDecimal getValor() {
-        return valor;
-    }
-
-    public void setValor(BigDecimal valor) {
-        this.valor = valor;
     }
 
     public int getCantidad() {
@@ -60,14 +35,6 @@ public class Pedido {
 
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
-    }
-
-    public int getMenuId() {
-        return menuId;
-    }
-
-    public void setMenuId(int menuId) {
-        this.menuId = menuId;
     }
 
 }

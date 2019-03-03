@@ -31,7 +31,7 @@ import org.primefaces.model.UploadedFile;
  */
 @Named(value = "menuController")
 @ViewScoped
-public class MenuController implements Serializable{
+public class MenuController implements Serializable {
 
     private Menu menu;
     private Menu selected;
@@ -39,6 +39,7 @@ public class MenuController implements Serializable{
     private int empresaId;
     private Empresa empresa;
     private UploadedFile file;
+    private File foto;
 
     public Menu getMenu() {
         return menu;
@@ -88,6 +89,14 @@ public class MenuController implements Serializable{
         this.file = file;
     }
 
+    public File getFoto() {
+        return foto;
+    }
+
+    public void setFoto(File foto) {
+        this.foto = foto;
+    }
+
     @PostConstruct
     public void init() {
         menu = new Menu();
@@ -109,13 +118,13 @@ public class MenuController implements Serializable{
         FacesContext context = FacesContext.getCurrentInstance();
         ServletContext servletContext = (ServletContext) context.getExternalContext().getContext();
         String rootpath = servletContext.getRealPath("/");
-        File fileImage = new File(rootpath + "upload" + File.separator + "temp" + File.separator + file.getFileName());
+        File fileImage = new File(rootpath + "upload" + File.separator + "temp" + File.separator + file);
         InputStream inputStream = file.getInputstream();
         if (SaveImage(inputStream, fileImage)) {
             empresa = empresaDAO.findById(empresaId);
             if (empresa != null) {
                 menu.setEmpresa(empresa);
-                menu.setMenuFoto("/upload/temp/" + file.getFileName());
+                menu.setMenuFoto("/upload/temp/" + file);
                 if (menuDAO.save(menu)) {
                     FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Dato registrado correctamente!");
                     FacesContext.getCurrentInstance().addMessage(null, massage);
@@ -140,13 +149,13 @@ public class MenuController implements Serializable{
         FacesContext context = FacesContext.getCurrentInstance();
         ServletContext servletContext = (ServletContext) context.getExternalContext().getContext();
         String rootpath = servletContext.getRealPath("/");
-        File fileImage = new File(rootpath + "upload" + File.separator + "temp" + File.separator + file.getFileName());
+        File fileImage = new File(rootpath + "upload" + File.separator + "temp" + File.separator + file);
         InputStream inputStream = file.getInputstream();
         if (SaveImage(inputStream, fileImage)) {
             empresa = empresaDAO.findById(empresaId);
             if (empresa != null) {
                 selected.setEmpresa(empresa);
-                selected.setMenuFoto("/upload/temp/" + file.getFileName());
+                selected.setMenuFoto("/upload/temp/" + file);
                 if (menuDAO.update(selected)) {
                     FacesMessage massage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Exito", "Dato modificado correctamente!");
                     FacesContext.getCurrentInstance().addMessage(null, massage);
@@ -180,6 +189,7 @@ public class MenuController implements Serializable{
             OutputStream outputStream = new FileOutputStream(ImageFile);
             IOUtils.copy(inputStream, outputStream);
         } catch (IOException e) {
+            System.err.print(e);
             result = false;
         }
         return result;

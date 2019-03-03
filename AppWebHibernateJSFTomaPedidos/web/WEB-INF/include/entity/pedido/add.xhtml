@@ -5,45 +5,49 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:b="http://bootsfaces.net/ui"
-                xmlns:f="http://xmlns.jcp.org/jsf/core">
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
     <b:container>
         <p:panel header="Toma de pedido">
-            <p:outputLabel for="txtMenu"
-                           value="Menu"/>
-            <p:spacer width="5"/>
-            <p:selectOneMenu id="txtMenu"
-                             value="#{pedidoViewController.menuId}"
-                             effect="fade"
-                             filter="true"
-                             filterMatchMode="startsWith"
-                             panelStyle="width:180px"
-                             style="width: 15em">
-                <f:selectItems value="#{menuController.menus}"
-                               var="item"
-                               itemLabel="#{item.menuNombre}"
-                               itemValue="#{item.menuId}"/>
-            </p:selectOneMenu>
-            <p:spacer width="5"/>
-            <p:outputLabel for="txtCantidad"
-                           value="Cantidad"/>
-            <p:spacer width="5"/>
-            <p:inputText id="txtCantidad"
-                         value="#{pedidoViewController.cantidad}"
-                         style="width: 5em">
-                <p:keyFilter regEx="/[\d]/"/>
-            </p:inputText>
-            <p:spacer width="5"/>
-            <p:commandButton id="btnAdd"
-                             value="Agregar"
-                             icon="fa fa-plus"
-                             actionListener="#{pedidoViewController.addPedido()}"
-                             update="dataTable, :growl"/>
+            <center>
+                <p:outputLabel for="txtMenu"
+                               value="Menu"/>
+                <p:spacer width="5"/>
+                <p:selectOneMenu id="txtMenu"
+                                 value="#{tomaPedidoViewController.menuId}"
+                                 effect="fade"
+                                 filter="true"
+                                 filterMatchMode="startsWith"
+                                 panelStyle="width:180px"
+                                 style="width: 15em">
+                    <f:selectItems value="#{menuController.menus}"
+                                   var="item"
+                                   itemLabel="#{item.menuNombre}"
+                                   itemValue="#{item.menuId}"/>
+                </p:selectOneMenu>
+                <p:spacer width="5"/>
+                <p:outputLabel for="txtCantidad"
+                               value="Cantidad"/>
+                <p:spacer width="5"/>
+                <p:inputText id="txtCantidad"
+                             value="#{tomaPedidoViewController.cantidad}"
+                             style="width: 5em">
+                    <p:keyFilter regEx="/[\d]/"/>
+                </p:inputText>
+                <p:spacer width="5"/>
+                <b:commandButton id="btnAdd"
+                                 look="success"
+                                 value="Agregar"
+                                 iconAwesome="fa-plus"
+                                 actionListener="#{tomaPedidoViewController.addPedido()}"
+                                 update="dataTable, :growl"/>
+            </center>
             <p:separator/>
 
             <!--Data table-->
             <p:dataTable id="dataTable"
                          widgetVar="data"
-                         value="#{pedidoViewController.pedidos}"
+                         value="#{tomaPedidoViewController.pedidos}"
                          var="item"
                          editable="true"
                          editMode="cell">
@@ -51,15 +55,11 @@
                     Pedido
                 </f:facet>
 
-                <p:ajax event="cellEdit"
-                        listener="#{pedidoViewController.onCellEdit}"
-                        update="dataTable, :growl"/>
-
                 <p:column headerText="Menu">
-                    <h:outputText value="#{item.menu}"/>
+                    <h:outputText value="#{item.menu.menuNombre}"/>
                 </p:column>
                 <p:column headerText="Valor unitario">
-                    $<h:outputText value="#{item.valor}">
+                    $<h:outputText value="#{item.menu.menuValor}">
                         <f:convertNumber pattern="#0.00"/>
                     </h:outputText>
                 </p:column>
@@ -73,6 +73,9 @@
                         </f:facet>
                     </p:cellEditor>
                 </p:column>
+                <f:facet name="footer">
+                    Total de items: #{fn:length(tomaPedidoViewController.pedidos)}
+                </f:facet>
             </p:dataTable>
             <p:contextMenu for="dataTable" widgetVar="cMenu">   
                 <p:menuitem value="Edit Cell" icon="pi pi-search" onclick="PF('cellCars').showCellEditor();return false;"/>  
@@ -82,7 +85,7 @@
         <b:commandButton id="btnSave"
                          value="Guardar"
                          look="success"
-                         actionListener="#{pedidoViewController.ordenar()}"
+                         actionListener="#{tomaPedidoViewController.save()}"
                          iconAwesome="fa-floppy-o"/>
     </b:container>
 </ui:composition>
