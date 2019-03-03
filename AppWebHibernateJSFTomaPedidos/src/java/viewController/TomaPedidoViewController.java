@@ -19,6 +19,7 @@ import model.Pedido;
 import model.Usuario;
 import sessionController.UsuarioSessionController;
 import util.MessagesUtil;
+import util.SumaFactura;
 
 /**
  *
@@ -35,6 +36,7 @@ public class TomaPedidoViewController implements Serializable {
     private int cantidad;
     private Usuario usuario;
     private List<Integer> idMenu;
+    private Double subtotal = 0.0;
 
     @ManagedProperty(value = "#{usuarioSessionController}")
     private UsuarioSessionController sessionController;
@@ -113,10 +115,20 @@ public class TomaPedidoViewController implements Serializable {
         this.idMenu = idMenu;
     }
 
+    public Double getSubtotal() {
+        return subtotal;
+    }
+
+    public void setSubtotal(Double subtotal) {
+        this.subtotal = subtotal;
+    }
+
     //Agregar pedido a la lista
     public void addPedido() {
+        subtotal = 0.0;
         MenuDAO menuDAO = new MenuDAO();
         MessagesUtil message = new MessagesUtil();
+        SumaFactura sumaFactura = new SumaFactura();
         menu = menuDAO.findById(menuId);
         //Verificar que el menu no esté dentro de la lista
         if (idMenu.indexOf(menuId) >= 0) {
@@ -137,11 +149,16 @@ public class TomaPedidoViewController implements Serializable {
                 }
             }
         }
+        //Suma el subtotal
+        for (Pedido p : pedidos) {
+            subtotal = subtotal + sumaFactura.suma(p.getMenu().getMenuValor().doubleValue(), p.getCantidad());
+        }
     }
 
     //Guardar pedido
     public void save() {
         MessagesUtil message = new MessagesUtil();
-        message.infoMessage("Hola" + sessionController.getUsuario().getEmpleado().getEmpleadoPrimernombre());
+        CabeceraFacturaDAO cabeceraFacturaDAO = new CabeceraFacturaDAO();
+        message.infoMessage("Hola " + sessionController.getUsuario().getEmpleado().getEmpleadoPrimernombre());
     }
 }

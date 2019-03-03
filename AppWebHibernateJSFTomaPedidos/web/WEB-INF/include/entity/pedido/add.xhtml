@@ -73,8 +73,13 @@
                         </f:facet>
                     </p:cellEditor>
                 </p:column>
+                <p:column headerText="Total">
+                    $<h:outputText value="#{item.menu.menuValor * item.cantidad}">
+                        <f:convertNumber pattern="#0.00"/>
+                    </h:outputText>
+                </p:column>
                 <f:facet name="footer">
-                    Total de items: #{fn:length(tomaPedidoViewController.pedidos)}
+                    Subtotal: $#{tomaPedidoViewController.subtotal}
                 </f:facet>
             </p:dataTable>
             <p:contextMenu for="dataTable" widgetVar="cMenu">   
