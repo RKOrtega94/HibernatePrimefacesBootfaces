@@ -15,7 +15,10 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import model.Cabecerafactura;
 import model.Detallefactura;
+import org.primefaces.event.RowEditEvent;
 import sessionController.UsuarioSessionController;
+import util.MessagesUtil;
+import util.SumaFactura;
 
 /**
  *
@@ -132,5 +135,27 @@ public class FacturaViewController implements Serializable {
         cabecera = cabeceraSelected;
         //Seleccionar los detalles que pertenecen a la cabecera
         detalles = detallefacturaDAO.findDetalle(cabecera);
+    }
+
+    //Editar factura
+    public void editFactura(RowEditEvent event) {
+        //Instancias
+        SumaFactura sumaFactura = new SumaFactura();
+        MessagesUtil message = new MessagesUtil();
+        DetallefacturaDAO detallefacturaDAO = new DetallefacturaDAO();
+        try {
+            //Variables
+            Object newObject = event.getObject();
+            //Setar el detalle con el objeto seleccionado
+            detalleSelected = (Detallefactura) newObject;
+            //Validar si se modifica la orden
+            if(detallefacturaDAO.update(detalleSelected)){
+                message.infoMessage("La cantidad del pedido " + detalleSelected.getMenu().getMenuNombre() + " ha sido modificado satisfactoriamente!");
+            } else {
+                message.errorMessage("No se ha podido modificar el pedido!");
+            }
+        } catch (Exception e) {
+            message.fatalMessage(e.toString());
+        }
     }
 }

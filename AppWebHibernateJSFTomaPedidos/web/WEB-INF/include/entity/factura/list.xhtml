@@ -8,13 +8,23 @@
                 xmlns:b="http://bootsfaces.net/ui"
                 xmlns:fn="http://java.sun.com/jsp/jstl/functions">
     <b:container>
-        <h:form id="form">
+        <h:form id="form"
+                style="z-index: 40">
+            <p:panel header="Factura #{facturaViewController.cabecera.cabecerafacturaId}">
+                <p:panelGrid>
+                    hola
+                </p:panelGrid>
+            </p:panel>
             <p:dataTable id="dataTable"
                          widgetVar="data"
                          value="#{facturaViewController.detalles}"
                          var="item"
                          editable="true"
                          editMode="row">
+                <p:ajax event="rowEdit"
+                        listener="#{facturaViewController.editFactura}"
+                        immediate="true"
+                        update="dataTable, :growl"/>
                 <f:facet name="header">
                     Detalle
                 </f:facet>
@@ -27,7 +37,7 @@
                     <h:outputText value="#{item.menu.menuNombre}"/>
                 </p:column>
                 <p:column headerText="Valor unitario">
-                    <h:outputText value="#{item.menu.menuValor}">
+                    $<h:outputText value="#{item.menu.menuValor}">
                         <f:convertNumber pattern="#.00"/>
                     </h:outputText>
                 </p:column>
@@ -42,8 +52,9 @@
                         </f:facet>
                     </p:cellEditor>
                 </p:column>
-                <p:column headerText="Valor total">
-                    <h:outputText value="#{item.menu.menuValor * item.detallefacturaCantidad}">
+                <p:column headerText="Valor total"
+                          style="text-align: center">
+                    $<h:outputText value="#{item.menu.menuValor * item.detallefacturaCantidad}">
                         <f:convertNumber pattern="#.00"/>
                     </h:outputText>
                 </p:column>

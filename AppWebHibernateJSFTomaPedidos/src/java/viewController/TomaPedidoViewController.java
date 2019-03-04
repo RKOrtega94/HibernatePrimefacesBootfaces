@@ -200,6 +200,7 @@ public class TomaPedidoViewController implements Serializable {
 
     //On row edit
     public void onRowEdit(RowEditEvent event) {
+        //Instancias
         SumaFactura sumaFactura = new SumaFactura();
         MessagesUtil message = new MessagesUtil();
         //Setear el index del obgeto

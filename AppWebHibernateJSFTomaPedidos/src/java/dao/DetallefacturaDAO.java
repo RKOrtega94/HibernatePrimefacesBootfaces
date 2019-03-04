@@ -61,4 +61,21 @@ public class DetallefacturaDAO {
         }
         return detalle;
     }
+    
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public boolean update(Detallefactura detallefactura){
+        boolean result = true;
+        Session session = SESSION_FACTORY.openSession();
+        try {
+            session.beginTransaction();
+            session.update(detallefactura);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            result = false;
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return result;
+    }
 }

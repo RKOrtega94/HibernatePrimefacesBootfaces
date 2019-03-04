@@ -3,6 +3,7 @@ body {
     font-family: Verdana, "Verdana CE",  Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
     padding: 0px;
     background: black !important;
+    z-index: -10;
 }
 
 h1 {
