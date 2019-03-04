@@ -8,11 +8,11 @@
         <ui:composition template="./../../WEB-INF/include/template.xhtml">
 
             <ui:define name="title">
-                Factura #{facturaViewController.cabeceraSelected.cabecerafacturaId}
+                Factura #{facturaViewController.cabecera.cabecerafacturaId}
             </ui:define>
 
             <ui:define name="content">
-                
+                <ui:include src="/WEB-INF/include/entity/factura/list.xhtml"/>
             </ui:define>
 
         </ui:composition>

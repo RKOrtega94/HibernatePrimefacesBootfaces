@@ -12,7 +12,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.view.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import model.Cabecerafactura;
 import model.Detallefactura;
 import sessionController.UsuarioSessionController;
@@ -22,7 +22,7 @@ import sessionController.UsuarioSessionController;
  * @author RKOrtega
  */
 @ManagedBean(name = "facturaViewController")
-@ViewScoped
+@SessionScoped
 public class FacturaViewController implements Serializable {
 
     //Declaración de variables
@@ -118,7 +118,19 @@ public class FacturaViewController implements Serializable {
 
     //Actualizar la lista de detalles de la cabecera seleccionada
     public void updateSelected() {
-        DetallefacturaDAO detalleDAO = new DetallefacturaDAO();
-        detalles = detalleDAO.findDetalle(cabeceraSelected);
+        DetallefacturaDAO detallefacturaDAO = new DetallefacturaDAO();
+        detalles = detallefacturaDAO.findDetalle(cabeceraSelected);
+    }
+
+    //Redireccionar a la edición de la factura
+    public void doRedirectToEdit() {
+        //Instancias
+        DetallefacturaDAO detallefacturaDAO = new DetallefacturaDAO();
+        //Llamar al método doRedirect de la sesión
+        sessionController.doRedirect("/appmenu/app/factura/index.jsf");
+        //Setear a la cabecera con la que ha sido seleccionada
+        cabecera = cabeceraSelected;
+        //Seleccionar los detalles que pertenecen a la cabecera
+        detalles = detallefacturaDAO.findDetalle(cabecera);
     }
 }

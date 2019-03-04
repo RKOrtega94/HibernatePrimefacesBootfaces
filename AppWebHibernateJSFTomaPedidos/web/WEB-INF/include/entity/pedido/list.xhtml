@@ -22,7 +22,7 @@
                             icon="ui-icon-trash"/>
             </p:contextMenu>
             <p:dataTable id="dataList"
-                         value="#{facturaViewController.cabeceras}"
+                         value="#{facturaViewController.pendientes}"
                          var="item"
                          lazy="false"
                          rowKey="#{item.cabecerafacturaId}"
@@ -90,8 +90,7 @@
                              style="visibility: hidden;"
                              icon="ui-icon-pencil"
                              value="Editar"
-                             update="facturaEditForm"
-                             oncomplete="PF('facturaEditDialog').show()"/>
+                             actionListener="#{facturaViewController.doRedirectToEdit()}"/>
             <p:commandButton id="deleteButton"
                              style="visibility: hidden"
                              icon="ui-icon-trash"
