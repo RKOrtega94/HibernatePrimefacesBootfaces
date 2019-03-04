@@ -13,7 +13,8 @@
                 margin-left:8px;
             }
         </style>
-        <p:panel header="Toma de pedido">
+        <p:panel id="panel"
+                 header="Toma de pedido">
             <center>
                 <p:outputLabel for="txtMenu"
                                value="Menu"/>
@@ -54,18 +55,23 @@
                          widgetVar="data"
                          value="#{tomaPedidoViewController.pedidos}"
                          var="item"
-                         editable="true">
+                         editable="true"
+                         editMode="row">
 
                 <p:ajax event="rowEdit"
                         listener="#{tomaPedidoViewController.onRowEdit}"
-                        update="dataTable, :growl"/>
+                        partialSubmit="true"
+                        immediate="true"
+                        update="dataTable, :growl, dataTable:subtotalrow"/>
 
                 <f:facet name="header">
                     Pedido
                 </f:facet>
 
                 <p:column style="width:35px">
-                    <p:rowEditor />
+                    <p:rowEditor editTitle="Ediatar"
+                                 cancelTitle="Quitar"
+                                 saveTitle="Confirmar"/>
                 </p:column>
                 <p:column headerText="Menu">
                     <h:outputText value="#{item.menu.menuNombre}"/>
@@ -86,13 +92,15 @@
                         </f:facet>
                     </p:cellEditor>
                 </p:column>
-                <p:column headerText="Total">
+                <p:column headerText="Total"
+                          style="text-align: center">
                     $<h:outputText value="#{item.menu.menuValor * item.cantidad}">
                         <f:convertNumber pattern="#0.00"/>
                     </h:outputText>
                 </p:column>
-                <p:columnGroup type="footer">
-                    <p:row>
+                <p:columnGroup id="facturadetail"
+                               type="footer">
+                    <p:row id="subtotalrow">
                         <p:column colspan="4"
                                   style="text-align:right"
                                   footerText="Subtotal"/>
@@ -101,7 +109,7 @@
                     <p:row>
                         <p:column colspan="4"
                                   style="text-align:right"
-                                  footerText="Iva (%12)"/>
+                                  footerText="IVA (%12)"/>
                         <p:column footerText="#{tomaPedidoViewController.subtotal*0.12}"/>
                     </p:row>
                     <p:row>
@@ -111,11 +119,21 @@
                         <p:column footerText="#{(tomaPedidoViewController.subtotal*1.12)}"/>
                     </p:row>
                 </p:columnGroup>
+                <f:facet name="footer">
+                    Subtotal: 
+                    $<h:outputText value="#{tomaPedidoViewController.subtotal}">
+                        <f:convertNumber pattern="#0.00"/>
+                    </h:outputText>
+                    IVA(12%):
+                    $<h:outputText value="#{tomaPedidoViewController.subtotal*0.12}">
+                        <f:convertNumber pattern="#0.00"/>
+                    </h:outputText>
+                    Total:
+                    $<h:outputText value="#{tomaPedidoViewController.subtotal*1.12}">
+                        <f:convertNumber pattern="#0.00"/>
+                    </h:outputText>
+                </f:facet>
             </p:dataTable>
-            <p:contextMenu for="dataTable" widgetVar="cMenu">   
-                <p:menuitem value="Edit Cell" icon="pi pi-search" onclick="PF('cellCars').showCellEditor();return false;"/>  
-                <p:menuitem value="Hide Menu" icon="pi pi-times" onclick="PF('cMenu').hide()"/>  
-            </p:contextMenu> 
         </p:panel>
         <b:commandButton id="btnSave"
                          value="Guardar"

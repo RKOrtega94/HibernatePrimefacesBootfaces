@@ -166,12 +166,33 @@ public class TomaPedidoViewController implements Serializable {
         }
     }
 
+    //Listener on submit
+    public void onSubmit() {
+        subtotal = 0.0;
+        SumaFactura sumaFactura = new SumaFactura();
+        for (Pedido p : pedidos) {
+            subtotal = subtotal + sumaFactura.suma(p.getMenu().getMenuValor().doubleValue(), p.getCantidad());
+        }
+    }
+
     //On row edit
     public void onRowEdit(RowEditEvent event) {
-        System.out.println("Index: " + idMenu.indexOf(((Pedido) event.getObject()).getMenu().getMenuId()));
+        SumaFactura sumaFactura = new SumaFactura();
+        MessagesUtil message = new MessagesUtil();
+        //Setear el index del obgeto
         int idIndex = idMenu.indexOf(((Pedido) event.getObject()).getMenu().getMenuId());
-        if(idIndex >= 0){
-            System.out.print("Cantidad: " + ((Pedido) event.getObject()).getCantidad());
+        //Valida si el index existe en la lista
+        if (idIndex >= 0) {
+            subtotal = 0.0;
+            //Setear el nuevo obgeto en el index que corresponde
+            pedidos.set(idIndex, new Pedido(((Pedido) event.getObject()).getMenu(), ((Pedido) event.getObject()).getCantidad()));
+            message.infoMessage("Pedido de " + ((Pedido) event.getObject()).getMenu().getMenuNombre() + " ha sido modificado!");
+            //Suma el subtotal
+            for (Pedido p : pedidos) {
+                subtotal = subtotal + sumaFactura.suma(p.getMenu().getMenuValor().doubleValue(), p.getCantidad());
+            }
+        } else {
+            message.errorMessage("Ha ocurrido un error!");
         }
     }
 
