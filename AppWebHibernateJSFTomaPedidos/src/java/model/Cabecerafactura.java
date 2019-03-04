@@ -143,7 +143,7 @@ public class Cabecerafactura implements java.io.Serializable {
             cabecerafacturaFechaCreacion = (new Timestamp(date.getTime()));
         }
         if (cabecerafacturaEstado == null) {
-            cabecerafacturaEstado = 'A';
+            cabecerafacturaEstado = 'P';
         }
     }
 }

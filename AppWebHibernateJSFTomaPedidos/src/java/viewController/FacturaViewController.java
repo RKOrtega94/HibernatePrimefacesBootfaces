@@ -11,9 +11,11 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.view.ViewScoped;
 import model.Cabecerafactura;
 import model.Detallefactura;
+import sessionController.UsuarioSessionController;
 
 /**
  *
@@ -21,15 +23,22 @@ import model.Detallefactura;
  */
 @ManagedBean(name = "facturaViewController")
 @ViewScoped
-public class FacturaViewController implements Serializable{
+public class FacturaViewController implements Serializable {
 
+    //Declaración de variables
     private Cabecerafactura cabecera;
     private Cabecerafactura cabeceraSelected;
     private List<Cabecerafactura> cabeceras;
+    private List<Cabecerafactura> pendientes;
     private Detallefactura detalle;
     private Detallefactura detalleSelected;
     private List<Detallefactura> detalles;
 
+    //Instancia de la sesión
+    @ManagedProperty(value = "#{usuarioSessionController}")
+    private UsuarioSessionController sessionController;
+
+    //Post-constructor
     @PostConstruct
     public void init() {
         cabecera = new Cabecerafactura();
@@ -38,6 +47,7 @@ public class FacturaViewController implements Serializable{
         detalleSelected = new Detallefactura();
     }
 
+    //Getter y Setter
     public Cabecerafactura getCabecera() {
         return cabecera;
     }
@@ -60,6 +70,14 @@ public class FacturaViewController implements Serializable{
 
     public void setCabeceras(List<Cabecerafactura> cabeceras) {
         this.cabeceras = cabeceras;
+    }
+
+    public List<Cabecerafactura> getPendientes() {
+        return pendientes;
+    }
+
+    public void setPendientes(List<Cabecerafactura> pendientes) {
+        this.pendientes = pendientes;
     }
 
     public Detallefactura getDetalle() {
@@ -86,15 +104,20 @@ public class FacturaViewController implements Serializable{
         this.detalles = detalles;
     }
 
-    /**
-     * Creates a new instance of FacturaViewController
-     */
-    public FacturaViewController() {
-        CabeceraFacturaDAO facturaDAO = new CabeceraFacturaDAO();
-        cabeceras = facturaDAO.findPendiente();
+    public void setSessionController(UsuarioSessionController sessionController) {
+        this.sessionController = sessionController;
     }
-    
-    public void updateSelected(){
+
+    //Constructor
+    public FacturaViewController() {
+        //Instancia DAO
+        CabeceraFacturaDAO facturaDAO = new CabeceraFacturaDAO();
+        //Listar facturas pendientes
+        pendientes = facturaDAO.findPendiente();
+    }
+
+    //Actualizar la lista de detalles de la cabecera seleccionada
+    public void updateSelected() {
         DetallefacturaDAO detalleDAO = new DetallefacturaDAO();
         detalles = detalleDAO.findDetalle(cabeceraSelected);
     }

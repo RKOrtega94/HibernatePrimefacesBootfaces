@@ -6,6 +6,8 @@
 package viewController;
 
 import dao.CabeceraFacturaDAO;
+import dao.ClienteDAO;
+import dao.DetallefacturaDAO;
 import dao.MenuDAO;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -14,10 +16,11 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import model.Cabecerafactura;
+import model.Detallefactura;
 import model.Menu;
 import model.Pedido;
 import model.Usuario;
-import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
 import sessionController.UsuarioSessionController;
 import util.MessagesUtil;
@@ -31,9 +34,12 @@ import util.SumaFactura;
 @ViewScoped
 public class TomaPedidoViewController implements Serializable {
 
+    //Declaración de variables
     private Pedido pedido;
     private List<Pedido> pedidos;
     private Menu menu;
+    private Cabecerafactura cabecerafactura;
+    private Detallefactura detallefactura;
     private int menuId;
     private int cantidad;
     private Usuario usuario;
@@ -41,23 +47,24 @@ public class TomaPedidoViewController implements Serializable {
     private Double subtotal = 0.0;
     private String format = "%.2f";
 
+    //Instancia de la sesión
     @ManagedProperty(value = "#{usuarioSessionController}")
     private UsuarioSessionController sessionController;
 
-    /**
-     * Creates a new instance of TomaPedidoViewController
-     */
+    //Post-constructor
     @PostConstruct
     public void init() {
         pedido = new Pedido();
         menu = new Menu();
     }
 
+    //Constructor
     public TomaPedidoViewController() {
         this.pedidos = new ArrayList<>();
         this.idMenu = new ArrayList<>();
     }
 
+    //Getters y setters
     public Pedido getPedido() {
         return pedido;
     }
@@ -134,6 +141,22 @@ public class TomaPedidoViewController implements Serializable {
         this.format = format;
     }
 
+    public Cabecerafactura getCabecerafactura() {
+        return cabecerafactura;
+    }
+
+    public void setCabecerafactura(Cabecerafactura cabecerafactura) {
+        this.cabecerafactura = cabecerafactura;
+    }
+
+    public Detallefactura getDetallefactura() {
+        return detallefactura;
+    }
+
+    public void setDetallefactura(Detallefactura detallefactura) {
+        this.detallefactura = detallefactura;
+    }
+
     //Agregar pedido a la lista
     public void addPedido() {
         subtotal = 0.0;
@@ -142,8 +165,8 @@ public class TomaPedidoViewController implements Serializable {
         SumaFactura sumaFactura = new SumaFactura();
         menu = menuDAO.findById(menuId);
         //Verificar que el menu no esté dentro de la lista
-        if (idMenu.indexOf(menuId) >= 0) {
-            message.warnMessage("El pedido ya se encuentra en la lista!");
+        if (idMenu.indexOf(menuId) >= 0 || cantidad == 0) {
+            message.warnMessage("No se puede agregar pedidos duplicados o sin una cantidad!");
         } else {
             //Guardar Id del menu en la lista
             idMenu.add(menuId);
@@ -196,28 +219,39 @@ public class TomaPedidoViewController implements Serializable {
         }
     }
 
-    //On row cancel
-    //Editar orden
-    public void onCellEdit(CellEditEvent event) {
-        SumaFactura sumaFactura = new SumaFactura();
-        MessagesUtil message = new MessagesUtil();
-        Object oldValue = event.getOldValue();
-        Object newValue = event.getNewValue();
-        if (newValue != null && !newValue.equals(oldValue)) {
-            message.infoMessage("Pedido modificado!");
-            //Suma el sub
-            for (Pedido p : pedidos) {
-                subtotal = subtotal + sumaFactura.suma(p.getMenu().getMenuValor().doubleValue(), p.getCantidad());
-            }
-        } else {
-            message.errorMessage("Ha ocurrido un error!");
-        }
-    }
-
     //Guardar pedido
     public void save() {
         MessagesUtil message = new MessagesUtil();
         CabeceraFacturaDAO cabeceraFacturaDAO = new CabeceraFacturaDAO();
-        message.infoMessage("Hola " + sessionController.getUsuario().getEmpleado().getEmpleadoPrimernombre());
+        DetallefacturaDAO detallefacturaDAO = new DetallefacturaDAO();
+        ClienteDAO clienteDAO = new ClienteDAO();
+        try {
+            //Validar que exista almenos un producto en la lista
+            if (pedidos.size() < 1) {
+                message.warnMessage("Debe ingresar al menos un producto!");
+            } else {
+                //Generar la factura
+                if (cabeceraFacturaDAO.save(clienteDAO.findByDni("9999999999"), sessionController.getUsuario(), 0.0)) {
+                    //Almacenar la factura generada
+                    cabeceraFacturaDAO.ultimaFactura().forEach((c) -> {
+                        cabecerafactura = c;
+                    });
+                    //Bucle para guardar el detalle de la factura
+                    pedidos.forEach((p) -> {
+                        //Agregar los elementos de la lista en el detalle
+                        if (detallefacturaDAO.save(cabecerafactura, p.getMenu(), p.getCantidad())) {
+                            message.infoMessage(p.getMenu().getMenuNombre() + "Ha sido agregado!");
+                        } else {
+                            message.errorMessage("Ha ocurrido un error al agregar " + p.getMenu().getMenuNombre() + " a la factura");
+                        }
+                    });
+                    sessionController.doRedirect("/appmenu/app/editarpedido/index.jsf");
+                } else {
+                    message.errorMessage("Ha ocurrido un error!");
+                }
+            }
+        } catch (Exception e) {
+            message.fatalMessage(e.toString());
+        }
     }
 }

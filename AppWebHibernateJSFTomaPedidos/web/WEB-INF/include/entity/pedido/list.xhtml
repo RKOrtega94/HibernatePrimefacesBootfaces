@@ -5,7 +5,8 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:b="http://bootsfaces.net/ui">
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
     <b:container>
         <h:form id="listForm">
             <p:contextMenu id="dataConextMenu"
@@ -21,7 +22,7 @@
                             icon="ui-icon-trash"/>
             </p:contextMenu>
             <p:dataTable id="dataList"
-                         value="#{pedidoViewController.facturas}"
+                         value="#{facturaViewController.cabeceras}"
                          var="item"
                          lazy="false"
                          rowKey="#{item.cabecerafacturaId}"
@@ -31,7 +32,7 @@
                          selectionMode="single"
                          selection="#{facturaViewController.cabeceraSelected}">
                 <f:facet name="header">
-                    Pedidos #{pedidoViewController.facturaPendiente}
+                    Pendientes: #{fn:length(facturaViewController.pendientes)}
                 </f:facet>
 
                 <p:ajax event="rowSelect"   
@@ -48,11 +49,27 @@
                           filterBy="#{item.cabecerafacturaId}"
                           filterMatchMode="contains">
                     <f:facet name="header">
-                        <h:outputText value=""/>
+                        <h:outputText value="Factura"/>
                     </f:facet>
                     <h:outputText value="#{item.cabecerafacturaId}">
                         <f:convertNumber pattern="0000000000"/>
                     </h:outputText>
+                </p:column>
+                <p:column sortBy="#{item.cliente.cienteNumeroDocumento}"
+                          filterBy="#{item.cliente.cienteNumeroDocumento}"
+                          filterMatchMode="contains">
+                    <f:facet name="header">
+                        <h:outputText value="Cédula/RUC"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cliente.cienteNumeroDocumento}"/>
+                </p:column>
+                <p:column sortBy="#{item.cliente.clienteNombre}"
+                          filterBy="#{item.cliente.clienteNombre}"
+                          filterMatchMode="contains">
+                    <f:facet name="header">
+                        <h:outputText value="Nombre/Razón social"/>
+                    </f:facet>
+                    <h:outputText value="#{item.cliente.clienteNombre}"/>
                 </p:column>
                 <p:column sortBy="#{item.cabecerafacturaEstado}"
                           filterBy="#{item.cabecerafacturaEstado==('A')?'Activo':'Pendiente'}">

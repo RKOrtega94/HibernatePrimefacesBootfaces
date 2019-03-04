@@ -140,7 +140,7 @@ public class CabeceraFacturaDAO {
         Session session = SESSION_FACTORY.openSession();
         try {
             session.beginTransaction();
-            Query query = session.createQuery("select c.cabecerafacturaId from Cabecerafactura c order by c.cabecerafacturaId desc");
+            Query query = session.createQuery("select c from Cabecerafactura c order by c.cabecerafacturaId desc");
             query.setMaxResults(1);
             result = query.getResultList();
             session.getTransaction().commit();
