@@ -10,10 +10,130 @@
     <b:container>
         <h:form id="form"
                 style="z-index: 40">
-            <p:panel header="Factura #{facturaViewController.cabecera.cabecerafacturaId}">
-                <p:panelGrid>
-                    hola
-                </p:panelGrid>
+            <p:panel>
+                <f:facet name="header">
+                    Factura: 
+                    <h:outputText value="#{facturaViewController.cabecera.cabecerafacturaId}">
+                        <f:convertNumber pattern="0000000000"/>
+                    </h:outputText>
+                </f:facet>
+                <center>
+                    <p:panelGrid styleClass="ui-noborder">
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel for="identificacion"
+                                               value="Identificación del cliente"/>
+                            </p:column>
+                            <p:column>
+                                <p:inputText id="identificacion"
+                                             value=""
+                                             placeholder="Cédula / RUC"
+                                             style="width: 100%"/>
+                            </p:column>
+                            <p:column>
+                                <b:commandButton value="Buscar"
+                                                 iconAwesome="fa-search"
+                                                 title="Buscar cliente"
+                                                 look="info"/>
+                            </p:column>
+                            <p:column>
+                                <b:commandButton value="Registrar"
+                                                 iconAwesome="fa-plus"
+                                                 title="Registrar nuevo cliente"
+                                                 look="primary"/>
+                            </p:column>
+                            <p:column>
+                                <b:commandButton value="Facturar"
+                                                 iconAwesome="fa-print"
+                                                 title="Imprimir factura"
+                                                 look="success"/>
+                            </p:column>
+                            <p:column colspan="2"
+                                      style="text-align: right">
+                                <b:commandButton value="Anular"
+                                                 iconAwesome="fa-remove"
+                                                 title="Anular pedido"
+                                                 look="warning"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel for="txtNombre"
+                                               value="Nombre / Razón social: "/>
+                            </p:column>
+                            <p:column colspan="3">
+                                <p:inputText id="txtNombre"
+                                             value="#{facturaViewController.cabecera.cliente.clienteNombre}"
+                                             required="true"
+                                             readonly="true"
+                                             style="width: 100%"/>
+                            </p:column>
+                            <p:column>
+                                <p:outputLabel for="txtDni"
+                                               value="Cédula / RUC"/>
+                            </p:column>
+                            <p:column>
+                                <p:inputText id="txtDni"
+                                             value="#{facturaViewController.cabecera.cliente.cienteNumeroDocumento}"
+                                             required="true"
+                                             readonly="true"
+                                             style="width: 100%"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel for="txtCorreo"
+                                               value="Correo electrónico"/>
+                            </p:column>
+                            <p:column colspan="3">
+                                <p:inputText id="txtCorreo"
+                                             value="#{facturaViewController.cabecera.cliente.clienteCorreo}"
+                                             readonly="true"
+                                             style="width: 100%"/>
+                            </p:column>
+                            <p:column>
+                                <p:outputLabel for="txtTelefono"
+                                               value="Teléfono"/>
+                            </p:column>
+                            <p:column>
+                                <p:inputText id="txtTelefono"
+                                             value="#{facturaViewController.cabecera.cliente.clienteTelefono}"
+                                             readonly="true"
+                                             style="width: 100%"/>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column colspan="4"/>
+                            <p:column style="text-align: right">
+                                Subtotal: 
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="aqui va el subtotal">
+                                </h:outputText>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column colspan="4"/>
+                            <p:column style="text-align: right">
+                                IVA(12%): 
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="aqui va el iva">
+                                </h:outputText>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column colspan="4"/>
+                            <p:column style="text-align: right">
+                                Total a pagar:: 
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="aqui va el total">
+                                </h:outputText>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </center>
             </p:panel>
             <p:dataTable id="dataTable"
                          widgetVar="data"
