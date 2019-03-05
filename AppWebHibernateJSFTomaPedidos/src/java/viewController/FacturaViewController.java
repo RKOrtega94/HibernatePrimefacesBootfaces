@@ -36,6 +36,7 @@ public class FacturaViewController implements Serializable {
     private Detallefactura detalle;
     private Detallefactura detalleSelected;
     private List<Detallefactura> detalles;
+    private Double subtotal = 0.0;
 
     //Instancia de la sesión
     @ManagedProperty(value = "#{usuarioSessionController}")
@@ -111,6 +112,14 @@ public class FacturaViewController implements Serializable {
         this.sessionController = sessionController;
     }
 
+    public Double getSubtotal() {
+        return subtotal;
+    }
+
+    public void setSubtotal(Double subtotal) {
+        this.subtotal = subtotal;
+    }
+
     //Constructor
     public FacturaViewController() {
         //Instancia DAO
@@ -119,10 +128,23 @@ public class FacturaViewController implements Serializable {
         pendientes = facturaDAO.findPendiente();
     }
 
+    //Listener on submit
+    public void onSubmit() {
+        subtotal = 0.0;
+        SumaFactura sumaFactura = new SumaFactura();
+        detalles.forEach((d) -> {
+            subtotal = subtotal + sumaFactura.suma(d.getMenu().getMenuValor().doubleValue(), d.getDetallefacturaCantidad());
+        });
+    }
+    
     //Actualizar la lista de detalles de la cabecera seleccionada
     public void updateSelected() {
         DetallefacturaDAO detallefacturaDAO = new DetallefacturaDAO();
         detalles = detallefacturaDAO.findDetalle(cabeceraSelected);
+        subtotal = 0.0;
+        detalles.forEach((d) -> {
+            subtotal = subtotal + (d.getMenu().getMenuValor().doubleValue() * d.getDetallefacturaCantidad());
+        });
     }
 
     //Redireccionar a la edición de la factura
@@ -149,8 +171,12 @@ public class FacturaViewController implements Serializable {
             //Setar el detalle con el objeto seleccionado
             detalleSelected = (Detallefactura) newObject;
             //Validar si se modifica la orden
-            if(detallefacturaDAO.update(detalleSelected)){
+            if (detallefacturaDAO.update(detalleSelected)) {
+                subtotal = 0.0;
                 message.infoMessage("La cantidad del pedido " + detalleSelected.getMenu().getMenuNombre() + " ha sido modificado satisfactoriamente!");
+                detalles.forEach((d) -> {
+                    subtotal = subtotal + (d.getMenu().getMenuValor().doubleValue() * d.getDetallefacturaCantidad());
+                });
             } else {
                 message.errorMessage("No se ha podido modificar el pedido!");
             }
