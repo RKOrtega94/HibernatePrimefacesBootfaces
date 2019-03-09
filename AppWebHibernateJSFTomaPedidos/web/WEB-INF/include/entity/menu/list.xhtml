@@ -5,7 +5,8 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:b="http://bootsfaces.net/ui">
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions">
     <b:container>
         <h:form id="listForm">
             <p:contextMenu id="dataConextMenu"
@@ -54,6 +55,17 @@
                     </f:facet>
                     <h:outputText value="#{item.menuNombre}"/>
                 </p:column>
+                
+                <p:column sortBy="#{item.menuTipo==('E')?'Entrada':item.menuTipo==('F')?'Fuerte':item.menuTipo==('P')?'Postre':'Bebida'}"
+                          filterBy="#{item.menuTipo==('E')?'Entrada':item.menuTipo==('F')?'Fuerte':item.menuTipo==('P')?'Postre':'Bebida'}"
+                          filterMatchMode="contains">
+                    <f:facet name="header">
+                        <h:outputText value="Tipo"/>
+                    </f:facet>
+                    <h:outputText value="#{item.menuTipo==('E')?'Entrada':item.menuTipo==('F')?'Fuerte':item.menuTipo==('P')?'Postre':'Bebida'}">
+                        <f:convertNumber pattern="#0.00"/>
+                    </h:outputText>
+                </p:column>
 
                 <p:column sortBy="#{item.menuValor}"
                           filterBy="#{item.menuValor}"
@@ -74,6 +86,9 @@
                     </f:facet>
                     <h:outputText value="#{item.menuEstado==('A')?'Activo':'Inactivo'}"/>
                 </p:column>
+                <f:facet name="footer">
+                    Número de platos: #{fn:length(menuController.menus)}
+                </f:facet>
             </p:dataTable>
             <p:commandButton id="createButton"
                              icon="ui-icon-plus"  

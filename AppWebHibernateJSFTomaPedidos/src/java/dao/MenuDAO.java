@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dao;
 
 import java.util.List;
@@ -115,6 +110,60 @@ public class MenuDAO {
         try {
             session.beginTransaction();
             Query query = session.createQuery("select m from Menu m where m.menuTipo = 'E'");
+            menus = query.getResultList();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            menus = null;
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return menus;
+    }
+
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public List<Menu> findPlatoFuerte() {
+        List<Menu> menus = null;
+        Session session = SESSION_FACTORY.openSession();
+        try {
+            session.beginTransaction();
+            Query query = session.createQuery("select m from Menu m where m.menuTipo = 'F'");
+            menus = query.getResultList();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            menus = null;
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return menus;
+    }
+    
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public List<Menu> findPostre() {
+        List<Menu> menus = null;
+        Session session = SESSION_FACTORY.openSession();
+        try {
+            session.beginTransaction();
+            Query query = session.createQuery("select m from Menu m where m.menuTipo = 'P'");
+            menus = query.getResultList();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            menus = null;
+            session.getTransaction().rollback();
+        } finally {
+            session.close();
+        }
+        return menus;
+    }
+    
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public List<Menu> findBebida() {
+        List<Menu> menus = null;
+        Session session = SESSION_FACTORY.openSession();
+        try {
+            session.beginTransaction();
+            Query query = session.createQuery("select m from Menu m where m.menuTipo = 'B'");
             menus = query.getResultList();
             session.getTransaction().commit();
         } catch (Exception e) {

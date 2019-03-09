@@ -1,9 +1,9 @@
 body {
-    font-size: 12px;
+    font-size: 12px !important;
     font-family: Verdana, "Verdana CE",  Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
     padding: 0px;
     background: black !important;
-    z-index: -10;
+    z-index: -20;
 }
 
 h1 {
